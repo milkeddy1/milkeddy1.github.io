@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>了解一下ForwardRef</title>
+      <link href="/2023/05/28/2/"/>
+      <url>/2023/05/28/2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要 ?"></a>前情提要 ?</h1><p>其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，</p><p>究竟是因為用不到所以不了解，還是因為不了解所以沒用到呢？</p><p>因為我在看一些 document 的時候，看到有一些 forwardRef 的用法，</p><p>就決定來了解一下這到底是什麼？</p><h1 id="什麼是-forwardRef"><a href="#什麼是-forwardRef" class="headerlink" title="什麼是 forwardRef ?"></a>什麼是 forwardRef ?</h1><p>我讀了一下文件，</p><p>以我的理解來說就是，</p><p>「把子層 component 的 ref 傳到父層去使用」</p><h2 id="疑問"><a href="#疑問" class="headerlink" title="疑問"></a>疑問</h2><p>看起來這個定義蠻直觀的，</p><p>而且本身命名也是吻合他的用法，</p><p>但去了解他具體怎麼用的時候我就產生了一些疑問，</p><p>不囉唆直接上 code</p><p>這是一般使用 forwardRef 的方法</p><ul><li>在要使用 ref 的那一個 component 使用 useRef 建立 ref</li><li>傳給要操作的 dom 的 component 裡面</li><li>component 會用 forwardRef 這個 function 包住 component，他會回傳兩個參數分別是 props 和 ref</li><li>在把 ref 傳到要操縱的元素上面即可</li></ul><pre><code class="js">import React, &#123; useEffect, forwardRef, useRef &#125; from &quot;react&quot;;export function App(props) &#123;  const btnRef = useRef(null);  useEffect(() =&gt; &#123;    console.log(btnRef, &quot;btnRef&quot;);  &#125;, []);  return (    &lt;div className=&quot;App&quot;&gt;      &lt;h1&gt;Hello React.&lt;/h1&gt;      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;      &lt;CustomButton ref=&#123;btnRef&#125; /&gt;    &lt;/div&gt;  );&#125;const ButtonWithForwardRef = forwardRef(function CustomButton(props, ref) &#123;  return &lt;button ref=&#123;ref&#125;&gt;button&lt;/button&gt;;&#125;);</code></pre><p>做到這邊其實很直觀的就會想到一個問題</p><p>那就是整個傳入 ref 的概念不就跟傳 props 一樣嗎？</p><p>為啥還要多一個 forwardRef 來只用來傳 ref ？</p><p>沒錯</p><p>我硬要用一般 props 傳入的方法一樣可以 work</p><p>但要注意的是情事 component 沒有執行 forwardRef 時</p><p>在父層傳入會無效，因此要命名 ref 以外的 e.g. btnRef 之類的</p><h1 id="So-Why-forwardRef"><a href="#So-Why-forwardRef" class="headerlink" title="So Why forwardRef"></a>So Why forwardRef</h1><p>那照前面的說明，forwardRef 好像就沒有存在的必要？</p><p>我的結論是</p><p>如果是寫 function component 確實是沒有差別</p><p>除了以 prop 傳 ref 可能會讓別人在使用 component 的時候比較不理解，因為他不能直接命名 ref</p><p>第二個原因是為了讓<code>class component重構至function component</code>能更佳 smooth，</p><p>不需要再去改父層的 api</p><p><a href="https://stackoverflow.com/questions/62931216/why-exactly-do-we-need-react-forwardref">詳細的解說在這</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> React </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>轉移到Github的Blog網站了!!</title>
+      <link href="/2023/05/28/1/"/>
+      <url>/2023/05/28/1/</url>
+      
+        <content type="html"><![CDATA[<p>很想要找到一個可以很舒適的寫我寫的東西的地方，</p><p>從一開始的痞克幫，medium，後來又自己寫一個blog，</p><p>痞課幫我覺得最大的點是太雜了，</p><p>而這三者共通問題比較是沒辦法很自如的寫有關程式碼東西，</p><p>後來在更新履歷的時候就發現一個東西，</p><p>因為我工作的時候用程式碼管理的平台是Gitlab，</p><p>我想要放Github連結的時候發現，挖X! 有夠空的，</p><p>同時又想到很多人其實會把很多文章寫在github上面，</p><p>我就google了一下github blog，</p><p>發現了Hexo這個東西，</p><p><a href="https://minglun-wu.medium.com/%E5%BB%BA%E7%AB%8B%E4%B8%80%E5%80%8B%E5%B1%AC%E6%96%BC%E8%87%AA%E5%B7%B1%E7%9A%84-%E7%A8%8B%E5%BC%8F-%E9%83%A8%E8%90%BD%E6%A0%BC-4d295ed96236">文章在這</a></p><p>Hexo簡單來說就是一個可以透過github repo去很簡單架設blog的框架</p><p>然後就又找到了現在這個我覺得蠻好看的theme XD</p><p><a href="https://github.com/Haojen/Claudia-theme-blog/tree/master/themes/hexo-theme-Claudia">主題在這</a></p><p>目前看到的功能有tag、根據時間篩選文章、搜尋文章功能等，我覺得挺棒的，而且部屬也是很迅速，</p><p>目前很粗糙的先打開了這個專案，我猜應該有不少可以用的有趣功能等我去發現，</p><p>反正目前就是這樣，不確定會不會去把過去的文章搬過來，應該會吧…</p><p>放一隻貓貓做結尾 ฅ•ω•ฅ</p><p><img src="/images/cat.jpg"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 閒聊 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
