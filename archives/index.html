@@ -1,5 +1,25 @@
 <!DOCTYPE html><html class="appearance-dark" lang="en"><head><meta charset="UTF-8"><title>Eddy's blog</title><meta name="description" content="只專注一件事"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
-<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/React"><i class="tag post-item-tag">React</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/2/">了解一下ForwardRef</a></h2><time class="has-text-grey" datetime="2023-05-28T05:52:48.740Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">前情提要 ?其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Javascript"><i class="tag post-item-tag">Javascript</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/31/3/">創造一個沒有shallow copy的世界</a></h2><time class="has-text-grey" datetime="2023-05-31T09:33:17.484Z">2023-05-31</time><p class="is-flex-grow-2 mt-2">arr.with()怎麼用 ?arr.with([指定的index], [指定的值]);
+
+以往想要更改 array 指定的 index 的值會這麼做
+let arr = [1, 2, 3];
+
+// 假設我想要這個arr但是第三項改為 4
+
+// 必須先做一個深拷貝
+let newArr = [...arr];
+newArr[2] = 4;
+// newArr = [1, 2, 4]
+
+而要做到這樣的效果就可以使用;
+arr.with();
+如下;
+
+let newArr = arr.with(2, 4);
+// newArr = [1, 2, 4]
+
+toSroted toReversed toSpliced看起來應該蠻眼熟的？
+沒錯，我自己的理解為 sort() reverse() splice() ..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/31/3/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/React"><i class="tag post-item-tag">React</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/2/">了解一下ForwardRef</a></h2><time class="has-text-grey" datetime="2023-05-28T05:52:48.740Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">前情提要 ?其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，
 究竟是因為用不到所以不了解，還是因為不了解所以沒用到呢？
 因為我在看一些 document 的時候，看到有一些 forwardRef 的用法，
 就決定來了解一下這到底是什麼？
@@ -27,7 +47,7 @@
 Hexo簡單來說就是一個可以透過github repo去很簡單架設blog的框架
 然後就又找到了現在這個我覺得蠻好看的theme XD
 主題在這
-目前看到的功能有tag、根據時間篩選文章、搜尋文章功能等，我覺得挺棒的，而且部屬也是很迅..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/1/">Read more</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a><span class="archive-list-count">2</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+目前看到的功能有tag、根據時間篩選文章、搜尋文章功能等，我覺得挺棒的，而且部屬也是很迅..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/1/">Read more</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a><span class="archive-list-count">3</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
