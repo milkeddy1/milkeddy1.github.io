@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>入職滿一年記錄一下</title>
+      <link href="/2023/06/09/4/"/>
+      <url>/2023/06/09/4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="和去年的差異"><a href="#和去年的差異" class="headerlink" title="和去年的差異"></a>和去年的差異</h1><p>我大概想一下，我覺得比較有進步的除了技術之外，很多在職場上的應對能力我覺得是更有幫助</p><p>我覺得不是說我現在變得很好，而是我之前真的太糟了</p><h2 id="主動性"><a href="#主動性" class="headerlink" title="主動性"></a>主動性</h2><p>我覺得這是我一直以來蠻大的缺點</p><p>現在也還在努力當中</p><p>因為公司比較自由的風氣</p><p>很多時候任務出來都會是主管問「這個有誰要負責？」</p><p>總是同事先講出來說他要負責</p><p>而就工作而言</p><p>我缺乏主動性的心態是因為怕自己做不來</p><p>但是我得到的結論是</p><p>很多事情，從不會到會，這樣的過程才是進步最快的時候</p><h2 id="對-document-的排斥感"><a href="#對-document-的排斥感" class="headerlink" title="對 document 的排斥感"></a>對 document 的排斥感</h2><p>其實這個還在學習當中</p><p>以前碰到新的套件、技術</p><p>我都會想要直接看 youtube 去看別人怎麼做</p><p>但是很多時候是真的要看過 document 才會真正的活用</p><p>常常腦袋出現一句話：「哇 X，他怎麼知道可以這樣用啊？」</p><p>我馬上就知道這是有沒有看 document 的差距</p><p>簡單來說，比較懂的靜下來好好掃過 document 一遍</p><h2 id="對使用中的東西不會去了解"><a href="#對使用中的東西不會去了解" class="headerlink" title="對使用中的東西不會去了解"></a>對使用中的東西不會去了解</h2><p>很多專案是同事開始去使用的</p><p>我就會完全抄他們的寫法直接用</p><p>沒有去好好了解那個套件在幹嘛</p><p>但我覺得目前也在慢慢填坑</p><p>能到目前這個狀態我覺得也是因為技術力慢慢有起來</p><p>有那個餘力再去做更深入的理解</p><h2 id="技術"><a href="#技術" class="headerlink" title="技術"></a>技術</h2><p>技術層面，其實回頭看我認為做到了某一個程度就是在重複的做了</p><p>老實講，我覺得我的技術到了後半年之後成長的就變得緩慢了</p><p>不過確確實實有明顯的進步</p><p>包含一些 component 的規劃</p><p>對程式碼的理解速度有加快</p><p>資料的處理想法也比較多</p><h1 id="接下來一年要達成的"><a href="#接下來一年要達成的" class="headerlink" title="接下來一年要達成的"></a>接下來一年要達成的</h1><h2 id="The-most-important"><a href="#The-most-important" class="headerlink" title="The most important"></a>The most important</h2><p>那就是閱讀 document 的能力</p><p>在這個節奏超級快的前端領域下</p><p>常常都在用新東西</p><p>我想要像我的同事一樣</p><p>能更有效、更快的理解一個技術、套件的整體脈絡以及使用方法</p><p>–靜下來好好的把一個 document 讀完–</p><h2 id="更新-Github"><a href="#更新-Github" class="headerlink" title="更新 Github"></a>更新 Github</h2><p>最近滿一年去面試了一下，我認為 github 是很多面試官會想要先看的東西</p><h2 id="持續在日常找到填坑的機會"><a href="#持續在日常找到填坑的機會" class="headerlink" title="持續在日常找到填坑的機會"></a>持續在日常找到填坑的機會</h2><p>不管是在工作、上網</p><p>常常都會吸收到一些知識</p><p>我現在都會記錄下來，以利後續可以深入研究這樣東西</p><p>有些是全新的技術，有些是用了但不是很理解那個東西</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> career </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>創造一個沒有shallow copy的世界</title>
       <link href="/2023/05/31/3/"/>
       <url>/2023/05/31/3/</url>
