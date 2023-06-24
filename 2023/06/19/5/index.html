@@ -1,0 +1,162 @@
+<!DOCTYPE html><html class="appearance-dark" lang="en"><head><meta charset="UTF-8"><title>自定義MUI的主題</title><meta name="description" content="只專注一件事"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="前言雖然 MUI 已經用了一段時間了
+我自己認為還是對他不是很熟悉
+所以想寫一篇來多了解他
+MUI with emotionnpm install @mui/material @emotion/react @emotion/styled
+若要使用 MUI，他的官方會直接叫你下這個指令
+WHY?
+emotion 是一個 css in js 的套件，和 styled component 相似
+而 MUI 就使使用 emotion 的一些方法去客製化他的 component 樣式
+MUI 本是提供「功能面」的 Component，自身已經有一個預設的樣式，要客製化還是依賴 emotion
+createThemecreateTheme 提供以下 default 的 key 可以去設定
+當然也可以自定義 key 名稱.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">自定義MUI的主題</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MUI-with-emotion"><span class="toc-text">MUI with emotion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#createTheme"><span class="toc-text">createTheme</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#palette"><span class="toc-text">palette</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typography"><span class="toc-text">typography</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spacing"><span class="toc-text">spacing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#breakpoints"><span class="toc-text">breakpoints</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#components"><span class="toc-text">components</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#apply-themes"><span class="toc-text">apply themes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useTheme"><span class="toc-text">useTheme</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#styled"><span class="toc-text">styled</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sx"><span class="toc-text">sx</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Library%E7%9B%B8%E9%97%9C"><i class="tag post-item-tag">Library相關</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">自定義MUI的主題</h1><time class="has-text-grey" datetime="2023-06-19T08:32:20.903Z">2023-06-19</time><article class="mt-2 post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>雖然 MUI 已經用了一段時間了</p>
+<p>我自己認為還是對他不是很熟悉</p>
+<p>所以想寫一篇來多了解他</p>
+<h1 id="MUI-with-emotion"><a href="#MUI-with-emotion" class="headerlink" title="MUI with emotion"></a>MUI with emotion</h1><p><code>npm install @mui/material @emotion/react @emotion/styled</code></p>
+<p>若要使用 MUI，他的官方會直接叫你下這個指令</p>
+<p>WHY?</p>
+<p>emotion 是一個 css in js 的套件，和 styled component 相似</p>
+<p>而 MUI 就使使用 emotion 的一些方法去客製化他的 component 樣式</p>
+<p>MUI 本是提供「功能面」的 Component，自身已經有一個預設的樣式，要客製化還是依賴 emotion</p>
+<h2 id="createTheme"><a href="#createTheme" class="headerlink" title="createTheme"></a>createTheme</h2><p>createTheme 提供以下 default 的 key 可以去設定</p>
+<p>當然也可以自定義 key 名稱，但注意不能使用’var’作為 key 名稱</p>
+<p><a target="_blank" rel="noopener" href="https://mui.com/material-ui/customization/default-theme/">這是是 MUI theme 的 default 值</a></p>
+<h3 id="palette"><a href="#palette" class="headerlink" title="palette"></a>palette</h3><p>設定顏色的 object</p>
+<p>something like this…</p>
+<pre><code class="js">  palette: &#123;
+    background: &#123;
+      default: &#39;#EEEEEE&#39;,
+    &#125;,
+  &#125;
+</code></pre>
+<h3 id="typography"><a href="#typography" class="headerlink" title="typography"></a>typography</h3><p>可以 customize 字的樣式</p>
+<pre><code class="js">  typography: &#123;
+    subtitle1: &#123;
+      fontSize: 12,
+    &#125;,
+    body1: &#123;
+      fontWeight: 500,
+    &#125;,
+    button: &#123;
+      fontStyle: &#39;italic&#39;,
+    &#125;,
+  &#125;,
+</code></pre>
+<h3 id="spacing"><a href="#spacing" class="headerlink" title="spacing"></a>spacing</h3><p>使用方法</p>
+<pre><code class="js">theme.spacing(2);
+// 就等於 2 X 8px = 16px
+</code></pre>
+<p>default 單位是 px</p>
+<p>也可以自定義單位成 rem</p>
+<pre><code class="js">&#123;
+  spacing: (factor) =&gt; `$&#123;0.25 * factor&#125;rem`;
+&#125;
+</code></pre>
+<h3 id="breakpoints"><a href="#breakpoints" class="headerlink" title="breakpoints"></a>breakpoints</h3><p>自定義方式如下</p>
+<pre><code class="js">  breakpoints: &#123;
+    values: &#123;
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    &#125;,
+  &#125;,
+</code></pre>
+<h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><p>可以更改 default props</p>
+<pre><code class="js">const theme = createTheme(&#123;
+  components: &#123;
+    // Name of the component
+    MuiButtonBase: &#123;
+      defaultProps: &#123;
+        // The props to change the default for.
+        disableRipple: true, // No more ripple, on the whole application 💣!
+      &#125;,
+    &#125;,
+  &#125;,
+</code></pre>
+<p>或是 override styles</p>
+<pre><code class="js">    MuiButton: &#123;
+      styleOverrides: &#123;
+        // Name of the slot
+        root: &#123;
+          // Some CSS
+          fontSize: &#39;1rem&#39;,
+        &#125;,
+      &#125;,
+    &#125;,
+</code></pre>
+<p>又或者 customize variants + default styles</p>
+<pre><code class="js">  components: &#123;
+   MuiButton: &#123;
+     styleOverrides: &#123;
+       root: (&#123; ownerState &#125;) =&gt; (&#123;
+         ...(ownerState.variant === &#39;contained&#39; &amp;&amp;
+           ownerState.color === &#39;primary&#39; &amp;&amp; &#123;
+             backgroundColor: &#39;#202020&#39;,
+             color: &#39;#fff&#39;,
+           &#125;),
+       &#125;),
+     &#125;,
+   &#125;,
+ &#125;,
+</code></pre>
+<h2 id="apply-themes"><a href="#apply-themes" class="headerlink" title="apply themes"></a>apply themes</h2><p>在 createTheme 定義好樣式之後，有些會直接使用到預設的樣式</p>
+<p>但大部分會需要手動去使用</p>
+<p>假設這是我定義好的 theme</p>
+<pre><code class="js">const theme = createTheme(&#123;
+  palette: &#123;
+    primary: &#123;
+      main: &quot;#ff4400&quot;,
+    &#125;,
+  &#125;,
+&#125;);
+
+function MyApp() &#123;
+  return (
+    &lt;ThemeProvider theme=&#123;theme&#125;&gt;
+      &lt;MyComponent /&gt;
+    &lt;/ThemeProvider&gt;
+  );
+&#125;
+</code></pre>
+<h3 id="useTheme"><a href="#useTheme" class="headerlink" title="useTheme"></a>useTheme</h3><pre><code class="js">function MyComponent() &#123;
+  // 使用主題
+  const theme = useTheme();
+
+  return &lt;div style=&#123;&#123; color: theme.palette.primary.main &#125;&#125;&gt;Hello, world!&lt;/div&gt;;
+&#125;
+</code></pre>
+<p>以下有幾種方法</p>
+<h3 id="styled"><a href="#styled" class="headerlink" title="styled"></a>styled</h3><pre><code class="js">const StyledDiv = styled(&quot;div&quot;)((&#123; theme &#125;) =&gt; (&#123;
+  color: theme.palette.primary.main,
+&#125;));
+</code></pre>
+<h3 id="sx"><a href="#sx" class="headerlink" title="sx"></a>sx</h3><p>sx 有兩種方法</p>
+<pre><code class="js">function MyComponent() &#123;
+  return (
+    &lt;Box
+      sx=&#123;(theme) =&gt; (&#123;
+        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.default,
+      &#125;)&#125;
+    &gt;
+      Hello, world!
+    &lt;/Box&gt;
+  );
+&#125;
+</code></pre>
+<pre><code class="js">function MyComponent() &#123;
+  return (
+    &lt;Box
+      sx=&#123;&#123;
+        width: 300,
+        color: "success.main",
+      &#125;&#125;
+    &gt;
+      Hello, world!
+    &lt;/Box&gt;
+  );
+&#125;
+</code></pre>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2023/06/09/4/" title="入職滿一年記錄一下"><span class="has-text-weight-semibold">Next: 入職滿一年記錄一下</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/myBlogRepo" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/milkeddy1"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com/milkeddy1"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Eddy 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
