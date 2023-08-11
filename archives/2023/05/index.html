@@ -4,50 +4,13 @@
 以往想要更改 array 指定的 index 的值會這麼做
 let arr = [1, 2, 3];
 
-// 假設我想要這個arr但是第三項改為 4
-
-// 必須先做一個深拷貝
-let newArr = [...arr];
-newArr[2] = 4;
-// newArr = [1, 2, 4]
-
-而要做到這樣的效果就可以使用;
-arr.with();
-如下;
-
-let newArr = arr.with(2, 4);
-// newArr = [1, 2, 4]
-
-toSroted toReversed toSpliced看起來應該蠻眼熟的？
-沒錯，我自己的理解為 sort() reverse() splice() ..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/31/3/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/React"><i class="tag post-item-tag">React</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/2/">了解一下ForwardRef</a></h2><time class="has-text-grey" datetime="2023-05-28T05:52:48.740Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">前情提要 ?其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，
+..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/31/3/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/React"><i class="tag post-item-tag">React</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/2/">了解一下ForwardRef</a></h2><time class="has-text-grey" datetime="2023-05-28T05:52:48.740Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">前情提要 ?其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，
 究竟是因為用不到所以不了解，還是因為不了解所以沒用到呢？
-因為我在看一些 document 的時候，看到有一些 forwardRef 的用法，
-就決定來了解一下這到底是什麼？
-什麼是 forwardRef ?我讀了一下文件，
-以我的理解來說就是，
-「把子層 component 的 ref 傳到父層去使用」
-疑問看起來這個定義蠻直觀的，
-而且本身命名也是吻合他的用法，
-但去了解他具體怎麼用的時候我就產生了一些疑問，
-不囉唆直接上 code
-這是一般使用 forwardRef 的方法
-
-在要使用 ref 的那一個 component 使用 useRef 建立 ref
-傳給要操作的 dom 的 component 裡..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/2/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/images/cat.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/05/28/1/"><img class="post-cover-img js-img-fadeIn" src="/images/cat.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%96%92%E8%81%8A"><i class="tag post-item-tag">閒聊</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/1/">轉移到Github的Blog網站了!!</a></h2><time class="has-text-grey" datetime="2023-05-28T04:41:14.674Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">很想要找到一個可以很舒適的寫我寫的東西的地方，
+因為我在看一些 document 的時候..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/2/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="/images/cat.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/05/28/1/"><img class="post-cover-img js-img-fadeIn" src="/images/cat.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E9%96%92%E8%81%8A"><i class="tag post-item-tag">閒聊</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/05/28/1/">轉移到Github的Blog網站了!!</a></h2><time class="has-text-grey" datetime="2023-05-28T04:41:14.674Z">2023-05-28</time><p class="is-flex-grow-2 mt-2">很想要找到一個可以很舒適的寫我寫的東西的地方，
 從一開始的痞克幫，medium，後來又自己寫一個blog，
 痞課幫我覺得最大的點是太雜了，
 而這三者共通問題比較是沒辦法很自如的寫有關程式碼東西，
-後來在更新履歷的時候就發現一個東西，
-因為我工作的時候用程式碼管理的平台是Gitlab，
-我想要放Github連結的時候發現，挖X! 有夠空的，
-同時又想到很多人其實會把很多文章寫在github上面，
-我就google了一下github blog，
-發現了Hexo這個東西，
-文章在這
-Hexo簡單來說就是一個可以透過github repo去很簡單架設blog的框架
-然後就又找到了現在這個我覺得蠻好看的theme XD
-主題在這
-目前看到的功能有tag、根據時間篩選文章、搜尋文章功能等，我覺得挺棒的，而且部屬也是很迅..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/1/">Read more</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a><span class="archive-list-count">3</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/05/28/1/">Read more</a></section></article></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">June 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a><span class="archive-list-count">3</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')
