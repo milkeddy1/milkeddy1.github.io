@@ -135,6 +135,101 @@
     </entry>
     
     
+    
+    <entry>
+      <title>近期的專案前置設定</title>
+      <link href="/2023/05/14/12/"/>
+      <url>/2023/05/14/12/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Eslint-x-lint-staged-x-prettier-x-husky"><a href="#Eslint-x-lint-staged-x-prettier-x-husky" class="headerlink" title="Eslint x lint-staged x prettier x husky"></a>Eslint x lint-staged x prettier x husky</h1><h2 id="這幾個工具的關聯"><a href="#這幾個工具的關聯" class="headerlink" title="這幾個工具的關聯"></a>這幾個工具的關聯</h2><p>我一開始也不知道有這麼樣的工具可以尬在一起用，</p><p>也是工作夥伴在我們team上推動的，</p><p>有一點不太一樣，</p><p>工作上沒有用到prettier，formatter只用了eslint（等等後面會說明這個）</p><p>先講最終目的，</p><p>就是為了要能夠在團隊中維護程式碼的品質，</p><p>eslint - 檢查程式碼的格式<br>prettier - format程式碼<br>lint-staged - 只針對修改過的程式碼做檢查<br>husky - 在你要進行push or commit時會觸發檢查的工具(我們是設定在commit階段)</p><h2 id="How-did-it-work"><a href="#How-did-it-work" class="headerlink" title="How did it work?"></a>How did it work?</h2><p>一般在做開發的時候，</p><p>完成一個feature後，我們會把程式碼commit後推上去發PR</p><p>而這整個流程就可以從commit出發，</p><p>下了commit指令 -&gt; 觸法husky -&gt; 執行lint-staged -&gt; lint那些只修改過的files</p><p>當然</p><p>在一般開發的時候，可以透過一些套件來直接檢查自己程式碼是否有符合你們制定的lint規範</p><p>可以透過一些vscode的擴充套件達成</p><p>不然在commit階段才做檢查會改得很痛苦</p><h2 id="eslint-setups"><a href="#eslint-setups" class="headerlink" title="eslint setups"></a>eslint setups</h2><ul><li><code>npm install eslint</code></li><li><code>npm init @eslint/config</code></li><li>根據所需的eslint規則加入到 .eslintrc的config中，可以直接在config裡面設定，也可以直接去引用別人定義好的lint</li><li>再把lint的script加入到package.json裡面</li></ul><h2 id="prettier-setups"><a href="#prettier-setups" class="headerlink" title="prettier setups"></a>prettier setups</h2><p>正常來說，eslint是不會和prettier一起用的</p><p>因為prettier自己有一套format規則</p><p>而eslint也有format的功能，因此兩者會有衝突</p><p>但是基於prettier的強大的formatter</p><p>有人就提供了eslint + prettier的方法</p><ul><li>額外下載這兩個套件 eslint-plugin-prettier eslint-config-prettier，用途主要是避免eslint與prettier衝突</li><li>.eslintrc中加入 <code>extend: &quot;plugin:prettier/recommended&quot;</code></li></ul><p>當然，還是可以更改.prettierrc的設定的</p><p>如果是eslint和prettier都有的設定，比如說: semi</p><p>這個情況會是以prettier為優先</p><h2 id="husky-setups"><a href="#husky-setups" class="headerlink" title="husky setups"></a>husky setups</h2><ul><li><code>npm install husky</code></li><li><code>npm pkg set scripts.prepare=&quot;husky install&quot;</code></li><li><code>npx husky add .husky/pre-commit &quot;npm test&quot;</code> 給husky加一個pre-commit的指令為’npm test’</li></ul><h2 id="lint-staged-setups"><a href="#lint-staged-setups" class="headerlink" title="lint-staged setups"></a>lint-staged setups</h2><ul><li><code>npm install lint-staged</code></li><li>承husky的pre-commit 指令，把pre-commit設定為<code>lint-staged</code>指令</li><li>設定要lint的files，這有很多方式，可以去lint-staged的npm看</li></ul><p>我個人覺得比較簡單的方式就是在package.json中給一個lint-staged物件，<br>格式會像是這樣</p><p>src底下的所有fold的所有files會run 一次lint</p><pre><code>  &quot;lint-staged&quot;: &#123;    &quot;src/**/*.&#123;ts,tsx&#125;&quot;: &quot;eslint --fix&quot;  &#125;</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Configure </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>nginx, Dockerfile, docker compose</title>
+      <link href="/2023/04/16/11/"/>
+      <url>/2023/04/16/11/</url>
+      
+        <content type="html"><![CDATA[<h1 id="工作上用到的Dockerfile"><a href="#工作上用到的Dockerfile" class="headerlink" title="工作上用到的Dockerfile"></a>工作上用到的Dockerfile</h1><h2 id="為何會有這篇？"><a href="#為何會有這篇？" class="headerlink" title="為何會有這篇？"></a>為何會有這篇？</h2><p>由於目前公司網站都是放在GCP的（還有一些是在Azure，不過目前都在慢慢遷移了）</p><p>簡單來說，會有這篇的原因是即使我是前端，還是有要自己設定一些dockerfile nginx的情況</p><p>不過即使到現在，我認為不是一個很好的狀態，因為我碰到要寫docker or nginx的時候</p><p>就是<code>打開過去類似的專案然後copy</code> XDD</p><p>不過當然</p><p>寫到現在也碰過很多次，甚至是有一些以前沒有遇過的狀況，這時候就會需要自己真的去寫這些file了</p><p>但你說我因此會寫了嗎？</p><p>我認為是否定的</p><p>基本上也都是based on 之前的設定檔做一些改寫</p><p>也就是因為為什麼會有這篇，我想要趁我想到這件事的時候，梳理一下這些邏輯</p><h2 id="專案如何部署的？"><a href="#專案如何部署的？" class="headerlink" title="專案如何部署的？"></a>專案如何部署的？</h2><p>我們公司會有好幾台GCP虛擬環境</p><p>而要在哪一台放哪些專案這個問題目前我都是會跑去跟後端他們確認</p><p>我的認知是這台GCP的ip的某個port要對應的哪一個domain</p><p>我們再透過docker + nginx 去把port號對出去，讓使用者訪問</p><h2 id="How-do-React-and-Next-work-with-docker"><a href="#How-do-React-and-Next-work-with-docker" class="headerlink" title="How do React and Next work with docker ?"></a>How do React and Next work with docker ?</h2><p>基本上我們公司前端專案撇除過去老舊專案</p><p>現在的專案都是由這兩個框架去做的</p><p>那使用的基準不外乎就是我們前端team會去評估</p><h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><p>目前是有兩種方式</p><p>第一種，在docker node image build完專案</p><p>再把這個在node image build好的檔案(dist)丟到nginx image裡面的&#x2F;var&#x2F;www&#x2F;html路徑</p><p>讓nginx server去抓裡面的index.html</p><p>在用docker compose 去對port號，就可以成功對外這個nginx server給使用者了</p><p>–</p><p>第二種，其實大同小異，差異就是讓docker做比較少事情</p><p>我自己在本地端build完成，把dist推到repo上，並在GCP機器上pull下來</p><p>docker只會建立nginx的image，然後docker會複製我在local build好的dist資料夾到nginx的&#x2F;var&#x2F;www&#x2F;html路徑</p><p>後面就一樣，nginx會去抓dist裡面的index.html後，用docker compose把port號對出去就完成了</p><h3 id="Next"><a href="#Next" class="headerlink" title="Next"></a>Next</h3><p>Next是經過請教公司意一個資深的同事才知道簡單那麼多</p><p>因為next本身就是一個server，因此他不需要再利用docker去建立一個nginx的image</p><p>因此只需要在node image裏面啟動server，再將該server的port號由docker compose對出去就可以了！</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>為什麼React map時需要加上key?</title>
+      <link href="/2023/04/07/10/"/>
+      <url>/2023/04/07/10/</url>
+      
+        <content type="html"><![CDATA[<h1 id="React-key的用途"><a href="#React-key的用途" class="headerlink" title="React key的用途"></a>React key的用途</h1><p>作為使用React開發網頁的開發者</p><p>必定會用到這個語法</p><pre><code class="sh">function Mycomponent() &#123;   return &lt;&gt;    &#123;arr.map(item=&gt;&lt;div key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/div&gt;)&#125;  &lt;/&gt;&#125;</code></pre><p>React官方網站寫說: <code>Keys tell React which array item each component corresponds to.</code></p><p>對React來講，key就是辨識array裡面每一個item的一個標示</p><p>他以資料夾做舉例，你要對資料夾新增刪除，電腦會提示你給他一個名稱而且不能重複</p><p>這對電腦來講就是他的key，電腦才知道要編輯、刪除、修改的是哪一個東西</p><h1 id="要怎麼給key-不給會怎樣-難道react就無法辨識每個array-item"><a href="#要怎麼給key-不給會怎樣-難道react就無法辨識每個array-item" class="headerlink" title="要怎麼給key ? 不給會怎樣 難道react就無法辨識每個array item ?"></a>要怎麼給key ? 不給會怎樣 難道react就無法辨識每個array item ?</h1><p>如上述所說，key像是資料夾名稱必須是unique的，因此我們在map的時候會給他唯一的key值</p><p>而要注意到的是，他不是只整個react application唯一，而是該array唯一</p><p>一般來說，在處理array類型資料的時候都會有對應的id，我們會把這個id當作key</p><p>但不一定要是id，也可能是name, title這種可能會是unique值的東西</p><p>如果真的重複，react也會貼心地跟你講</p><p>–</p><p>!! 錯誤的情況</p><ul><li>就是你可能給了key，但是它是有重複的，react就會報錯</li><li>或者是用map第二個參數index給key，這個方式在一般情況可能沒問題，但是有機會發生無法預期的錯誤</li><li>不給key，根據react官網，他會一樣default給你index</li></ul><h2 id="給index會發生什麼問題"><a href="#給index會發生什麼問題" class="headerlink" title="給index會發生什麼問題 ?"></a>給index會發生什麼問題 ?</h2><h3 id="效能問題"><a href="#效能問題" class="headerlink" title="效能問題"></a>效能問題</h3><p>使用index作為key，如果做新增、刪除array的操作，對react來講每一次都在重新給予key值</p><p>假設有一個array</p><p>item 1-3對應的index key是 0, 1, 2</p><pre><code>[&#39;item1&#39;, &#39;item2&#39;, &#39;item3&#39;]</code></pre><p>如果我把’item2’刪掉，那這個array index只剩下 1, 2，那item3就被重新給予key了</p><p>如果有一個非常龐大的array，每次操作他都會重新render，可以想像會對效能造成不小的傷害</p><h3 id="無法預期的錯誤"><a href="#無法預期的錯誤" class="headerlink" title="無法預期的錯誤"></a>無法預期的錯誤</h3><p>如下圖例子，刪除第二項，input內容卻被保留了</p><p><img src="/images/post3.png" alt="image"><br><img src="/images/post3-1.png" alt="image"></p><h2 id="可以用index作為key的時機"><a href="#可以用index作為key的時機" class="headerlink" title="可以用index作為key的時機"></a>可以用index作為key的時機</h2><p>在靜態頁面的情況，非常確定不會操作到array的時候其實就可以用index</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> React </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何在nextjs使用.md</title>
+      <link href="/2023/04/05/9/"/>
+      <url>/2023/04/05/9/</url>
+      
+        <content type="html"><![CDATA[<h1 id="markdown-files-in-Nextjs"><a href="#markdown-files-in-Nextjs" class="headerlink" title="markdown files in Nextjs"></a>markdown files in Nextjs</h1><h3 id="MDX"><a href="#MDX" class="headerlink" title=".MDX"></a>.MDX</h3><p>其實依照Nextjs官網的solution，他有一個方式可以去讀一個叫做.mdx的檔案格式</p><p>他和.md幾乎是一樣的，但是他能做的事情不只是寫markdown</p><p>他可以在裡面寫javascript，把需要的component import進去</p><p>e.g.</p><pre><code>import &#123; MyComponent &#125; from &#39;my-components&#39;# My MDX pageThis is a list in markdown:- One- Two- ThreeCheckout my React component:&lt;MyComponent/&gt;</code></pre><h2 id="如何實作"><a href="#如何實作" class="headerlink" title="如何實作 ?"></a>如何實作 ?</h2><h3 id="如何讀這些-md檔案"><a href="#如何讀這些-md檔案" class="headerlink" title="如何讀這些.md檔案?"></a>如何讀這些.md檔案?</h3><p>我在&#x2F;src資料夾裡面加了一folder叫做<code>posts</code></p><p>在posts裡面新增markdown files</p><p>然後會在pages的 <code>getServerSideProps</code> function去讀fs檔案</p><p>利用<code>fs</code>module裡面的<code>readdirSync</code>和<code>readdirSync</code>function去讀files和folder</p><p>如下</p><pre><code>export const getServerSideProps = async () =&gt; &#123;  const files = fs.readdirSync(path.resolve(process.cwd(), &quot;src/posts&quot;));  const allPostsData = files.map((fileName) =&gt; &#123;    const slug = fileName.replace(&quot;.md&quot;, &quot;&quot;);    const fileContents = fs.readFileSync(      path.resolve(process.cwd(), `src/posts/$&#123;slug&#125;.md`      ));    const &#123; data, content &#125; = matter(fileContents);    return &#123;      files,      slug,      data,      content,    &#125;;  &#125;);  return &#123; props: &#123; allPostsData &#125; &#125;;&#125;;</code></pre><h3 id="在nextjs使用fs遇到的坑"><a href="#在nextjs使用fs遇到的坑" class="headerlink" title="在nextjs使用fs遇到的坑"></a>在nextjs使用fs遇到的坑</h3><h4 id="process-cwd-vs-dirname"><a href="#process-cwd-vs-dirname" class="headerlink" title="process.cwd() vs __dirname"></a>process.cwd() vs __dirname</h4><p>對於node不是很熟悉的我來說，即使是google到答案還不是很確定為什麼XD</p><p>我要去閱讀 <code>path.resolve(process.cwd(), &quot;src/posts&quot;)</code>這個位置的檔案</p><p>一開始都一直失敗，因為我第一個參數用的是<code>__dirname</code>，一直不知道為何</p><p>但這和next執行node的方式有關</p><p>先講一下__dirname和process.cwd()的差異</p><p>前者是<strong>執行node的檔案位置</strong>，以我的案例來說，因為我是在getServerSideProps執行</p><p><img src="/images/2.png" alt="image"></p><p>有上圖可以看到，因為是在server執行的，所以會抓到.next\server\pages這個路徑，而找不到我的.md檔案</p><h3 id="解析拿到的md資料"><a href="#解析拿到的md資料" class="headerlink" title="解析拿到的md資料"></a>解析拿到的md資料</h3><p>會需要一個叫做 next-mdx-remote 這個套件來解析markdown file</p><p>會需要import一個component和function分別是MDXRemote和serialize</p><p>serialize function會回傳一個promise，response會回傳一個物件</p><p>再把這個物件放到MDXRemote component裡面</p><h3 id="樣式"><a href="#樣式" class="headerlink" title="樣式"></a>樣式</h3><p>以我這個專案用tailwind來說</p><p>tailwind有給一個className可以diabled掉指定的component <code>prose</code></p><p>在tailwind.config裡面去設定我想要的markdown樣式</p><p><a href="https://tailwindcss.com/docs/typography-plugin" target="_blank">參考如連結</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Nextjs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何更改commit message ?</title>
+      <link href="/2023/04/03/8/"/>
+      <url>/2023/04/03/8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="更改前一個-commit-message"><a href="#更改前一個-commit-message" class="headerlink" title="更改前一個 commit message"></a>更改前一個 commit message</h1><p>以更改「前一個」commit message 來說比較簡單</p><p>可以直接用 <code>--amend</code> 參數</p><pre><code>git commit --amend -m &quot;message you want to apply...&quot;</code></pre><p>但是必須要注意的事情是，他會成為一個新的 commit log</p><p>這邊做個範例</p><pre><code>git commit log --oneline</code></pre><pre><code>69ea03d (HEAD -&gt; main) chore: add some custom stlyesf0984db fix: enable huskybc9c434 refactor: posts ordering25b8dca (origin/main, origin/HEAD) feat: changelog layout</code></pre><pre><code>git commit --amend -m &quot;build: add some custom styles&quot;</code></pre><pre><code>3a4e223 (HEAD -&gt; main) build: add some custom stylesf0984db fix: enable huskybc9c434 refactor: posts ordering25b8dca feat: changelog layout</code></pre><p>這邊就可以看到，原本的<code>69ea03d</code>已經不見了，取而代之的是<code>3a4e223</code></p><h1 id="更改任意一個-commit-message"><a href="#更改任意一個-commit-message" class="headerlink" title="更改任意一個 commit message"></a>更改任意一個 commit message</h1><p>那如果是我想要更改更之前的 commit name 呢？</p><p>分為幾個步驟</p><ol><li>找到我要改的 commit id</li></ol><pre><code>git log --oneline708df70 (HEAD -&gt; main) feat: first post3a4e223 build: add some custom stylesf0984db fix: enable huskybc9c434 refactor: posts ordering</code></pre><ol start="2"><li>假設我要改的是<code>f0984db</code>這個 commit message，我要找到該 commit 的上一個 commit id，以這個情況為例就是<code>bc9c434</code></li></ol><p>然後下該指令 （要注意下此指令前要先把 git 的 stage 和 change 清空）</p><pre><code>git rebase -i bc9c434</code></pre><ol start="3"><li>此時會進入 vim 長這樣</li></ol><pre><code>pick f0984db fix: enable huskypick 3a4e223 build: add some custom stylespick 708df70 feat: first post# Rebase bc9c434..708df70 onto bc9c434 (3 commands)## Commands:# p, pick &lt;commit&gt; = use commit# r, reword &lt;commit&gt; = use commit, but edit the commit message# e, edit &lt;commit&gt; = use commit, but stop for amending# s, squash &lt;commit&gt; = use commit, but meld into previous commit# f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#39;s log message# x, exec &lt;command&gt; = run command (the rest of the line) using shell# b, break = stop here (continue rebase later with &#39;git rebase --continue&#39;)# d, drop &lt;commit&gt; = remove commit# l, label &lt;label&gt; = label current HEAD with a name# t, reset &lt;label&gt; = reset HEAD to a label# m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]# .       create a merge commit using the original merge commit&#39;s# .       message (or the oneline, if no original merge commit was# .       specified). Use -c &lt;commit&gt; to reword the commit message.#</code></pre><p>但別慌張，我們要注意的只有這個部分</p><pre><code>pick f0984db fix: enable huskypick 3a4e223 build: add some custom stylespick 708df70 feat: first post</code></pre><p>將我們要改的 commit 前面 pick 改為 r 然後 esc &#x3D;&gt; : &#x3D;&gt; wq 儲存並退出 vim</p><pre><code>r f0984db fix: enable huskypick 3a4e223 build: add some custom stylespick 708df70 feat: first post</code></pre><ol start="4"><li>修改你要的 commit message</li></ol><p>此時會進入另一個 vim</p><pre><code>fix: enable husky# Please enter the commit message for your changes. Lines starting# with &#39;#&#39; will be ignored, and an empty message aborts the commit.## Date:      Mon Apr 3 14:12:18 2023 +0800## interactive rebase in progress; onto bc9c434# Last command done (1 command done):#    reword f0984db fix: enable husky# Next commands to do (2 remaining commands):#    pick 3a4e223 build: add some custom styles#    pick 708df70 feat: first post# You are currently editing a commit while rebasing branch &#39;main&#39; on &#39;bc9c434&#39;.## Changes to be committed:#       modified:   .husky/commit-msg#       modified:   .husky/pre-commit#</code></pre><p>將 fix: enable husky -&gt; 改為你要的 message 後一樣 esc &#x3D;&gt; : &#x3D;&gt; wq 儲存並離開 vim 就完成了。</p><p>!! 但是這邊有一個情況</p><p>如果 commit message 是已經被 push 過了，你更改完再 push 會出現以下 error</p><pre><code> ! [rejected]        main -&gt; main (non-fast-forward)</code></pre><p>此時只要在 push 加上-f 參數即可</p><pre><code>git push -f</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
