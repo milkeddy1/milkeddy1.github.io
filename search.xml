@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Migrate CRA to Vite</title>
+      <link href="/2023/09/08/13/"/>
+      <url>/2023/09/08/13/</url>
+      
+        <content type="html"><![CDATA[<h2 id="場景"><a href="#場景" class="headerlink" title="場景"></a>場景</h2><p>一個公司管理所有客戶資料的後台</p><p>是用 React 寫的</p><p>但是當初創建這個專案的時候用的是 CRA(create react app)</p><p>而要改成使用 Vite 的目的就是提升 DX(develop experience)</p><p>Vite 可以很大程度的提高網頁的 hot reload 速度</p><p>打包速度非常快，並且只會更新有更改code的部分</p><p>加上我自己也想了解這設定上有沒有什麼細節要注意的</p><h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>大家常常拿來比較的是 CRA and Vite</p><p>但是 Vite 其實就是一個打包工具</p><p>他代替的是一個叫做 react-scripts 的 node module</p><p>而這就是 CRA 打包的工具</p><h3 id="Step-One"><a href="#Step-One" class="headerlink" title="Step One"></a>Step One</h3><p>因此 要做的就是先將 react-scripts node module 替換成 vite</p><pre><code>npm uninstall react-scriptsnpm install vite</code></pre><h3 id="Step-Two"><a href="#Step-Two" class="headerlink" title="Step Two"></a>Step Two</h3><p>將 &#x2F;src 裡面的 index.html 移到根目錄</p><p>vite 預設就是抓根目錄的 index.html</p><h3 id="Step-Three"><a href="#Step-Three" class="headerlink" title="Step Three"></a>Step Three</h3><p>建立 vite.config.ts</p><p>先安裝這個套件</p><pre><code>npm install @vitejs/plugin-react-swc</code></pre><pre><code class="javascript">import &#123; defineConfig &#125; from &quot;vite&quot;;import react from &quot;@vitejs/plugin-react-swc&quot;;export default defineConfig(&#123;  plugins: [react()],&#125;);</code></pre><p>為什麼要裝這個套件呢？</p><p>因為 快！</p><p>他可以更快地解析 react</p><p>當然 default 就可以解析了，這只是更快的選擇</p><p>他的描述：<code> A fast Fast Refresh (~20x faster than Babel)</code></p><h3 id="Step-Four"><a href="#Step-Four" class="headerlink" title="Step Four"></a>Step Four</h3><p>更改 script 指令</p><pre><code>  &quot;scripts&quot;: &#123;    &quot;start&quot;: &quot;vite&quot;,    &quot;build&quot;: &quot;vite build&quot;,    &quot;test&quot;: &quot;vite test&quot;  &#125;,</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Vite </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>新工作入職一個月心得</title>
       <link href="/2023/09/05/7/"/>
       <url>/2023/09/05/7/</url>
