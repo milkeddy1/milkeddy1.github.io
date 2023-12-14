@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>React query 的 fresh, stale</title>
+      <link href="/2023/12/13/14/"/>
+      <url>/2023/12/13/14/</url>
+      
+        <content type="html"><![CDATA[<h2 id="React-query-的-stale-機制"><a href="#React-query-的-stale-機制" class="headerlink" title="React query 的 stale 機制"></a>React query 的 stale 機制</h2><p>一直以來沒搞很清楚的 react-query 的兩個機制</p><p>在 useQuery hook 中有兩個參數 <code>staleTime</code> 和 <code>cacheTime</code></p><p>這兩個具體上的不同是什麼？</p><p>先講論好了</p><p><code>staleTime</code> 是告訴 react query 這個資料多久之內是最新的</p><p><code>cacheTime</code> 是告訴 react query cache 的 data 要 cache 多久</p><p>–</p><h3 id="fresh"><a href="#fresh" class="headerlink" title="fresh"></a>fresh</h3><p>打開 react query dev tools 可以看到 fresh 和 stale 兩個 tag</p><p>而 staleTime 所定義的時間為「多久後」資料會變成 fresh</p><p>因此 staleTime 設定為 0 的時候就不會有 fresh 狀態的 data</p><p>那問題來了</p><p>fresh 代表什麼意思？</p><p><span style="color:red">fresh 狀態的資料不用重新 call api</span></p><p>沒錯</p><p>就是直接從 cache 拿資料</p><h3 id="stale"><a href="#stale" class="headerlink" title="stale"></a>stale</h3><p>其實 stale 很簡單</p><p>就是下次在 render 的時候會重新 call api 拿資料</p><p>並「更新」cache 的 data</p><p>這邊為何說是「更新」，後面會解釋</p><h2 id="最大的疑問"><a href="#最大的疑問" class="headerlink" title="最大的疑問"></a>最大的疑問</h2><p><code>cacheTime = 0</code> 乍看之下和 <code>staleTime = 0</code>  怎麼好像沒有差異？</p><p>cacheTime 到了，就會把 cache 的資料丟棄</p><p>staleTime 到了，就會將資料視為「陳舊」的資料</p><p>–</p><p>這就是為什麼兩個時間設置為 0 都會重新獲得資料</p><p>所以 staleTime 到了是更新 cache data</p><p>cache Time 到了是重新加到 cache</p><p>因為實際上 cache 不會只有 data 還有一些狀態</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> react-query </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Migrate CRA to Vite</title>
       <link href="/2023/09/08/13/"/>
       <url>/2023/09/08/13/</url>
