@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Hash Router &amp; Browser Router</title>
+      <link href="/2024/01/17/16/"/>
+      <url>/2024/01/17/16/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>多了一個新的 tag，「Comparison」</p><p>主要是覺得很多實踐，常常會透過不同方式的比較才知道什麼要使用它</p><p>而會有標題這個疑問，單純是因為和上一間公司用不一樣的方法</p><p>我覺得這也是 software engineer 到不同公司好處（？</p><h2 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h2><p>他們最大的差異就是對 server 來說實際的 path 是什麼</p><p>舉例有一個網站的網址是 hello.com</p><p>假設有一個 about 頁面</p><p>使用 <code>HashRouter</code> 會是這樣：hello.com&#x2F;#&#x2F;about<br>使用 <code>BrowserRouter</code> 會是這樣：hello.com&#x2F;about</p><p>在做頁面的 request 時，server 不會解析 # 之後的內容</p><p>對他來講都是 hello.com 的 request</p><p>而 BrowserRouter 對 server 來說會拿到完整的 path</p><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>兩者差異為何</p><ol><li>因為要 BrowserRouter 會使 server 拿到不同的 path，可能會多「一點點」負擔</li><li>也因為有多解析 path，BrowserRouter 更有利於 SEO</li><li>BrowserRouter 的 url 長得相對比較好看</li></ol><p>以上是據我所知最大的三個差異點</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Comparison </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Login flow</title>
       <link href="/2023/12/21/15/"/>
       <url>/2023/12/21/15/</url>
