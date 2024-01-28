@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日文馬拉松[Day4]</title>
+      <link href="/2024/01/28/21/"/>
+      <url>/2024/01/28/21/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014331491000/k10014331491000.html">https://www3.nhk.or.jp/news/easy/k10014331491000/k10014331491000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震が起こったあと、石川県穴水町にある高校で、自動販売機が壊されていました。この高校には近所の人が避難していて、自動販売機の中の飲み物はなくなっていました。<br>能登半島的地震過後，石川縣穴水町的高中的販賣機被震壞了。附近的居民疏散到高中時，販賣機個飲料都不見了。</p><p>そのあと、自動販売機の飲み物の会社に「避難している人に飲み物を渡すために壊しました。すみません」と連絡がありました。<br>在那之後，提供自動販賣機的飲料商說：「為了被提供避難者而用壞販賣機非常抱歉」。</p><p>会社によると、この自動販売機は、災害のときに無料で飲み物を出すことができるタイプでした。電気で動いているときは、自動販売機を管理している人が鍵を使って出すことができます。しかし、地震のあと穴水町では電気が止まって、鍵を持っている人も高校にいませんでした。<br>根據公司，這類型的販賣機是會在災害發生時提供免費飲料的機型。在機器運轉時，機器管理者可以使用鑰匙來開啟這個功能。但是，此次地震造成了穴水町停電，而高中裡也沒有人有鑰匙。</p><p>会社は「飲み物を出したいときは、壊さないで、管理している人や会社に連絡してください」と話しています。<br>該公司表示：「如果想要娶飲料，請不要用壞他，請聯絡負責的機器管理員」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['起', 'お'],      ['こった']    ],    chinese: '發生'  },  {    japanese: [      ['自動販売機', 'じどうはんばいき'],    ],    chinese: '自動販賣機'  },  {    japanese: [      ['近所', 'きんじょ'],    ],    chinese: '附近'  },  {    japanese: [      ['避難', 'ひなん'],    ],    chinese: '避難'  },  {    japanese: [      ['渡', 'わた'],      ['す']    ],    chinese: '提供'  },  {    japanese: [      ['災害', 'さいがい'],      ['す']    ],    chinese: '提供'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day3]</title>
       <link href="/2024/01/27/20/"/>
       <url>/2024/01/27/20/</url>
