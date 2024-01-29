@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日文馬拉松[Day5]</title>
+      <link href="/2024/01/29/22/"/>
+      <url>/2024/01/29/22/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014333621000/k10014333621000.html">https://www3.nhk.or.jp/news/easy/k10014333621000/k10014333621000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>沖縄県名護市の動物園「ネオパークオキナワ」には、寒さが苦手な動物たちがいます。<br>在沖繩縣名護市的動物園Neo Park Okinawa，那些怕冷的動物。</p><p>この動物園では、1日の最も高い気温が13℃ぐらいでいつもの年よりずっと寒くなった日がありました。「フタユビナマケモノ」は、南アメリカの森にいる動物です。この日はおりの中のストーブの近くで、ほとんど動かないで気持ちよさそうにしていました。<br>這個動物園，有幾天的最高的溫度大約是13度，比往年還要冷，二趾樹懶，南美洲森林的一種動物。今天他們很靠近暖爐，看起來非常舒適。</p><p>「コモンリスザル」のおりの中でも、リスザルたちがストーブの近くに集まっていました。<br>松鼠猴的籠子裡面，松鼠猴們也集中到了暖爐旁。</p><p>見に来た女性は「とてもかわいいです。ナマケモノを見て心も体も温めたいと思います」と話しました。<br>來觀賞的女性，說道：「非常的可愛，看著樹懶，我的身心都暖和的起來。」</p><p>動物園の人は「ナマケモノは体の温度を上げたり下げたりするのが上手ではありません。動物たちのこのような様子は沖縄では珍しいので、見に来てください」と話しました。<br>動物人員說：「樹懶不擅長提升或下降他們的體溫，像這樣情況的動物在沖繩市比較稀有的，請大家來觀賞。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['苦手な', 'にがて'],      ['な']    ],    chinese: '不擅長、喜歡'  },  {    japanese: [      ['フタユビナマケモノ'],    ],    chinese: '二趾樹懶'  },  {    japanese: [      ['おり'],    ],    chinese: '籠子'  },  {    japanese: [      ['ほとんど'],    ],    chinese: '幾乎'  },  {    japanese: [      ['コモンリスザル'],    ],    chinese: '普通松鼠猴'  },  {    japanese: [      ['集', 'あつ'],      ['まる']    ],    chinese: '集合'  },  {    japanese: [      ['温度', 'おんど'],    ],    chinese: '溫度'  },  {    japanese: [      ['上', 'あ'],      ['げる']    ],    chinese: '上升'  },  {    japanese: [      ['下', 'さ'],      ['げる']    ],    chinese: '下降'  },  {    japanese: [      ['様子', 'ようす'],    ],    chinese: '狀態'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day4]</title>
       <link href="/2024/01/28/21/"/>
       <url>/2024/01/28/21/</url>
