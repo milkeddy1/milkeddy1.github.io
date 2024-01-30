@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日文馬拉松[Day6]</title>
+      <link href="/2024/01/30/23/"/>
+      <url>/2024/01/30/23/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html">https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>厚生労働省によると、去年10月、日本で働く外国人が204万8675人いました。前の年と比べて約12%増えました。日本で働く外国人は、2013年から増え続けていて、初めて200万人より多くなりました。<br>跟去厚生勞動省，去年10月日本的外國勞動人口高達204萬8675人。跟去年比增加了12%。日本的外國勞動人口從2013年持續增加，首次超過200萬人。</p><p>いちばん多いのは、ベトナム人で約51万8000人です。次は、中国人が約39万7000人、フィリピン人が約22万6000人でした。<br>最多的是越南的51萬8000人，再來是中國的39萬7000人和菲律賓的22萬6000人。</p><p>在留資格で比べると、日系の人や日本人と結婚している人が多くて、約61万5000人でした。研究の仕事をする人など専門の技術を持った人は約59万5000人、技能実習の人は約41万2000人でした。<br>在留資格的比較下，和具有日本血統或是日本人結婚的人比較多，約61萬5000人，從事研究工作的人，例如具有專業技術的人大約59萬5000人，技術訓練的人約41萬2000人。</p><p>働く外国人の問題に詳しい専門家は「日本人は毎年80万人以上減っています。どの産業も働く人を集めることが大きな問題になっています」と話しています。<br>熟悉國外工作的專家說道：「日本每年人口減少80萬人，怎麼樣吸引工人是每間公司大問題。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['約', 'やく'],    ],    chinese: '約'  },  {    japanese: [      ['増', 'ふ'],      ['えました'],    ],    chinese: '增加'  },  {    japanese: [      ['続', 'つづ'],      ['けて'],    ],    chinese: '持續'  },  {    japanese: [      ['在留資格', 'ざいりゅうしかく'],    ],    chinese: '在留資格'  },  {    japanese: [      ['日系', 'にっけい'],      ['の'],      ['人', 'ひと'],    ],    chinese: '具有日本血統的人'  },  {    japanese: [      ['詳', 'くわ'],      ['しい'],    ],    chinese: '熟悉的'  },  {    japanese: [      ['減', 'へ'],      ['る'],    ],    chinese: '減少'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day5]</title>
       <link href="/2024/01/29/22/"/>
       <url>/2024/01/29/22/</url>
