@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日文馬拉松[Day7]</title>
+      <link href="/2024/01/31/24/"/>
+      <url>/2024/01/31/24/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html">https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>総務省によると、去年、東京都に引っ越してきた人は約45万4000人でした。東京都からほかの所に出ていった人は約38万6000人でした。引っ越してきた人のほうが約6万8000人多くなりました。<br>根據總務省，去年搬進東興的人口大約45萬4000人，離開東京前往其他地方的人數約為38萬6000人。還有大約多了6萬8000人搬來東京。</p><p>新型コロナウイルスの問題があった2021年は、引っ越してきた人のほうが少し多くて、約5400人でした。しかし、おととしと去年は大きく増えました。<br>雖受到新冠疫情的影響，2021搬來東京的人口還是有稍微多了些，大約5400人。不過，前年和去年人口是大幅增加的。</p><p>総務省は「若い人たちが仕事や勉強のために東京に来たと考えています」と話しています。<br>總務省說：「為了工作或讀書的年輕人會考量來東京。」</p><p>引っ越してきた人のほうが多かった所は、東京都やその周りの県、大阪府などでした。ほかの所は、出ていった人のほうが多くなりました。<br>很多人搬進去的地方像是東京都和周邊的縣、大阪府等等。其他的地方呈現離開的人比較多。</p><p>総務省は「地方の人口が少なくなると、日本の力が弱くなります。地方に住む人を多くして、地方を元気にしたいです」と話しました。<br>總務省說：「農村的人口減少的話，會降低日本的實力，為了讓農村能夠更多人去生活，要讓農村振興。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['ほかの'],    ],    chinese: '其他'  },  {    japanese: [      ['新型', 'しんがた'],      ['コロナウイルス'],    ],    chinese: '新冠疫情'  },  {    japanese: [      ['のほうが'],    ],    chinese: '更'  },  {    japanese: [      ['若', 'わか'],      ['い'],    ],    chinese: '年輕的'  },  {    japanese: [      ['周', 'まわ'],      ['り'],    ],    chinese: '周圍'  },  {    japanese: [      ['など'],    ],    chinese: '等等的'  },  {    japanese: [      ['地方', 'ちほう'],    ],    chinese: '農村'  },  {    japanese: [      ['人口', 'じんこう'],    ],    chinese: '人口'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day6]</title>
       <link href="/2024/01/30/23/"/>
       <url>/2024/01/30/23/</url>
