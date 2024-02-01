@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日文馬拉松[Day8]</title>
+      <link href="/2024/02/01/25/"/>
+      <url>/2024/02/01/25/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html">https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震では、日本酒をつくる会社も被害を受けました。<br>能登半島的地震，也讓日本清酒生產的公司受到波及。</p><p>石川県能登町にある「松波酒造」という会社では、お酒をつくる建物が壊れました。しかし、中にあった約3ｔの米や、瓶に入れた日本酒は大丈夫でした。<br>在石川縣能登町一間叫做「松波酒造」的公司，生產酒精的建築物被摧毀，不過裡面約三噸的米和清酒都沒事。</p><p>この会社の金七聖子さんは、石川県の別の市にある会社に頼んで、自分の会社の米を使って、日本酒をつくり続けることにしました。<br>公司裡面的金七聖子說，可以拜託石川縣其他市的公司，使用自家公司的米持續的製作日本清酒。</p><p>29日には、近くに住む人やボランティアの人と一緒に、米を車にのせました<br>在29號這天，附近的志工一起幫忙將米裝進車上。</p><p>金七さんは「この米で、今年も日本酒をつくることができると思うと希望を感じます」と話していました。<br>金七說：「這些米讓我看到今年可以順利製作日本清酒的希望。」</p><p>能登半島地震では、11の会社で日本酒をつくることができなくなっています。この中の3つの会社が、別の会社に米などを運んで、日本酒をつくることにしています。<br>受到能登半島地震的影響，造成有11間製作日本清酒公司無法生產。其中有三家透過別家公司運來的米等材料得以繼續生產。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['日本酒', 'にほんしゅ'],    ],    chinese: '日本清酒'  },  {    japanese: [      ['米', 'こめ'],    ],    chinese: '米'  },  {    japanese: [      ['頼', 'たの'],      ['む'],    ],    chinese: '委託'  },  {    japanese: [      ['ボランティア'],    ],    chinese: '志工'  },  {    japanese: [      ['乗', 'の'],      ['せる'],    ],    chinese: '放、裝上'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day7]</title>
       <link href="/2024/01/31/24/"/>
       <url>/2024/01/31/24/</url>
