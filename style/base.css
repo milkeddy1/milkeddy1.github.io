@@ -20,6 +20,8 @@
   --primary-bg-color: #181818;
   --second-bg-color: #212121;
   --third-bg-color: #ffffff14;
+  --hover-bg-color: #ffffff0d;
+  --active-bg-color: #ffffff1a;
   --primary-text-color: #fff;
   --second-text-color: #aaa;
   --border-line-color: rgba(255, 255, 255, 0.05);
@@ -54,6 +56,8 @@
     --primary-bg-color: #181818;
     --second-bg-color: #212121;
     --third-bg-color: #ffffff14;
+    --hover-bg-color: #ffffff0d;
+    --active-bg-color: #ffffff1a;
     --primary-text-color: #fff;
     --second-text-color: #aaa;
     --border-line-color: rgba(255, 255, 255, 0.05);
