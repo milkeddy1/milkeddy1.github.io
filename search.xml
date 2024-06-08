@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>從 race condition 更了解 useEffect</title>
+      <link href="/2024/06/08/37/"/>
+      <url>/2024/06/08/37/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在看 yt 在介紹為啥不建議用 useEffect 去 fetch data 時</p><p>從官網他給的解法我 get 不到</p><p>稍微研究之後才發現我對 useEffect 不夠瞭解</p><p>所以稍微記錄一下</p><h3 id="一般使用-useEffect-去-fetch-data"><a href="#一般使用-useEffect-去-fetch-data" class="headerlink" title="一般使用 useEffect 去 fetch data"></a>一般使用 useEffect 去 fetch data</h3><p>Code 如下</p><pre><code class="javascript">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;export function App(props) &#123;  const [person, setPerson] = useState(1);  const [bio, setBio] = useState(null);  const handlePeople = () =&gt; &#123;    setPerson(2);  &#125;;  const fakeFetchData = (num) =&gt; &#123;    return new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;        // 模擬成功返回數據        const success = true; // 將其設為 false 以模擬錯誤        if (success) &#123;          const db = &#123;            1: &quot;Alice&quot;,            2: &quot;Bob&quot;,          &#125;;          resolve(&#123; message: db[num] &#125;);        &#125; else &#123;          reject(&quot;Error fetching data&quot;);        &#125;      &#125;, 2000); // 模擬 2 秒的延遲    &#125;);  &#125;;  useEffect(() =&gt; &#123;    setBio(null);    fakeFetchData(person).then((result) =&gt; &#123;      setBio(result.message);    &#125;);  &#125;, [person]);  return (    &lt;div className=&quot;App&quot;&gt;      &lt;h1&gt;Hello React.&lt;/h1&gt;      &lt;h2&gt;&#123;bio&#125;&lt;/h2&gt;      &lt;button onClick=&#123;handlePeople&#125;&gt;switch&lt;/button&gt;    &lt;/div&gt;  );&#125;</code></pre><p>其實這個寫法非常不難懂也不難寫</p><p>以有在使用或是對 React 有些了解的人來說</p><p>不過他會有一個問題</p><p>就是如果第一次 call api 也就是第一次渲染還沒 response</p><p>我就點了 switch 按鈕所以會 call 第二次的 api 且返回得值會和第一次不一樣</p><p>結果出現第二次 api call 比第一次 api call 還要早 response</p><p>就會出現 state 和 response 資料對不起來的情況</p><p>就叫做 race condition</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>Code 如下</p><p>（這裡有特意做一個第二次會比第一次 response 快的機制）</p><pre><code class="javascript">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;export function App(props) &#123;  const [person, setPerson] = useState(1);  const [bio, setBio] = useState(null);  const handlePeople = () =&gt; &#123;    setPerson(2);  &#125;;  const fakeFetchData = (num, defer = 5000) =&gt; &#123;    return new Promise((resolve, reject) =&gt; &#123;      if (num === 2) defer = 1000;      setTimeout(() =&gt; &#123;        // 模擬成功返回數據        const success = true; // 將其設為 false 以模擬錯誤        if (success) &#123;          const db = &#123;            1: &quot;Alice&quot;,            2: &quot;Bob&quot;,          &#125;;          resolve(&#123; message: db[num] &#125;);        &#125; else &#123;          reject(&quot;Error fetching data&quot;);        &#125;      &#125;, defer); // 模擬 2 秒的延遲    &#125;);  &#125;;  useEffect(() =&gt; &#123;    let ignore = false;    setBio(null);    fakeFetchData(person).then((result) =&gt; &#123;      if (!ignore) &#123;        setBio(result.message);      &#125;    &#125;);    return () =&gt; &#123;      ignore = true;    &#125;;  &#125;, [person]);  return (    &lt;div className=&quot;App&quot;&gt;      &lt;h1&gt;Hello React.&lt;/h1&gt;      &lt;h2&gt;&#123;bio&#125;&lt;/h2&gt;      &lt;button onClick=&#123;handlePeople&#125;&gt;switch&lt;/button&gt;    &lt;/div&gt;  );&#125;</code></pre><p>簡單來說就是多了 ignore 這個 flag</p><p>原本很 confused 這個 ignore 為何可以預防這件事</p><p>其實涵蓋了兩個概念</p><ul><li>useEffect return 的時機</li><li>閉包運作原理</li></ul><p>直接說明解決問題發生的順序</p><p>他的步驟是這樣的：</p><ol><li>第一次渲染，useEffect 執行 call api，return function 會存起來</li><li>點擊 switch 按鈕，state 改變</li><li>執行上一次 render useEffect 記住的 return function</li><li>useEffect 再次執行</li></ol><p>沒錯，我才發現 useEffect 在以 state 為參數時 return 是這時候執行的 😅</p><p>另外一個概念是閉包</p><p>雖然 return function 才將 ignore 變為 true</p><p>但是這個 ignore 代表的還是第一次 api call 的那個 ignore 判斷</p><pre><code class="javascript">useEffect(() =&gt; &#123;  let ignore = false;  setBio(null);  fakeFetchData(person).then((result) =&gt; &#123;    if (!ignore) &#123;      setBio(result.message);    &#125;  &#125;);  return () =&gt; &#123;    ignore = true; // 這個會在有下一個 api call 的時候才會執行  &#125;;&#125;, [person]);</code></pre><p>簡單來說</p><p>在第一次 api response 之前，我在第二次的 useEffect 執行的上一個 return function</p><p>來擋住上一次的 api response state change</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日文馬拉松[Day18]</title>
       <link href="/2024/03/07/36/"/>
       <url>/2024/03/07/36/</url>
