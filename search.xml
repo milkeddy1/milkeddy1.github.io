@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>日文馬拉松[Day6]</title>
-      <link href="/2024/09/13/23/"/>
-      <url>/2024/09/13/23/</url>
-      
-        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html">https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>厚生労働省によると、去年10月、日本で働く外国人が204万8675人いました。前の年と比べて約12%増えました。日本で働く外国人は、2013年から増え続けていて、初めて200万人より多くなりました。<br>跟去厚生勞動省，去年10月日本的外國勞動人口高達204萬8675人。跟去年比增加了12%。日本的外國勞動人口從2013年持續增加，首次超過200萬人。</p><p>いちばん多いのは、ベトナム人で約51万8000人です。次は、中国人が約39万7000人、フィリピン人が約22万6000人でした。<br>最多的是越南的51萬8000人，再來是中國的39萬7000人和菲律賓的22萬6000人。</p><p>在留資格で比べると、日系の人や日本人と結婚している人が多くて、約61万5000人でした。研究の仕事をする人など専門の技術を持った人は約59万5000人、技能実習の人は約41万2000人でした。<br>在留資格的比較下，和具有日本血統或是日本人結婚的人比較多，約61萬5000人，從事研究工作的人，例如具有專業技術的人大約59萬5000人，技術訓練的人約41萬2000人。</p><p>働く外国人の問題に詳しい専門家は「日本人は毎年80万人以上減っています。どの産業も働く人を集めることが大きな問題になっています」と話しています。<br>熟悉國外工作的專家說道：「日本每年人口減少80萬人，怎麼樣吸引工人是每間公司大問題。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['約', 'やく'],    ],    chinese: '約'  },  {    japanese: [      ['増', 'ふ'],      ['えました'],    ],    chinese: '增加'  },  {    japanese: [      ['続', 'つづ'],      ['けて'],    ],    chinese: '持續'  },  {    japanese: [      ['在留資格', 'ざいりゅうしかく'],    ],    chinese: '在留資格'  },  {    japanese: [      ['日系', 'にっけい'],      ['の'],      ['人', 'ひと'],    ],    chinese: '具有日本血統的人'  },  {    japanese: [      ['詳', 'くわ'],      ['しい'],    ],    chinese: '熟悉的'  },  {    japanese: [      ['減', 'へ'],      ['る'],    ],    chinese: '減少'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 日文 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>從 race condition 更了解 useEffect</title>
       <link href="/2024/06/08/37/"/>
       <url>/2024/06/08/37/</url>
@@ -214,8 +195,8 @@
     
     <entry>
       <title>日文馬拉松[Day10]</title>
-      <link href="/2024/02/02/27/"/>
-      <url>/2024/02/02/27/</url>
+      <link href="/2024/02/03/27/"/>
+      <url>/2024/02/03/27/</url>
       
         <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>昨天跑南部看演唱會，miss掉一天，今天直接 level up 看「普通のニュース」</p><h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240131/k10014341951000.html">https://www3.nhk.or.jp/news/html/20240131/k10014341951000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震で被災した石川県の飲食店を支援しようと、富山県の飲食店の経営者たちが「フッコウメシ」と名付けた料理を詰めたギフトボックスを、寄付してくれた人たちに、お礼として提供する取り組みを始めました。<br>為了支援能登半島地震的石川縣的餐飲店，富山縣的餐飲店將一個名為「フッコウメシ」的料理裝在禮盒裡面，作為感謝那些貢獻者而提供的。</p><p>これは、富山県南砺市で飲食店を営む谷口英司さんが、石川県輪島市と七尾市で被災した知り合いの飲食店を支援しようと仲間の飲食店経営者7人に呼びかけて始めました。<br>這活動是由在富山縣南礪市經營餐飲店的谷口英司發起的，他呼籲七位餐廳老闆夥伴，幫忙支援他朋友在輪島市和七尾市的餐廳。</p><p>谷口さんたちが準備したのは、「フッコウメシ」と名付けられたギフトボックスで、富山県内の食材を使って、それぞれの店で調理した恵方巻き、かにしんじょう、豚のもつ煮など、8種類の料理が詰められています<br>谷口先生準備了名為「フッコウメシ」的禮盒，他使用了富山縣的食材，每間店都用了八種不同的料理，有惠方卷、蟹肉、豬雜碎等。</p><p>1月31日は、富山市中心部の「総曲輪通り商店街」などで、飲食店を支援するため一口5000円の寄付を呼びかけました。<br>在1月31日，在富山市中心的Sokuruwa Dori商店街等地方，呼籲每一份以5000元日幣來支持餐飲店。</p><p>そしてお礼として、今回の地震で被災した富山県氷見市の酒蔵で作られた日本酒とあわせて提供すると、用意された300セットは、およそ1時間でなくなりました。<br>為了表示感謝，這是受到地震影響的富山縣冰見市的製作清酒的釀酒廠也一併提供了300組的清酒，大約在一小時銷售完畢。</p><p>寄付をした富山市の50代の女性は「若いころは能登半島方面に仕事に行くことがあり、被災された方たちのことが気になっていたので、役に立ちたいと思いました。早く日常が取り戻されることを願っています」と話していました。<br>其中一個50多歲來自富山市的五十多歲的女性捐贈者說：「早期工作會要去能登半島工作，我很關心受到災害的人，我很想要幫忙，希望能早日恢復正常生活。」</p><p>谷口さんは「能登半島の各地には、知り合いの料理人や生産者がたくさんいるので、それぞれが元気になれば、周りの方たちも勇気づけられると思います。この活動を長く続けていきたい」と話していました。<br>谷口先生說：「能登半島有很多我認識做料理的人，如果他們能打起精神，我覺的也可以影響到周圍的人。我想要長期的持續這樣的活動。」</p>]]></content>
       
@@ -233,8 +214,8 @@
     
     <entry>
       <title>日文馬拉松[Day9]</title>
-      <link href="/2024/02/01/26/"/>
-      <url>/2024/02/01/26/</url>
+      <link href="/2024/02/02/26/"/>
+      <url>/2024/02/02/26/</url>
       
         <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014343861000/k10014343861000.html">https://www3.nhk.or.jp/news/easy/k10014343861000/k10014343861000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>石川県は、能登半島地震で大きな被害を受けた七尾市や志賀町、穴水町にボランティアを送り始めています。<br>在石川縣，受到能登半島地震影響的七尾市、志賀町、穴水町等地已經開始派遣志工。</p><p>2月1日朝6時ごろ、50人ぐらいのボランティアが金沢駅からバスで出発しました。埼玉県から来た25歳の森田和奈さんは、穴水町で壊れた家を片づける手伝いをしました。森田さんは「壊れた建物や道を見て、災害は怖いと思いました。あと1日頑張ります」と話していました。<br>2月1號大早上6點左右，大約50位志工從金澤站出發。來自埼玉縣25歲的森田和奈，幫忙清理那些在穴水町遭受破壞的房子。他說：「看到你那些受損的建築物和道路，覺得很可怕。我會再努力一天。」</p><p>3日からは、珠洲市と中能登町でもボランティアの活動が始まる予定です。輪島市は今月上旬から始めたいと考えています。<br>從3號開始，珠洲市和中能登町的志工的活動預計會開始。輪島市希望能在這個月的上旬開始。</p><p>被害を受けた町に泊まる所がないため、ボランティアは毎日金沢市からバスで行きます。市や町の職員や車が足りないなど、ほかにもいろいろな問題があります。このため、ボランティアは行く前に石川県に登録する必要があります。<br>受損的鎮上，已經沒有能夠住宿的地方，志工每天需要從金澤是搭巴士過來。城鎮的公務人員和汽車有不足等等的其他問題，也因為如此，志工在前往石川縣之前必須事先登記。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['送', 'おく'],      ['り'],    ],    chinese: '送（指人）'  },  {    japanese: [      ['片', 'かた'],      ['づける'],    ],    chinese: '清理'  },  {    japanese: [      ['災害', 'さいがい'],    ],    chinese: '災害'  },  {    japanese: [      ['活動', 'かつどう'],    ],    chinese: '活動'  },  {    japanese: [      ['上旬', 'じょうじゅん'],    ],    chinese: '上旬'  },  {    japanese: [      ['職員', 'しょくいん'],    ],    chinese: '公職人員'  },  {    japanese: [      ['登録', 'とうろく'],    ],    chinese: '登記'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
       
@@ -252,8 +233,8 @@
     
     <entry>
       <title>日文馬拉松[Day8]</title>
-      <link href="/2024/01/31/25/"/>
-      <url>/2024/01/31/25/</url>
+      <link href="/2024/02/01/25/"/>
+      <url>/2024/02/01/25/</url>
       
         <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html">https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震では、日本酒をつくる会社も被害を受けました。<br>能登半島的地震，也讓日本清酒生產的公司受到波及。</p><p>石川県能登町にある「松波酒造」という会社では、お酒をつくる建物が壊れました。しかし、中にあった約3ｔの米や、瓶に入れた日本酒は大丈夫でした。<br>在石川縣能登町一間叫做「松波酒造」的公司，生產酒精的建築物被摧毀，不過裡面約三噸的米和清酒都沒事。</p><p>この会社の金七聖子さんは、石川県の別の市にある会社に頼んで、自分の会社の米を使って、日本酒をつくり続けることにしました。<br>公司裡面的金七聖子說，可以拜託石川縣其他市的公司，使用自家公司的米持續的製作日本清酒。</p><p>29日には、近くに住む人やボランティアの人と一緒に、米を車にのせました<br>在29號這天，附近的志工一起幫忙將米裝進車上。</p><p>金七さんは「この米で、今年も日本酒をつくることができると思うと希望を感じます」と話していました。<br>金七說：「這些米讓我看到今年可以順利製作日本清酒的希望。」</p><p>能登半島地震では、11の会社で日本酒をつくることができなくなっています。この中の3つの会社が、別の会社に米などを運んで、日本酒をつくることにしています。<br>受到能登半島地震的影響，造成有11間製作日本清酒公司無法生產。其中有三家透過別家公司運來的米等材料得以繼續生產。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['日本酒', 'にほんしゅ'],    ],    chinese: '日本清酒'  },  {    japanese: [      ['米', 'こめ'],    ],    chinese: '米'  },  {    japanese: [      ['頼', 'たの'],      ['む'],    ],    chinese: '委託'  },  {    japanese: [      ['ボランティア'],    ],    chinese: '志工'  },  {    japanese: [      ['乗', 'の'],      ['せる'],    ],    chinese: '放、裝上'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
       
@@ -271,10 +252,29 @@
     
     <entry>
       <title>日文馬拉松[Day7]</title>
-      <link href="/2024/01/30/24/"/>
-      <url>/2024/01/30/24/</url>
+      <link href="/2024/01/31/24/"/>
+      <url>/2024/01/31/24/</url>
       
         <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html">https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>総務省によると、去年、東京都に引っ越してきた人は約45万4000人でした。東京都からほかの所に出ていった人は約38万6000人でした。引っ越してきた人のほうが約6万8000人多くなりました。<br>根據總務省，去年搬進東興的人口大約45萬4000人，離開東京前往其他地方的人數約為38萬6000人。還有大約多了6萬8000人搬來東京。</p><p>新型コロナウイルスの問題があった2021年は、引っ越してきた人のほうが少し多くて、約5400人でした。しかし、おととしと去年は大きく増えました。<br>雖受到新冠疫情的影響，2021搬來東京的人口還是有稍微多了些，大約5400人。不過，前年和去年人口是大幅增加的。</p><p>総務省は「若い人たちが仕事や勉強のために東京に来たと考えています」と話しています。<br>總務省說：「為了工作或讀書的年輕人會考量來東京。」</p><p>引っ越してきた人のほうが多かった所は、東京都やその周りの県、大阪府などでした。ほかの所は、出ていった人のほうが多くなりました。<br>很多人搬進去的地方像是東京都和周邊的縣、大阪府等等。其他的地方呈現離開的人比較多。</p><p>総務省は「地方の人口が少なくなると、日本の力が弱くなります。地方に住む人を多くして、地方を元気にしたいです」と話しました。<br>總務省說：「農村的人口減少的話，會降低日本的實力，為了讓農村能夠更多人去生活，要讓農村振興。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['ほかの'],    ],    chinese: '其他'  },  {    japanese: [      ['新型', 'しんがた'],      ['コロナウイルス'],    ],    chinese: '新冠疫情'  },  {    japanese: [      ['のほうが'],    ],    chinese: '更'  },  {    japanese: [      ['若', 'わか'],      ['い'],    ],    chinese: '年輕的'  },  {    japanese: [      ['周', 'まわ'],      ['り'],    ],    chinese: '周圍'  },  {    japanese: [      ['など'],    ],    chinese: '等等的'  },  {    japanese: [      ['地方', 'ちほう'],    ],    chinese: '農村'  },  {    japanese: [      ['人口', 'じんこう'],    ],    chinese: '人口'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day6]</title>
+      <link href="/2024/01/30/23/"/>
+      <url>/2024/01/30/23/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html">https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>厚生労働省によると、去年10月、日本で働く外国人が204万8675人いました。前の年と比べて約12%増えました。日本で働く外国人は、2013年から増え続けていて、初めて200万人より多くなりました。<br>跟去厚生勞動省，去年10月日本的外國勞動人口高達204萬8675人。跟去年比增加了12%。日本的外國勞動人口從2013年持續增加，首次超過200萬人。</p><p>いちばん多いのは、ベトナム人で約51万8000人です。次は、中国人が約39万7000人、フィリピン人が約22万6000人でした。<br>最多的是越南的51萬8000人，再來是中國的39萬7000人和菲律賓的22萬6000人。</p><p>在留資格で比べると、日系の人や日本人と結婚している人が多くて、約61万5000人でした。研究の仕事をする人など専門の技術を持った人は約59万5000人、技能実習の人は約41万2000人でした。<br>在留資格的比較下，和具有日本血統或是日本人結婚的人比較多，約61萬5000人，從事研究工作的人，例如具有專業技術的人大約59萬5000人，技術訓練的人約41萬2000人。</p><p>働く外国人の問題に詳しい専門家は「日本人は毎年80万人以上減っています。どの産業も働く人を集めることが大きな問題になっています」と話しています。<br>熟悉國外工作的專家說道：「日本每年人口減少80萬人，怎麼樣吸引工人是每間公司大問題。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['約', 'やく'],    ],    chinese: '約'  },  {    japanese: [      ['増', 'ふ'],      ['えました'],    ],    chinese: '增加'  },  {    japanese: [      ['続', 'つづ'],      ['けて'],    ],    chinese: '持續'  },  {    japanese: [      ['在留資格', 'ざいりゅうしかく'],    ],    chinese: '在留資格'  },  {    japanese: [      ['日系', 'にっけい'],      ['の'],      ['人', 'ひと'],    ],    chinese: '具有日本血統的人'  },  {    japanese: [      ['詳', 'くわ'],      ['しい'],    ],    chinese: '熟悉的'  },  {    japanese: [      ['減', 'へ'],      ['る'],    ],    chinese: '減少'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
       
       
       
