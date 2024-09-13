@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>日文馬拉松[Day6]</title>
+      <link href="/2024/09/13/23/"/>
+      <url>/2024/09/13/23/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html">https://www3.nhk.or.jp/news/easy/k10014335871000/k10014335871000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>厚生労働省によると、去年10月、日本で働く外国人が204万8675人いました。前の年と比べて約12%増えました。日本で働く外国人は、2013年から増え続けていて、初めて200万人より多くなりました。<br>跟去厚生勞動省，去年10月日本的外國勞動人口高達204萬8675人。跟去年比增加了12%。日本的外國勞動人口從2013年持續增加，首次超過200萬人。</p><p>いちばん多いのは、ベトナム人で約51万8000人です。次は、中国人が約39万7000人、フィリピン人が約22万6000人でした。<br>最多的是越南的51萬8000人，再來是中國的39萬7000人和菲律賓的22萬6000人。</p><p>在留資格で比べると、日系の人や日本人と結婚している人が多くて、約61万5000人でした。研究の仕事をする人など専門の技術を持った人は約59万5000人、技能実習の人は約41万2000人でした。<br>在留資格的比較下，和具有日本血統或是日本人結婚的人比較多，約61萬5000人，從事研究工作的人，例如具有專業技術的人大約59萬5000人，技術訓練的人約41萬2000人。</p><p>働く外国人の問題に詳しい専門家は「日本人は毎年80万人以上減っています。どの産業も働く人を集めることが大きな問題になっています」と話しています。<br>熟悉國外工作的專家說道：「日本每年人口減少80萬人，怎麼樣吸引工人是每間公司大問題。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['約', 'やく'],    ],    chinese: '約'  },  {    japanese: [      ['増', 'ふ'],      ['えました'],    ],    chinese: '增加'  },  {    japanese: [      ['続', 'つづ'],      ['けて'],    ],    chinese: '持續'  },  {    japanese: [      ['在留資格', 'ざいりゅうしかく'],    ],    chinese: '在留資格'  },  {    japanese: [      ['日系', 'にっけい'],      ['の'],      ['人', 'ひと'],    ],    chinese: '具有日本血統的人'  },  {    japanese: [      ['詳', 'くわ'],      ['しい'],    ],    chinese: '熟悉的'  },  {    japanese: [      ['減', 'へ'],      ['る'],    ],    chinese: '減少'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>從 race condition 更了解 useEffect</title>
+      <link href="/2024/06/08/37/"/>
+      <url>/2024/06/08/37/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在看 yt 在介紹為啥不建議用 useEffect 去 fetch data 時</p><p>從官網他給的解法我 get 不到</p><p>稍微研究之後才發現我對 useEffect 不夠瞭解</p><p>所以稍微記錄一下</p><h3 id="一般使用-useEffect-去-fetch-data"><a href="#一般使用-useEffect-去-fetch-data" class="headerlink" title="一般使用 useEffect 去 fetch data"></a>一般使用 useEffect 去 fetch data</h3><p>Code 如下</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = <span class="title function_">useState</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> [bio, setBio] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handlePeople</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setPerson</span>(<span class="number">2</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">fakeFetchData</span> = (<span class="params">num</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 模擬成功返回數據</span></span><br><span class="line">        <span class="keyword">const</span> success = <span class="literal">true</span>; <span class="comment">// 將其設為 false 以模擬錯誤</span></span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">          <span class="keyword">const</span> db = &#123;</span><br><span class="line">            <span class="number">1</span>: <span class="string">&quot;Alice&quot;</span>,</span><br><span class="line">            <span class="number">2</span>: <span class="string">&quot;Bob&quot;</span>,</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="title function_">resolve</span>(&#123; <span class="attr">message</span>: db[num] &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(<span class="string">&quot;Error fetching data&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, <span class="number">2000</span>); <span class="comment">// 模擬 2 秒的延遲</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [person]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;bio&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handlePeople&#125;</span>&gt;</span>switch<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>其實這個寫法非常不難懂也不難寫</p><p>以有在使用或是對 React 有些了解的人來說</p><p>不過他會有一個問題</p><p>就是如果第一次 call api 也就是第一次渲染還沒 response</p><p>我就點了 switch 按鈕所以會 call 第二次的 api 且返回得值會和第一次不一樣</p><p>結果出現第二次 api call 比第一次 api call 還要早 response</p><p>就會出現 state 和 response 資料對不起來的情況</p><p>就叫做 race condition</p><h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>Code 如下</p><p>（這裡有特意做一個第二次會比第一次 response 快的機制）</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = <span class="title function_">useState</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> [bio, setBio] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handlePeople</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setPerson</span>(<span class="number">2</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">fakeFetchData</span> = (<span class="params">num, defer = <span class="number">5000</span></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (num === <span class="number">2</span>) defer = <span class="number">1000</span>;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 模擬成功返回數據</span></span><br><span class="line">        <span class="keyword">const</span> success = <span class="literal">true</span>; <span class="comment">// 將其設為 false 以模擬錯誤</span></span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">          <span class="keyword">const</span> db = &#123;</span><br><span class="line">            <span class="number">1</span>: <span class="string">&quot;Alice&quot;</span>,</span><br><span class="line">            <span class="number">2</span>: <span class="string">&quot;Bob&quot;</span>,</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="title function_">resolve</span>(&#123; <span class="attr">message</span>: db[num] &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(<span class="string">&quot;Error fetching data&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, defer); <span class="comment">// 模擬 2 秒的延遲</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> ignore = <span class="literal">false</span>;</span><br><span class="line">    <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!ignore) &#123;</span><br><span class="line">        <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      ignore = <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [person]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;bio&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handlePeople&#125;</span>&gt;</span>switch<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>簡單來說就是多了 ignore 這個 flag</p><p>原本很 confused 這個 ignore 為何可以預防這件事</p><p>其實涵蓋了兩個概念</p><ul><li>useEffect return 的時機</li><li>閉包運作原理</li></ul><p>直接說明解決問題發生的順序</p><p>他的步驟是這樣的：</p><ol><li>第一次渲染，useEffect 執行 call api，return function 會存起來</li><li>點擊 switch 按鈕，state 改變</li><li>執行上一次 render useEffect 記住的 return function</li><li>useEffect 再次執行</li></ol><p>沒錯，我才發現 useEffect 在以 state 為參數時 return 是這時候執行的 😅</p><p>另外一個概念是閉包</p><p>雖然 return function 才將 ignore 變為 true</p><p>但是這個 ignore 代表的還是第一次 api call 的那個 ignore 判斷</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> ignore = <span class="literal">false</span>;</span><br><span class="line">  <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ignore) &#123;</span><br><span class="line">      <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ignore = <span class="literal">true</span>; <span class="comment">// 這個會在有下一個 api call 的時候才會執行</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [person]);</span><br></pre></td></tr></table></figure><p>簡單來說</p><p>在第一次 api response 之前，我在第二次的 useEffect 執行的上一個 return function</p><p>來擋住上一次的 api response state change</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day19]</title>
+      <link href="/2024/03/07/36/"/>
+      <url>/2024/03/07/36/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240304/k10014378661000.html">https://www3.nhk.or.jp/news/html/20240304/k10014378661000.html</a></p><h2 id="標題"><a href="#標題" class="headerlink" title="標題"></a>標題</h2><p>中国 上海の日本料理店 石川県産の食材で“被災地を応援”<br>中國上海的日本料理店，使用石川縣產的食物來支援災區</p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震の被災地を応援しようと、中国・上海にある日本料理店が4日から石川県産の食材を使ったランチの提供を始めました。<br>位於中國上海的日本料理店，使用石川縣產的食材製作午餐來支援能登半島的受災地</p><p>これは、上海にある日本料理店と中国で県産品のプロモーションなどを行っている石川県の事務所などが企画したものです。<br>上海的日本料理和中國本土產品的推廣，這些事石川縣政府所做的推廣</p><p>ランチは石川県産のしょうゆや、ふを使った焼き魚やみそ汁、それに、おでんなどがセットになっていて、日本円でおよそ800円で1週間程度の間、限定で提供されます。<br>午餐包含了石川縣的醬油、使用麩做的烤魚和味增湯，日本燉菜也在其中，日圓大約800元，大約一週的時間限定提供</p><p>4日は昼前から、近くで働く中国人などが店に訪れ従業員がランチについて説明すると、早速注文していました。<br>四號的中午之前，附近工作的中國人到店，稍微向他們說明後就快速訂購了。</p><p>このランチを注文した人には抽せんで、能登半島地震で大きな被害を受けた石川県珠洲市の特産品で、伝統的な方法で作られた塩を使ったサイダーなどが、ふるまわれました。<br>點了這分午餐的人，有機會贏得受重創的株洲市用傳統製法，使用鹽等製作的汽水。</p><p>ランチを注文した40代の中国人の男性は「石川県の特産品を食べる以外にも、石川県の人たちの住宅再建を支援する方法がないか考えてみたいです」と話していました。<br>購買午餐的40多歲的中國男性說道：「除了吃石川縣的特產品，也在思考要怎麼替石川縣的人們建造居住的地方。」</p><p>料理店の経営者、毛雲※ひょうさん（58）は「地震ではつらいこともあり、大変だったと思います。しかし、その困難を乗り越えれば、きっといいことがあると信じてください。応援しています」と話していました。<br>餐廳經理毛雲說到：「因為地震有時候會變得很困難，但是，跨過這個困難的話，請相信美好的事情會發生，我們支持你。」</p><h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><p>被災地を応援<br>支援災區</p><p>石川県の事務所<br>石川縣政府</p><p>中国で県産品<br>中國的本土產品</p><p>プロモーションを行きます<br>進行宣傳</p><p>（動詞）たものです<br>過去發生並影響現在的動作</p><p>みそ汁（しる）<br>味增湯</p><p>おでんなど<br>日本燉菜</p><p>1週間程度の間<br>大約一週</p><p>伝統的な方法（でんとうてきなほうほう）<br>傳統的方法<br>（名詞加上「的」變成「な」形容詞）</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day18]</title>
+      <link href="/2024/03/05/35/"/>
+      <url>/2024/03/05/35/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240301/k10014376691000.html">https://www3.nhk.or.jp/news/html/20240301/k10014376691000.html</a></p><h2 id="標題"><a href="#標題" class="headerlink" title="標題"></a>標題</h2><p>「夕焼けパンダ」7年ぶりに完全な形で出現 兵庫 明石<br>「夕陽熊貓」七年以來首次完整出現 - 位於 兵庫 明石</p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>夕日が鉄塔のアンテナと重なってパンダの顔のように見える「夕焼けパンダ」と呼ばれる現象。兵庫県明石市で1日に観察会が開かれ、7年ぶりに完全な形の「夕焼けパンダ」が姿を現しました。<br>夕陽和鐵塔的天線重疊，看起來像熊貓的臉，被叫做「夕陽熊貓」。兵庫縣明石市在一號這天舉行的觀察活動，是七年來首次出現的「夕陽熊貓」</p><p>明石市立天文科学館の展望台では毎年3月と10月に、日の入り間近の夕日が鉄塔と重なり、丸いアンテナの部分がパンダの目や耳に、太陽が顔の輪郭のように見える現象を「夕焼けパンダ」と呼んで、観察会を開いています。<br>在明石市天文科學館的瞭望台，每年的三月和十月，接近日落的夕陽會和鐵塔重疊，圓形的天線成了眼睛和耳朵，太陽則看起來像臉，因此被稱為「夕陽熊貓」，我們也舉辦了觀察會來觀察。</p><p>1日は倍率およそ13倍の抽せんに当たった親子連れなど20人が集まり、「夕焼けパンダ」を待ちました。<br>在一號這天，在這個13倍率中獎的家庭們約20人，聚集在一起等待「夕陽熊貓」</p><p>そして、午後6時前、夕日が鉄塔のアンテナと重なり、2017年以来7年ぶりに完全な形での「夕焼けパンダ」が現れました。<br>然後，下午六點之前，日落和鐵塔重合，2017年以來首次完整出現了「日落熊貓」</p><p>集まった人たちは歓声をあげて拍手をしたり、写真に収めたりしていました。<br>聚集的人們，有的人在歡呼鼓掌有的人在拍照紀錄</p><p>小学生の男の子は「パンダの目の位置が上に行ったり下に行ったり、変化してかわいかったです」と話していました。<br>一位小學男生說：「熊貓的眼睛跑上跑下的很可愛。」</p><p>1日が80歳の誕生日だという女性は「1週間前から天気予報を見て、ずっと楽しみにしていました。パンダを見ることができて、とても感激しました。これからも元気に過ごせそうです」と話していました。<br>一位過80歲生日的女性說：「一週在天氣預報上看到，一直都很期待。可以看到熊貓，非常印象深刻。接下來可以更健康地過日子」</p><p>明石市立天文科学館の中島正登主任は「感動しました。これだけちゃんと見ることができたのは7年ぶりで、感慨深いです。感動は格別なので今後も催しを続けていきたい」と話していました。<br>明石市立天文科學館的中島正登主任說：「很感動，七年以來真正能好好看到他，深受感動。因為是很特別的感動，希望之後可以繼續舉辦這樣的活動。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>夕焼け（ゆうや）<br>夕陽</p><p>アンテナ<br>天線</p><p>重なって（かさなって）<br>重疊</p><p>パンダの顔のように見える<br>看起來像熊貓的臉</p><p>歓声をあげて拍手をした<br>歡呼鼓掌</p><p>感激しました（かんげき）<br>印象深刻</p><p>感慨深いです（かんがいぶかい）<br>深受感動</p><p>催し（もよお）<br>主辦、舉辦</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day17]</title>
+      <link href="/2024/02/25/34/"/>
+      <url>/2024/02/25/34/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240221/k10014366421000.html">https://www3.nhk.or.jp/news/html/20240221/k10014366421000.html</a></p><h2 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h2><p>中学校の教室間借りし授業の高校生 中学生に勉強を教える 石川<br>那些和國中借教室上課的高中生在教導國中生</p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>石川県穴水町の県立高校の生徒たちは、能登半島地震で校舎が被害を受けたため、近くの中学校の教室を間借りして授業を受けています。こうした中、高校生たちが同じ校舎で学ぶ中学生に勉強を教える取り組みが行われています<br>石川縣縣立高中的學生們，因為受到能登半島地震學校宿舍受到損害，和附近的國中借教室來上課。就在這樣狀況下，在學習中的高中生和國中生在同一個教學大樓，並試圖教導他們學習。</p><p>穴水町にある県立穴水高校の生徒たちは、地震で校舎の壁に亀裂が入るなどしたため、近くにある穴水中学校の教室を間借りして授業を受けています。<br>位於穴水町的縣立穴水高中學生，因為受到地震而教學樓出現裂痕，而到位於附近的穴水國中借教室來上課。</p><p>こうした中、中学校からの依頼を受けて、高校生たちが同じ校舎で学ぶ中学3年生に勉強を教える取り組みが先週から行われています。<br>這樣的狀況下，受到國中學校的要求，從上週開始，讓高中生們在同一棟教學樓嘗試替國三生補習。</p><p>21日は授業が終わったあとに5人の生徒が残って英語や数学を教え、中学生が質問をするとメモをしながら丁寧に答えていました。<br>在21號補習完成後，剩下五個人在學習英文和數學，學生一邊提問做筆記一邊認真的回答。</p><p>穴水中学校によりますと、受験を控える3年生の中には地震が起きて不安を抱えている生徒もいるということで、年齢が近い高校生に接することで不安を和らげてもらいたいとしています。<br>根據穴水中學，即將要考試的三年級生中那些對地震發生感到不安學生，希望透過與年齡相近的高中生們的互動接觸可以減緩不安和焦慮。</p><p>参加した中学3年の女子生徒は「年齢の近い先輩たちだと気軽に質問もしやすいので、頑張りたいと思います」と話していました。<br>一位參加的國三女學生說：「因為年紀將近的前輩，可以很輕易地問問題，我會加油的。」</p><p>勉強を教えた高校2年の男子生徒は「校舎を借りているので、少しでも恩返しができればと思います」と話していました<br>其中一個高中2男生說：「因為借了學校來上課，希望可以做一個小小的回報」</p><h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>借りし授業<br>等同於借りた 此為「古典日語」用法</p><p>こうした中<br>這樣的情況下</p><p>同じ（おなじ）<br>同樣</p><p>取り組み（とりくみ）<br>努力</p><p>xxxにある<br>位於xxx</p><p>壁に亀裂が入る（かべにきれつがはいる）<br>牆壁出現裂縫</p><p>xxxからの依頼を受けて<br>回應xxx的要求</p><p>受験を控える3年生<br>準備接受入學考試的三年級生</p><p>もらいたいとしています。<br>（當下）很想要…</p><p>少しでも<br>雖然不多</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day16]</title>
+      <link href="/2024/02/19/33/"/>
+      <url>/2024/02/19/33/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240216/k10014359431000.html">https://www3.nhk.or.jp/news/html/20240216/k10014359431000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>TITLE：<br>被災の水族館から移動のペンギン 富山市の動物園で元気な姿<br>從受災的水族館搬出的企鵝，在富山市的動物園看起來很健康</p><p>CONTENT:<br>富山市の動物園では、能登半島地震で被害を受けた水族館からやってきたペンギンが元気な姿を見せています。<br>在富山市的動物園，那些在能登半島地震受害的水族館而來的企鵝，目前展現出健康的樣子</p><p>石川県七尾市の「のとじま水族館」は能登半島地震で設備に大きな被害を受けたため、飼育している動物を別の動物園に移動させています。<br>石川縣七尾市的「能登島水族館」的設備受到能登半島地震而造成重大損壞，那些他們所飼養的動物，正在被送往其他的動物遠</p><p>富山市ファミリーパークは先月17日、「日本動物園水族館協会」からの依頼を受けて、フンボルトペンギン10羽を受け入れました。<br>富山市的「家庭公園」在17日受到來自日本動物園水族館協会的要求，接受了10隻「洪堡企鵝」</p><p>そして、受け入れたペンギンの体調に問題がないことが確認できたため、今月の4日からもともといたペンギン9羽とともに一般公開を始めました。<br>然後，因爲接收到的企鵝之後，確認了他們身體狀況沒有問題，這個月的四號開始和原本的9隻企鵝開始對外開放</p><p>これまで動物園ではペンギンの餌にアジを与えていましたが、のとじま水族館ではイカナゴを与えていたため、今は新たな環境に少しずつ慣れさせるため、両方の餌を与えています。<br>到目前為止，動物園用竹莢魚作為飼料給企鵝，不過能登島水族館給的是「沙鰻」，為了能漸漸習慣新的環境，目前是兩種飼料都會給</p><p>避難してきたペンギンは元気よく池の中を泳ぎ回っていました。<br>因避難而來的企鵝們正開心地在泳池游來游去</p><p>富山市ファミリーパークの森大輔係長は「餌を食べる量も安定してきた。健康な状態で来たので、そのまま元気に帰せるように管理したい」と話していました。<br>富山市的「家庭公園」的森大輔所長說：「進食量已經變穩定，因為他們是健康地來的，希望能夠管理得當讓他們健康的回家。」</p><p>孫と共に動物園を訪れた富山市の女性は「また元の場所に戻ってもらえたら一番いい。ペンギンが戻れるようになったら、今度はのとじま水族館に遊びに行きたい」と話していました。<br>和孫子一起來動物園來自富山是的女生說道：「還是希望他們能會到他們原本的地方。當企鵝能夠回去的時候，希望下次能夠道能登島水族館玩。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>元気な姿<br>健康的樣子</p><p>見せています<br>正在展示</p><p>体調<br>身體條件</p><p>9羽<br>九隻（鳥類）</p><p>とともに<br>一起</p><p>もともと<br>原本</p><p>元気よく<br>有元氣地</p><p>そのまま<br>保持原樣</p><p>帰せるように<br>為了能夠回去</p><p>戻れる<br>能回去</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day15]</title>
+      <link href="/2024/02/13/32/"/>
+      <url>/2024/02/13/32/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240207/k10014350691000.html">https://www3.nhk.or.jp/news/html/20240207/k10014350691000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>フランス料理フルコースをドローンで 北海道有珠山で実証実験<br>使用無人機運送法國料理套餐到北海道有珠山的實驗</p><p>新たな観光コンテンツを作り出そうと、ドローンを使ってフランス料理のフルコースを北海道の有珠山の展望台まで運ぶ実証実験が行われました。<br>作為嘗試新的旅遊內容，以使用無人機攜帶法國餐點，到達北海道的有珠山的瞭望台作為示範實驗</p><p>この実証実験は、ドローンの幅広い利用を促進し、新たな観光コンテンツを作り出そうと北海道が企画しました。<br>這個示範實驗是以作為北海道新的觀光計畫嘗試的無人機更廣泛的利用</p><p>使われたのは、冬場はあまり利用されることのない苗木を運搬するためのドローンです。<br>這個無人機是被用來幫助搬運秧苗，但在冬季不常被使用</p><p>はじめに、有珠山のロープウエーの「山頂駅」でワインやあらかじめ用意された料理を配送用の箱に入れたあと、ロープでドローンに固定します。<br>首先，在有珠山的山頂站，將酒或是預先準備好的食物放入配送箱裡面，固定在無人機上面</p><p>続いてドローンを飛ばして、およそ250メートル先の展望台まで5分ほどかけて運びました。<br>接下來我們會駕駛，花五分鐘到達大約距離250公尺的瞭望台</p><p>ドローンは、前菜のサラダや、かも肉を使ったメインデッシュ、それにデザートなどを5往復して順に運びます。<br>無人機會往返五次，前菜沙拉、鴨肉用來作為主菜還有點心等</p><p>スタッフはテーブルに並べられた料理を味わいながら、料理が飛行中に崩れていないことや、温かいまま食べられることなどを確認していました。<br>員工會在桌邊安排料理<br>工作人員在品嚐桌上擺放的食物的同時，一邊確認食物沒有在飛行中散落以及是否可以保持溫度</p><p>北海道デジタルトランスフォーメーション推進課の黒澤厚主査は「今回の実験は、非日常の体験としてとても可能性がある。北海道は広いが、人はそこまで多くなくドローンを飛ばしやすいので、用途はどんどん広がっていくと感じている」と話していました。<br>殊為轉型推光科的黑澤敦長官說：「這次的實驗，作為一個特別的體驗是非常有可能的，北海道很寬廣，人也不多，無人機飛機來也很方便，感覺會有越來越多的用途。」</p><p>北海道は今後、農業用のドローンで融雪剤をまく実験も行い、ドローンの活用方法をさらに模索していくことにしています。<br>北海道未來也會在農業上使用無人機噴灑融雪劑，以及持續探索無人機的運用</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>運ぶ（はこぶ）<br>攜帶</p><p>多くなく<br>不多</p><p>広がる<br>擴大</p><p>あらかじめ<br>提早</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day14]</title>
+      <link href="/2024/02/10/31/"/>
+      <url>/2024/02/10/31/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240204/k10014346901000.html">https://www3.nhk.or.jp/news/html/20240204/k10014346901000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>冬の札幌を彩る「さっぽろ雪まつり」が開幕<br>增添札幌冬天色彩的冰雪節開幕了</p><p>冬の札幌を彩る「さっぽろ雪まつり」が開幕し、大小さまざまな雪像や氷像が観光客を楽しませています。<br>增添札幌冬天色彩的冰雪節開幕了，各式各樣的雪雕和冰雕使觀光客玩得很開心。</p><p>「さっぽろ雪まつり」は4日午前、札幌駅のかつての駅舎「旧札幌停車場」をかたどった大雪像の前で開会式が行われ、ファンファーレとともに開会が宣言されました。<br>在四號上午在舊札幌車站的雪雕前發佈了一個大張旗鼓的開幕宣言，作為冰雪節的開幕儀式。</p><p>メイン会場となる札幌市中央区の大通公園には高さ10メートルを超える5つの大雪像が展示されていて、去年開業したプロ野球・日本ハムの新しい球場と新庄監督をテーマとしたものや、明治時代の北海道を舞台にした人気漫画、「ゴールデンカムイ」のキャラクターをかたどったものなどがあります。<br>主要的會場：札幌市中央區的大通公園展示著5個超過10公尺的雪雕，包含了去年火腿棒球隊新球場的主題的雪雕和以明治時代的北海道主題的人氣漫畫「黃金神威」的角色人物</p><p>ことしは4年ぶりにコロナ禍以前の規模で開催され、3つの会場には市民が作った雪像も含め、大小合わせておよそ200の雪像や氷像が並んでいます。<br>今年是四年以來首次有新冠疫情前規模的活動，一共三個會場展示著市民所製作的雪雕，所有大大小小的雪雕、冰雕加起來大約有2000件。</p><p>初日の4日から家族連れや外国人観光客など大勢が訪れていて、このうち、東京から家族で訪れた40代の女性は「この日を楽しみにしていました。大きくて迫力があります」と話していました。<br>從四號第一天開始，許多觀光客包括家族、外國人來參訪，其中，一位來自東京家庭的40多歲女性說道：「我一直很期待這一天，他們又大又具有震撼力。」</p><p>また、大阪から訪れた50代の男性は「おととし亡くなった妻が来たいと言っていたので、追悼旅行で来ました。ゆっくり見ていこうと思います」と話していました。<br>另外，來自大阪的50多歲的男性說道：「前年去世的老說說想來這裡，因此來到這裡追悼。我想來這裡慢慢參觀。」</p><p>「さっぽろ雪まつり」は今月11日までの8日間、開催されます<br>冰雪節，會一直持續到11號一共8天。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>楽しませる<br>取悅</p><p>（で）訪れた（おとずれた）<br>訪問</p><p>彩る（いろどる）<br>上色</p><p>札幌（さっぽろ）<br>札幌</p><p>超える（こえる）<br>超過</p><p>大勢（おおぜい）<br>許多人</p><p>迫力（はくりょく）<br>感人肺腑</p><p>追悼（ついとう）<br>追悼</p><p>開催する（かいさいする）<br>舉辦</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day13]</title>
+      <link href="/2024/02/09/30/"/>
+      <url>/2024/02/09/30/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240201/k10014343291000.html">https://www3.nhk.or.jp/news/html/20240201/k10014343291000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><h3 id="豊洲市場の隣に“江戸時代の町並み”新たな商業施設がオープン"><a href="#豊洲市場の隣に“江戸時代の町並み”新たな商業施設がオープン" class="headerlink" title="豊洲市場の隣に“江戸時代の町並み”新たな商業施設がオープン"></a>豊洲市場の隣に“江戸時代の町並み”新たな商業施設がオープン</h3><h3 id="豐洲市場旁邊的，「江戶時代街景」區域開了新的商業設施"><a href="#豐洲市場旁邊的，「江戶時代街景」區域開了新的商業設施" class="headerlink" title="豐洲市場旁邊的，「江戶時代街景」區域開了新的商業設施"></a>豐洲市場旁邊的，「江戶時代街景」區域開了新的商業設施</h3><p>6年前に東京 築地から移転した豊洲市場の隣に、新たな商業施設が1日にオープンしました。<br>六年前從東京轉移到豐洲市場的新的商業設施在1號的時候開幕了。</p><p>1日にオープンしたのは、江東区の豊洲市場の隣にできた商業施設「豊洲千客万来」で、市場の新鮮な食材が楽しめる飲食店や、入浴施設などが入り、江戸時代の町並みをイメージしてつくられています。<br>在一號這天，江東區的豐洲市場內完成的商業設施「豐洲千客萬來」，裡面可以享受來自市場新鮮食材的餐飲店、也包含洗浴設施等各種還原江戶時代街景的感覺。</p><p>オープンの前には記念式典が開かれ、東京都の小池知事は「場内と場外が一体となって一層のにぎわいが生まれることを楽しみにしている。臨海部の新しい顔として大いに発展してほしい」と述べました。<br>在開幕前的紀念典禮，東京都的小池知事說道：「我希望在場內外的融合能夠更加地繁榮，讓沿海地區的新的樣貌也能大力發展。」</p><p>このあと、PR役のアンバサダーを務める歌舞伎俳優の中村獅童さんが「大勢の方にお越しいただき、食を楽しんで温泉で疲れを癒やして、歌舞伎座にも来ていただけたらうれしい」とあいさつしました。<br>在這之後，公關大使歌舞伎演員中村志度說道：「希望有很多人來拜訪，來到歌舞伎座享受美食和溫泉。」</p><p>そして、午前10時にオープンすると、待っていた人たちが次々と店舗に入り、早速、買い物や食事を楽しんでいました。<br>然後，在上午十點開放後，在等待的人們隨即陸續入內開始享用美食和購物。</p><p>施設は当初、築地から移転したあとの市場の開場にあわせてオープンする計画でしたが、運営事業者の辞退や新型コロナの影響などで、予定より遅れてのオープンとなりました。<br>這個設施當初是從築地轉移後，原本是要配合市場的開幕時間，但受到經營者辭職和新冠疫情的影響，比預定還要晚才開幕。</p><p>施設の運営会社によりますと、年間260万人の来場を見込んでいるということです。<br>根據營運方，每年可以上看260萬人的人流。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>移転する（いてんする）<br>搬遷</p><p>町並み（まちなみ）<br>市容、街景</p><p>つくられています<br>被製作中</p><p>開かる（ひらかる）<br>打開</p><p>楽しみにしている（たのしみにしている）<br>非常期待</p><p>臨海部（りんかいぶ）<br>沿岸</p><p>述べる（のべる）<br>說明</p><p>大勢の方に（おおぜいのかたに）<br>比較有禮貌地行容「一群人」</p><p>お越しいただき（おこしいただき）<br>感謝您的到來（非常謙讓說法）</p><p>次々（つぎつぎ）<br>接連地</p><p>早速（さっそく）<br>馬上</p><p>あわせて<br>配合</p><p>賑わい（にぎわい）<br>繁榮</p><p>見込む（みこむ）<br>期待</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day12]</title>
+      <link href="/2024/02/08/29/"/>
+      <url>/2024/02/08/29/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240206/k10014348421000.html">https://www3.nhk.or.jp/news/html/20240206/k10014348421000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>インフルエンザは例年、2月初めのちょうど今の時期にピークを迎えると言われています。検査は、鼻の粘膜を採取する方法が一般的ですが、今、AI＝人工知能を用いた方法が広がり始めています。<br>流感在每年的二月初會來到一個高峰時期，而正好也就是這個時期。檢查一般是透過鼻子黏膜採樣，而現在使用AI人工智能的方法已經逐漸普及。</p><p>国立感染症研究所などによりますと、全国およそ5000か所の医療機関から報告されたインフルエンザの患者数は、1月28日までの1週間に9万4694人にのぼり、1医療機関当たりでは19.2人と前の週よりも増加しています。<br>根據國立感染症研究所報導，全國大約5000所的醫療機關所提供的患者數量，截至1月28日那一週，人數攀升到9萬4694人，相當於一個醫療機構一週平均多了19.2人。</p><p>各地のクリニックなどでは、検査を受けに来た人たちで混み合う様子がみられますが、今、AI＝人工知能を活用した新しい検査方法が広がり始めています。<br>許多地方的診所，來檢查的人越來越多而變得越來越擁擠，而現在開始使用了人工智能來診斷。</p><p>新しい検査方法では、まずAIを搭載した小型のカメラで、のどの状態を撮影します。<br>新的檢查方法，首先要戴一個小型的攝影機，可以照出喉嚨的狀態。</p><p>AIは、50万枚以上の、のどの画像を元に学習していて、インフルエンザに感染すると、のどにできるとされる「インフルエンザろ胞」などがあるかどうかを判定します。<br>AI擁有50萬件以上的喉嚨圖像學習，因此可以透過判斷否有「流感濾泡」來決定是否感染了流感。</p><p>かかる時間は数秒から十数秒で、これを元に医師が問診などを行ったうえで、インフルエンザと診断します。<br>只要花數秒到數十秒，加上醫生的問診，就可以診斷出是否有流感。</p><p>機器を導入した埼玉県のクリニックによりますと、鼻の粘膜からの検査が苦手な患者を中心に好評だということです。<br>有這個機器的導入，埼玉縣的診所表示深受那些不喜歡鼻腔粘膜檢查的患者喜歡。</p><p>また、「インフルエンザろ胞」は、発症後すぐに現れるとされ、診断までの時間の短縮にもつながっているということです。<br>而且，這個「流感濾泡」會在發病後就出現，也因此減少了診斷的時間。</p><p>この機器による検査は保険適用され、全国の医療機関で使われ始めているということです。<br>使用這個機器檢測已經加入保險內，全國各個醫療機關已經開始使用。</p><p>検査を受けた10歳の女の子は「痛くなくて、すぐに結果が出てすごいと思いました」と話していました。<br>一位10歲受檢查的女孩說道：「不會痛，結果很快就出來了，非常厲害。」</p><p>機器を導入した、埼玉県の「いまじょうクリニック」の今城眞臣医師は「新しいテクノロジーに期待して、診断の精度や業務の効率化のために導入しました。患者の痛みが少なく、診断のスピードが速くなるのは、患者にとっても医療者にとってもメリットがあると感じています」と話していました。<br>機器導入之後，埼玉縣的金城診所的真臣醫師說道：「很期待這樣的新的科技，可以幫助診斷的正確性和執行的效率，也可以減少患者的痛苦。診斷的速度變快，對患者和醫療人員都是好事。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>ちょうど<br>正好</p><p>迎える（むかえる）<br>迎來</p><p>検査（けんさ）<br>檢查</p><p>鼻（はな）<br>鼻子</p><p>粘膜（ねんまく）<br>粘膜</p><p>用いた（もちいた）<br>使用</p><p>…によりますと<br>根據…</p><p>増加（ぞうか）<br>增加</p><p>混み合う様子（こみあうようす）<br>場面擁擠</p><p>撮影（さつえい）<br>攝影</p><p>これを元に（これおもとに）<br>以此為基礎</p><p>中心に好評（ちゅうしんにこうひょう）<br>深受好評</p><p>現れる（あらわれる）<br>被發現</p><p>…にもつながっている<br>有助於</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day11]</title>
+      <link href="/2024/02/06/28/"/>
+      <url>/2024/02/06/28/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240203/k10014346301000.html">https://www3.nhk.or.jp/news/html/20240203/k10014346301000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>来月開業する北陸新幹線の金沢・敦賀間で一般向けの試乗会が行われ、一足早く、新たな区間での走行を体験しました。<br>預計下個月開通的北陸新幹線金澤到賀敦的路線，舉辦了給民眾搭乘的試乘會，讓客人提前體驗新的路線的行駛。</p><p>この試乗会では来月16日に開業する北陸新幹線の金沢駅と福井県の敦賀駅をそれぞれ出発して往復します。<br>這個試乘會將從下個月16號開通的金澤站和福井縣的敦賀站個別出發。</p><p>3日と4日の2日間行われ、応募倍率およそ75倍のなか、抽せんで選ばれたおよそ2000人が乗車体験します。<br>三號和四號這為期兩天的活動，報名比例約為 75:1 中抽出約兩千人來體驗乘車。</p><p>このうち、敦賀駅にはおよそ500人の家族連れや鉄道ファンが集まり、営業用の車両「W7系」が新しいホームに入ってくると、車両と一緒に記念撮影をしていました。<br>其中，敦賀站包含家庭和鐵道迷大約有五百人聚集在此，在商用車種W7系列進新的月台時和他一起合照。</p><p>子どもと一緒に乗車するという愛知県の30代の女性は「息子が新幹線が好きなので応募しました。車両から雪景色を見るのが楽しみです」と話していました。<br>一位來自愛知縣30多歲帶著小孩的女性說道：「因為兒子很喜歡新幹線所以報名了，很期待從車上看到雪景。」</p><p>そして、正午ごろ、参加者たちを乗せた新幹線は金沢に向けて出発しました。<br>中午時，載著參加者的新幹線，向金澤站出發。</p><p>まもなくすると、金沢駅を発車した新幹線が敦賀駅に到着し、一足早く新たな区間での走行を体験した参加者たちが降りてきました。<br>過了不久，從金澤站出發的新幹線到達了敦賀站，提前體驗這個新的路線的乘車乘客也都下車了。</p><p>乗車した石川県の50代の男性は「音が静かで、乗り心地がよかったです。また新幹線に乗って敦賀のほうに遊びに来たいです」と話していました。<br>剛剛體驗玩的一位來自石川縣的50多歲男性說道：「搭起來很安靜、也很舒適，我希望再次乘坐這個新幹線來到敦賀這邊遊玩。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><p>行われ （おこなわれ）<br>舉辦  </p><p>一足早く （ひとあしく）<br>稍早、提早</p><p>それぞれ<br>各別</p><p>往復します（おうふく）<br>往返</p><p>このうち<br>其中</p><p>鉄道ファン（てつどう）<br>鐵道迷</p><p>xxxに向けて<br>前往xxx</p><p>心地（ここち）<br>感覺</p><p>ほう<br>方向、地方</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day10]</title>
+      <link href="/2024/02/02/27/"/>
+      <url>/2024/02/02/27/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>昨天跑南部看演唱會，miss掉一天，今天直接 level up 看「普通のニュース」</p><h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/html/20240131/k10014341951000.html">https://www3.nhk.or.jp/news/html/20240131/k10014341951000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震で被災した石川県の飲食店を支援しようと、富山県の飲食店の経営者たちが「フッコウメシ」と名付けた料理を詰めたギフトボックスを、寄付してくれた人たちに、お礼として提供する取り組みを始めました。<br>為了支援能登半島地震的石川縣的餐飲店，富山縣的餐飲店將一個名為「フッコウメシ」的料理裝在禮盒裡面，作為感謝那些貢獻者而提供的。</p><p>これは、富山県南砺市で飲食店を営む谷口英司さんが、石川県輪島市と七尾市で被災した知り合いの飲食店を支援しようと仲間の飲食店経営者7人に呼びかけて始めました。<br>這活動是由在富山縣南礪市經營餐飲店的谷口英司發起的，他呼籲七位餐廳老闆夥伴，幫忙支援他朋友在輪島市和七尾市的餐廳。</p><p>谷口さんたちが準備したのは、「フッコウメシ」と名付けられたギフトボックスで、富山県内の食材を使って、それぞれの店で調理した恵方巻き、かにしんじょう、豚のもつ煮など、8種類の料理が詰められています<br>谷口先生準備了名為「フッコウメシ」的禮盒，他使用了富山縣的食材，每間店都用了八種不同的料理，有惠方卷、蟹肉、豬雜碎等。</p><p>1月31日は、富山市中心部の「総曲輪通り商店街」などで、飲食店を支援するため一口5000円の寄付を呼びかけました。<br>在1月31日，在富山市中心的Sokuruwa Dori商店街等地方，呼籲每一份以5000元日幣來支持餐飲店。</p><p>そしてお礼として、今回の地震で被災した富山県氷見市の酒蔵で作られた日本酒とあわせて提供すると、用意された300セットは、およそ1時間でなくなりました。<br>為了表示感謝，這是受到地震影響的富山縣冰見市的製作清酒的釀酒廠也一併提供了300組的清酒，大約在一小時銷售完畢。</p><p>寄付をした富山市の50代の女性は「若いころは能登半島方面に仕事に行くことがあり、被災された方たちのことが気になっていたので、役に立ちたいと思いました。早く日常が取り戻されることを願っています」と話していました。<br>其中一個50多歲來自富山市的五十多歲的女性捐贈者說：「早期工作會要去能登半島工作，我很關心受到災害的人，我很想要幫忙，希望能早日恢復正常生活。」</p><p>谷口さんは「能登半島の各地には、知り合いの料理人や生産者がたくさんいるので、それぞれが元気になれば、周りの方たちも勇気づけられると思います。この活動を長く続けていきたい」と話していました。<br>谷口先生說：「能登半島有很多我認識做料理的人，如果他們能打起精神，我覺的也可以影響到周圍的人。我想要長期的持續這樣的活動。」</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day9]</title>
+      <link href="/2024/02/01/26/"/>
+      <url>/2024/02/01/26/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014343861000/k10014343861000.html">https://www3.nhk.or.jp/news/easy/k10014343861000/k10014343861000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>石川県は、能登半島地震で大きな被害を受けた七尾市や志賀町、穴水町にボランティアを送り始めています。<br>在石川縣，受到能登半島地震影響的七尾市、志賀町、穴水町等地已經開始派遣志工。</p><p>2月1日朝6時ごろ、50人ぐらいのボランティアが金沢駅からバスで出発しました。埼玉県から来た25歳の森田和奈さんは、穴水町で壊れた家を片づける手伝いをしました。森田さんは「壊れた建物や道を見て、災害は怖いと思いました。あと1日頑張ります」と話していました。<br>2月1號大早上6點左右，大約50位志工從金澤站出發。來自埼玉縣25歲的森田和奈，幫忙清理那些在穴水町遭受破壞的房子。他說：「看到你那些受損的建築物和道路，覺得很可怕。我會再努力一天。」</p><p>3日からは、珠洲市と中能登町でもボランティアの活動が始まる予定です。輪島市は今月上旬から始めたいと考えています。<br>從3號開始，珠洲市和中能登町的志工的活動預計會開始。輪島市希望能在這個月的上旬開始。</p><p>被害を受けた町に泊まる所がないため、ボランティアは毎日金沢市からバスで行きます。市や町の職員や車が足りないなど、ほかにもいろいろな問題があります。このため、ボランティアは行く前に石川県に登録する必要があります。<br>受損的鎮上，已經沒有能夠住宿的地方，志工每天需要從金澤是搭巴士過來。城鎮的公務人員和汽車有不足等等的其他問題，也因為如此，志工在前往石川縣之前必須事先登記。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['送', 'おく'],      ['り'],    ],    chinese: '送（指人）'  },  {    japanese: [      ['片', 'かた'],      ['づける'],    ],    chinese: '清理'  },  {    japanese: [      ['災害', 'さいがい'],    ],    chinese: '災害'  },  {    japanese: [      ['活動', 'かつどう'],    ],    chinese: '活動'  },  {    japanese: [      ['上旬', 'じょうじゅん'],    ],    chinese: '上旬'  },  {    japanese: [      ['職員', 'しょくいん'],    ],    chinese: '公職人員'  },  {    japanese: [      ['登録', 'とうろく'],    ],    chinese: '登記'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day8]</title>
+      <link href="/2024/01/31/25/"/>
+      <url>/2024/01/31/25/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html">https://www3.nhk.or.jp/news/easy/k10014340141000/k10014340141000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震では、日本酒をつくる会社も被害を受けました。<br>能登半島的地震，也讓日本清酒生產的公司受到波及。</p><p>石川県能登町にある「松波酒造」という会社では、お酒をつくる建物が壊れました。しかし、中にあった約3ｔの米や、瓶に入れた日本酒は大丈夫でした。<br>在石川縣能登町一間叫做「松波酒造」的公司，生產酒精的建築物被摧毀，不過裡面約三噸的米和清酒都沒事。</p><p>この会社の金七聖子さんは、石川県の別の市にある会社に頼んで、自分の会社の米を使って、日本酒をつくり続けることにしました。<br>公司裡面的金七聖子說，可以拜託石川縣其他市的公司，使用自家公司的米持續的製作日本清酒。</p><p>29日には、近くに住む人やボランティアの人と一緒に、米を車にのせました<br>在29號這天，附近的志工一起幫忙將米裝進車上。</p><p>金七さんは「この米で、今年も日本酒をつくることができると思うと希望を感じます」と話していました。<br>金七說：「這些米讓我看到今年可以順利製作日本清酒的希望。」</p><p>能登半島地震では、11の会社で日本酒をつくることができなくなっています。この中の3つの会社が、別の会社に米などを運んで、日本酒をつくることにしています。<br>受到能登半島地震的影響，造成有11間製作日本清酒公司無法生產。其中有三家透過別家公司運來的米等材料得以繼續生產。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['日本酒', 'にほんしゅ'],    ],    chinese: '日本清酒'  },  {    japanese: [      ['米', 'こめ'],    ],    chinese: '米'  },  {    japanese: [      ['頼', 'たの'],      ['む'],    ],    chinese: '委託'  },  {    japanese: [      ['ボランティア'],    ],    chinese: '志工'  },  {    japanese: [      ['乗', 'の'],      ['せる'],    ],    chinese: '放、裝上'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day7]</title>
+      <link href="/2024/01/30/24/"/>
+      <url>/2024/01/30/24/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html">https://www3.nhk.or.jp/news/easy/k10014340611000/k10014340611000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>総務省によると、去年、東京都に引っ越してきた人は約45万4000人でした。東京都からほかの所に出ていった人は約38万6000人でした。引っ越してきた人のほうが約6万8000人多くなりました。<br>根據總務省，去年搬進東興的人口大約45萬4000人，離開東京前往其他地方的人數約為38萬6000人。還有大約多了6萬8000人搬來東京。</p><p>新型コロナウイルスの問題があった2021年は、引っ越してきた人のほうが少し多くて、約5400人でした。しかし、おととしと去年は大きく増えました。<br>雖受到新冠疫情的影響，2021搬來東京的人口還是有稍微多了些，大約5400人。不過，前年和去年人口是大幅增加的。</p><p>総務省は「若い人たちが仕事や勉強のために東京に来たと考えています」と話しています。<br>總務省說：「為了工作或讀書的年輕人會考量來東京。」</p><p>引っ越してきた人のほうが多かった所は、東京都やその周りの県、大阪府などでした。ほかの所は、出ていった人のほうが多くなりました。<br>很多人搬進去的地方像是東京都和周邊的縣、大阪府等等。其他的地方呈現離開的人比較多。</p><p>総務省は「地方の人口が少なくなると、日本の力が弱くなります。地方に住む人を多くして、地方を元気にしたいです」と話しました。<br>總務省說：「農村的人口減少的話，會降低日本的實力，為了讓農村能夠更多人去生活，要讓農村振興。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['ほかの'],    ],    chinese: '其他'  },  {    japanese: [      ['新型', 'しんがた'],      ['コロナウイルス'],    ],    chinese: '新冠疫情'  },  {    japanese: [      ['のほうが'],    ],    chinese: '更'  },  {    japanese: [      ['若', 'わか'],      ['い'],    ],    chinese: '年輕的'  },  {    japanese: [      ['周', 'まわ'],      ['り'],    ],    chinese: '周圍'  },  {    japanese: [      ['など'],    ],    chinese: '等等的'  },  {    japanese: [      ['地方', 'ちほう'],    ],    chinese: '農村'  },  {    japanese: [      ['人口', 'じんこう'],    ],    chinese: '人口'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day5]</title>
+      <link href="/2024/01/29/22/"/>
+      <url>/2024/01/29/22/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014333621000/k10014333621000.html">https://www3.nhk.or.jp/news/easy/k10014333621000/k10014333621000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>沖縄県名護市の動物園「ネオパークオキナワ」には、寒さが苦手な動物たちがいます。<br>在沖繩縣名護市的動物園Neo Park Okinawa，那些怕冷的動物。</p><p>この動物園では、1日の最も高い気温が13℃ぐらいでいつもの年よりずっと寒くなった日がありました。「フタユビナマケモノ」は、南アメリカの森にいる動物です。この日はおりの中のストーブの近くで、ほとんど動かないで気持ちよさそうにしていました。<br>這個動物園，有幾天的最高的溫度大約是13度，比往年還要冷，二趾樹懶，南美洲森林的一種動物。今天他們很靠近暖爐，看起來非常舒適。</p><p>「コモンリスザル」のおりの中でも、リスザルたちがストーブの近くに集まっていました。<br>松鼠猴的籠子裡面，松鼠猴們也集中到了暖爐旁。</p><p>見に来た女性は「とてもかわいいです。ナマケモノを見て心も体も温めたいと思います」と話しました。<br>來觀賞的女性，說道：「非常的可愛，看著樹懶，我的身心都暖和的起來。」</p><p>動物園の人は「ナマケモノは体の温度を上げたり下げたりするのが上手ではありません。動物たちのこのような様子は沖縄では珍しいので、見に来てください」と話しました。<br>動物人員說：「樹懶不擅長提升或下降他們的體溫，像這樣情況的動物在沖繩市比較稀有的，請大家來觀賞。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['苦手な', 'にがて'],      ['な']    ],    chinese: '不擅長、喜歡'  },  {    japanese: [      ['フタユビナマケモノ'],    ],    chinese: '二趾樹懶'  },  {    japanese: [      ['おり'],    ],    chinese: '籠子'  },  {    japanese: [      ['ほとんど'],    ],    chinese: '幾乎'  },  {    japanese: [      ['コモンリスザル'],    ],    chinese: '普通松鼠猴'  },  {    japanese: [      ['集', 'あつ'],      ['まる']    ],    chinese: '集合'  },  {    japanese: [      ['温度', 'おんど'],    ],    chinese: '溫度'  },  {    japanese: [      ['上', 'あ'],      ['げる']    ],    chinese: '上升'  },  {    japanese: [      ['下', 'さ'],      ['げる']    ],    chinese: '下降'  },  {    japanese: [      ['様子', 'ようす'],    ],    chinese: '狀態'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day4]</title>
+      <link href="/2024/01/28/21/"/>
+      <url>/2024/01/28/21/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014331491000/k10014331491000.html">https://www3.nhk.or.jp/news/easy/k10014331491000/k10014331491000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>能登半島地震が起こったあと、石川県穴水町にある高校で、自動販売機が壊されていました。この高校には近所の人が避難していて、自動販売機の中の飲み物はなくなっていました。<br>能登半島的地震過後，石川縣穴水町的高中的販賣機被震壞了。附近的居民疏散到高中時，販賣機個飲料都不見了。</p><p>そのあと、自動販売機の飲み物の会社に「避難している人に飲み物を渡すために壊しました。すみません」と連絡がありました。<br>在那之後，提供自動販賣機的飲料商說：「為了被提供避難者而用壞販賣機非常抱歉」。</p><p>会社によると、この自動販売機は、災害のときに無料で飲み物を出すことができるタイプでした。電気で動いているときは、自動販売機を管理している人が鍵を使って出すことができます。しかし、地震のあと穴水町では電気が止まって、鍵を持っている人も高校にいませんでした。<br>根據公司，這類型的販賣機是會在災害發生時提供免費飲料的機型。在機器運轉時，機器管理者可以使用鑰匙來開啟這個功能。但是，此次地震造成了穴水町停電，而高中裡也沒有人有鑰匙。</p><p>会社は「飲み物を出したいときは、壊さないで、管理している人や会社に連絡してください」と話しています。<br>該公司表示：「如果想要娶飲料，請不要用壞他，請聯絡負責的機器管理員」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['起', 'お'],      ['こった']    ],    chinese: '發生'  },  {    japanese: [      ['自動販売機', 'じどうはんばいき'],    ],    chinese: '自動販賣機'  },  {    japanese: [      ['近所', 'きんじょ'],    ],    chinese: '附近'  },  {    japanese: [      ['避難', 'ひなん'],    ],    chinese: '避難'  },  {    japanese: [      ['渡', 'わた'],      ['す']    ],    chinese: '提供'  },  {    japanese: [      ['災害', 'さいがい'],      ['す']    ],    chinese: '提供'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[Day3]</title>
+      <link href="/2024/01/27/20/"/>
+      <url>/2024/01/27/20/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014333101000/k10014333101000.html">https://www3.nhk.or.jp/news/easy/k10014333101000/k10014333101000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p><span style="font-size:20px">京都市で2019年、京都アニメーションの建物に男が火をつける事件がありました。36人が亡くなりました。京都地方裁判所は25日、45歳の青葉真司被告を死刑にすると言いました。</span><br>在2019年，東京市的東京動畫的建築物裡面，發生一名男子的縱火事件。造成了36人的死亡。東京的地方法院在25日宣布45歲的被告青葉真司死刑。</p><p><span style="font-size:20px">裁判でいちばん問題になったのは、青葉被告がいいことと悪いことをわかっていたかどうかでした。</span><br>審判最大的問題是，不知道被告青葉是否知道對的事情跟不對的事情。</p><p><span style="font-size:20px">裁判所は、青葉被告がどのように育ってきたかや、どうして火をつけようと考えたかについても調べました。そして「青葉被告は、火をつけたとき少し心の問題がありました。しかし自分で考えて行動していました。いいことと悪いことはわかっていました」と言いました。</span><br>經法院調查被告青葉，是怎麼樣長大的，還有基於什麼原因想要去縱火，說明：「他縱火的原因是有些心態上的問題，但是他知道自己在做一件壞事。」</p><p><span style="font-size:20px">裁判所は「多くの人が亡くなったとても悲しい事件です。家族たちは、とても苦しんでいます」と話しました。</span><br>法院表示：「這是一個如此讓人傷心的事件，許多人因此喪身，他們的家人也都陷入深深的痛苦之中。」</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['火', 'ひ'],    ],    chinese: '火'  },  {    japanese: [      ['被告', 'ひこく'],    ],    chinese: '被告'  },  {    japanese: [      ['死刑', 'しけい'],    ],    chinese: '死刑'  },  {    japanese: [      ['裁判', 'さいばん'],    ],    chinese: '法官'  },  {    japanese: [      ['育', 'そだ'],      ['ちます']    ],    chinese: '生長'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[DAY2]</title>
+      <link href="/2024/01/26/19/"/>
+      <url>/2024/01/26/19/</url>
+      
+        <content type="html"><![CDATA[<h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014333381000/k10014333381000.html">https://www3.nhk.or.jp/news/easy/k10014333381000/k10014333381000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p><span style="font-size:20px">能登半島地震の大きな被害で、石川県の輪島市など4つの市と町の郵便局は、手紙や荷物を家に届ける仕事などができなくなっています。</span><br>受到能登半島地震的影響，石川縣的輪島市等四個縣市郵局的信件、包裹的寄送工作無法進行</p><p><span style="font-size:20px">24日から一部の郵便局で、手紙などを受け取ることができるようになりました。</span><br>從24日開始，有一部分的郵局已經開始可以接收信件了。</p><p><span style="font-size:20px">珠洲市は珠洲郵便局、輪島市は輪島郵便局と門前郵便局に行くと、受け取ることができます。</span><br>珠洲市的珠洲郵局、輪島市的輪島郵局和門前郵局也開始受理郵件。</p><p><span style="font-size:20px">穴水町は穴水郵便局、能登町は能都郵便局と松波郵便局と柳田郵便局です。</span><br>穴水町的穴水郵局、能登町的能都郵局和松波郵局和柳田郵局也都開始受理了。</p><p><span style="font-size:20px">能都郵便局は、500mぐらい離れた宇出津港いやさか広場にある郵便局の車で受け取ることができます。</span><br>距離能都郵局500公尺的牛津港宮坂廣場有郵局車可以受理。</p><p><span style="font-size:20px">受け取るときは、運転免許証など、名前や住所がわかる物が必要です。</span><br>收取信件時，需要能辨別名字和地址的東西，像是駕照。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies" /><script>  const vocabularies = [  {    japanese: [      ['被害', 'ひがい'],    ],    chinese: '受災'  },  {    japanese: [      ['など'],    ],    chinese: '等等'  },  {    japanese: [      ['届', 'とど'],      ['ける']    ],    chinese: '送(文件)、報告'  },  {    japanese: [      ['受', 'う'],      ['け'],      ['取', 'と'],      ['る']    ],    chinese: '接受'  },  {    japanese: [      ['運転免許証', 'うんてんめんきょしょう'],    ],    chinese: '駕駛執照'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日文馬拉松[DAY1]</title>
+      <link href="/2024/01/24/18/"/>
+      <url>/2024/01/24/18/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是一個到年中前每天看一篇日文新聞並翻譯還有背單字的計畫</p><h2 id="連結"><a href="#連結" class="headerlink" title="連結"></a>連結</h2><p><a href="https://www3.nhk.or.jp/news/easy/k10014329811000/k10014329811000.html">https://www3.nhk.or.jp/news/easy/k10014329811000/k10014329811000.html</a></p><h2 id="內文"><a href="#內文" class="headerlink" title="內文"></a>內文</h2><p>北海道の網走市の海には、冬になると、流氷が北から流れてきます。<br>冬天來臨時，流冰從北方流到北海道的網走市的海邊。</p><p>網走地方気象台によると、22日、流氷が網走市の海岸まで流れてきました。<br>根據網走地方氣象台，流冰在22日流到網走市的海岸。</p><p>去年より3週間ぐらい早くなりました。<br>比去年還要早三年發生。</p><p>網走市から見ると、たくさんの氷で海が遠くまで白くなっていました。<br>從遠處看網走市，很多冰讓海水看起來變得白白的</p><p>流氷が流れてくると、氷を見ることができる観光の船が海に出ます。<br>當流冰流動時，觀賞流冰的觀光船就會出海。</p><p>東京から来た夫婦は「これから船に乗ります。初めてきれいな流氷を見るので、楽しみです」と話しました。<br>東京來的夫婦說：「我們正要上傳，第一次看流冰，覺得有趣」</p><p>北海道では紋別市や知床の海にも氷が流れてきていて、流氷を楽しむ季節になりました。<br>在北海道，紋別市、知床等地的海邊已經開始有流冰了，已經是享受流冰的季節了。</p><h2 id="單字"><a href="#單字" class="headerlink" title="單字"></a>單字</h2><div class="vocabularies"></div><script>const vocabularies = [  {    japanese: [      ['網走', 'あばしり'],    ],    chinese: '日本地名'  },  {    japanese: [      ['流氷', 'りゅうひょう'],    ],    chinese: '流冰'  },  {    japanese: [      ['北', 'きた'],    ],    chinese: '北'  },  {    japanese: [      ['流', 'なが'],      ['れます']    ],    chinese: '流'  },  {    japanese: [      ['氷', 'こおり'],    ],    chinese: '冰'  },  {    japanese: [      ['紋別市', 'もんべつし'],    ],    chinese: '日本地名'  },  {    japanese: [      ['知床', 'しれとこ'],    ],    chinese: '日本地名'  },]const vocabulariesParent = document.querySelector(".vocabularies");vocabularies.forEach(vocabulary => {  const span = document.createElement('span');  vocabulary.japanese.forEach(jpPair => {    const ruby = document.createElement('ruby');    ruby.style.color = 'white';    ruby.textContent = jpPair[0];    if (jpPair.length > 1) {      const rt = document.createElement('rt');      rt.textContent = jpPair[1];      ruby.appendChild(rt);    }    span.appendChild(ruby);  });  const spanText = document.createElement('span');  spanText.textContent = vocabulary.chinese;  span.appendChild(spanText);span.appendChild(document.createTextNode('｜'));  vocabulariesParent.appendChild(span);});</script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 日文 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>三元運算子在 React 的行為</title>
+      <link href="/2024/01/23/17/"/>
+      <url>/2024/01/23/17/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這是在工作中碰到的一個小問題，做一個小記錄</p><h3 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h3><p>我有一個區塊是透過 state 去判斷目前的裝置更改樣式</p><p>直接上 code：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;isDesktop ? (</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">PageTab</span> <span class="attr">tabs</span>=<span class="string">&#123;pageConfig.tabs&#125;</span> <span class="attr">activeKey</span>=<span class="string">&#123;currentTab&#125;</span> <span class="attr">onChange</span>=<span class="string">&#123;onTabChange&#125;</span> <span class="attr">type</span>=<span class="string">&quot;card&quot;</span> <span class="attr">key</span>=<span class="string">&quot;card&quot;</span> /&gt;</span></span></span><br><span class="line">) : (</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">PageTab</span> <span class="attr">tabs</span>=<span class="string">&#123;pageConfig.tabs&#125;</span> <span class="attr">activeKey</span>=<span class="string">&#123;currentTab&#125;</span> <span class="attr">onChange</span>=<span class="string">&#123;onTabChange&#125;</span> <span class="attr">type</span>=<span class="string">&quot;line&quot;</span> <span class="attr">key</span>=<span class="string">&quot;line&quot;</span> /&gt;</span></span></span><br><span class="line">)&#125;</span><br></pre></td></tr></table></figure><p>上面這段，type 會給這個 component 不同的樣式</p><p>Component 有沒有加上 key 的差異是什麼？</p><h3 id="對-React-來說"><a href="#對-React-來說" class="headerlink" title="對 React 來說"></a>對 React 來說</h3><p>沒加 key：</p><p>就是一個組件</p><p>會根據 hook 變化更新傳入的 props</p><p>有加 key：</p><p>對 react 來說是「兩個組件」</p><p>他們會在 hook 變化期間「重新 mount」</p><h3 id="影響"><a href="#影響" class="headerlink" title="影響"></a>影響</h3><p>不加 key 的行為</p><ul><li>如果該 component 下面有自己的 state，因為是同一個 component，state 就不會被更新</li><li>因為是只更新 props，如果傳入的 props 是控制 component 的樣式，會看得到「樣式過度」的情形(也是我這次遇到的問題)</li></ul><h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>取決於自己的情境</p><p>大家在開發 react 時</p><p>都會知道用 <code>map</code> 時要加上 key</p><p>因為 react 本身也是不停地在提醒</p><p>但是使用<code>三元運算子</code>的時候</p><p>如果用 state 來決定要傳入的 props 是什麼</p><p>這個 props 如果是跟樣式有關 <strong>就要加上key</strong></p><p>如果是跟資料相關的其實就不需要加上 key</p><p>（但是像這樣做三元運算的渲染似乎都是針對樣式）</p><p>所以其實也可以這樣寫</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">PageTab</span></span><br><span class="line">tabs=&#123;pageConfig.<span class="property">tabs</span>&#125;</span><br><span class="line">activeKey=&#123;currentTab&#125;</span><br><span class="line">onChange=&#123;onTabChange&#125;</span><br><span class="line">type=&#123;isDesktop ? <span class="string">&quot;card&quot;</span> : <span class="string">&quot;line&quot;</span>&#125;</span><br><span class="line">key=&#123;isDesktop ? <span class="string">&quot;card&quot;</span> : <span class="string">&quot;line&quot;</span>&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hash Router &amp; Browser Router（Comparison）</title>
+      <link href="/2024/01/17/16/"/>
+      <url>/2024/01/17/16/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>多了一個新的，「Comparison」</p><p>主要是覺得很多實踐，常常會透過不同方式的比較才知道什麼要使用它</p><p>而會有標題這個疑問，單純是因為和上一間公司用不一樣的方法</p><p>我覺得這也是 software engineer 到不同公司好處（？</p><h2 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h2><p>他們最大的差異就是對 server 來說實際的 path 是什麼</p><p>舉例有一個網站的網址是 hello.com</p><p>假設有一個 about 頁面</p><p>使用 <code>HashRouter</code> 會是這樣：hello.com&#x2F;#&#x2F;about<br>使用 <code>BrowserRouter</code> 會是這樣：hello.com&#x2F;about</p><p>在做頁面的 request 時，server 不會解析 # 之後的內容</p><p>對他來講都是 hello.com 的 request</p><p>而 BrowserRouter 對 server 來說會拿到完整的 path</p><h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>兩者差異為何</p><ol><li>因為要 BrowserRouter 會使 server 拿到不同的 path，可能會多「一點點」負擔</li><li>也因為有多解析 path，BrowserRouter 更有利於 SEO</li><li>BrowserRouter 的 url 長得相對比較好看</li></ol><p>以上是據我所知最大的三個差異點</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Login flow(frontend-solutions)</title>
+      <link href="/2023/12/21/15/"/>
+      <url>/2023/12/21/15/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這個 frontend-solution 用圖是未來可能遇到相同問題前以來這邊看一下</p><p>減少重複從頭思考的過程</p><h2 id="登入流程"><a href="#登入流程" class="headerlink" title="登入流程"></a>登入流程</h2><p>這篇會以我目前正在重構的專案紀錄我整個 login 的 flow</p><h3 id="驗證方式"><a href="#驗證方式" class="headerlink" title="驗證方式"></a>驗證方式</h3><p>在我上一間公司的 login api 稍微比較完整一點 會有 <code>login API</code>, <code>verify API</code> 和 <code>refresh token API</code></p><p>loginAPI: 取的 access token 和 refresh token<br>verifyAPI: 帶入 access token 做 token 的驗證<br>refreshAPi: 帶入 refresh token 取得 access token</p><p>但目前的專案就比較單純</p><p>只有一個 login API</p><p>因此 verify 會選一個簡單的 API 來 call 判斷是否為 login 狀態</p><h3 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h3><p>這裡就描述會出現的幾個情境，不講code</p><h4 id="登入頁面"><a href="#登入頁面" class="headerlink" title="登入頁面"></a>登入頁面</h4><p>進入到 &#x2F;login 頁面</p><p>有幾個情境會需要 cover</p><ol><li>檢查 local storage 有沒有 token（登入過），如果有就會直接 call verify api，若 api response success 就直接 navigate 到 dashboard頁面</li><li>如果沒有 token，就進入正常登入流程，call login api，如果 response success navigate 到 dashboard</li></ol><p>備註：</p><p>這邊我遇到的問題是，如果在登入成功後，同時塞 token 到 local storage 和 navigate 會有問題，因為我進入到 dashboard 也會 verify<br>一次。</p><p>因此如果 local storage 的 token 還沒有設置好，就直接 navigate 到 dashboard 並 call verify api，<strong>頁面就會閃爍<strong></p><h4 id="Dashboard頁面"><a href="#Dashboard頁面" class="headerlink" title="Dashboard頁面"></a>Dashboard頁面</h4><p>所有 dashboard 頁面都會有一個 layout component 做一個 outlet，所以方問任何 dashboard 頁面都會經過這個 layout</p><p>因此會在這個 layout 做 登入狀態的 verify</p><p>直接訪問 dashboard 有幾個情境</p><ol><li>沒有 token 狀態，verify 直接返回錯誤狀態，並且 navigate 到 login page</li><li>有 token 狀態，verify token，response success 保留在原本頁面， error 就 navigate 到 login page</li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>React query 的 fresh, stale</title>
+      <link href="/2023/12/13/14/"/>
+      <url>/2023/12/13/14/</url>
+      
+        <content type="html"><![CDATA[<h2 id="React-query-的-stale-機制"><a href="#React-query-的-stale-機制" class="headerlink" title="React query 的 stale 機制"></a>React query 的 stale 機制</h2><p>一直以來沒搞很清楚的 react-query 的兩個機制</p><p>在 useQuery hook 中有兩個參數 <code>staleTime</code> 和 <code>cacheTime</code></p><p>這兩個具體上的不同是什麼？</p><p>先講論好了</p><p><code>staleTime</code> 是告訴 react query 這個資料多久之內是最新的</p><p><code>cacheTime</code> 是告訴 react query cache 的 data 要 cache 多久</p><p>–</p><h3 id="fresh"><a href="#fresh" class="headerlink" title="fresh"></a>fresh</h3><p>打開 react query dev tools 可以看到 fresh 和 stale 兩個 tag</p><p>而 staleTime 所定義的時間為「多久後」資料會變成 fresh</p><p>因此 staleTime 設定為 0 的時候就不會有 fresh 狀態的 data</p><p>那問題來了</p><p>fresh 代表什麼意思？</p><p><span style="color:red">fresh 狀態的資料不用重新 call api</span></p><p>沒錯</p><p>就是直接從 cache 拿資料</p><h3 id="stale"><a href="#stale" class="headerlink" title="stale"></a>stale</h3><p>其實 stale 很簡單</p><p>就是下次在 render 的時候會重新 call api 拿資料</p><p>並「更新」cache 的 data</p><p>這邊為何說是「更新」，後面會解釋</p><h2 id="最大的疑問"><a href="#最大的疑問" class="headerlink" title="最大的疑問"></a>最大的疑問</h2><p><code>cacheTime = 0</code> 乍看之下和 <code>staleTime = 0</code>  怎麼好像沒有差異？</p><p>cacheTime 到了，就會把 cache 的資料丟棄</p><p>staleTime 到了，就會將資料視為「陳舊」的資料</p><p>–</p><p>這就是為什麼兩個時間設置為 0 都會重新獲得資料</p><p>所以 staleTime 到了是更新 cache data</p><p>cache Time 到了是重新加到 cache</p><p>因為實際上 cache 不會只有 data 還有一些狀態</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Migrate CRA to Vite</title>
+      <link href="/2023/09/08/13/"/>
+      <url>/2023/09/08/13/</url>
+      
+        <content type="html"><![CDATA[<h2 id="場景"><a href="#場景" class="headerlink" title="場景"></a>場景</h2><p>一個公司管理所有客戶資料的後台</p><p>是用 React 寫的</p><p>但是當初創建這個專案的時候用的是 CRA(create react app)</p><p>而要改成使用 Vite 的目的就是提升 DX(develop experience)</p><p>Vite 可以很大程度的提高網頁的 hot reload 速度</p><p>打包速度非常快，並且只會更新有更改code的部分</p><p>加上我自己也想了解這設定上有沒有什麼細節要注意的</p><h2 id="作法"><a href="#作法" class="headerlink" title="作法"></a>作法</h2><p>大家常常拿來比較的是 CRA and Vite</p><p>但是 Vite 其實就是一個打包工具</p><p>他代替的是一個叫做 react-scripts 的 node module</p><p>而這就是 CRA 打包的工具</p><h3 id="Step-One"><a href="#Step-One" class="headerlink" title="Step One"></a>Step One</h3><p>因此 要做的就是先將 react-scripts node module 替換成 vite</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall react-scripts</span><br><span class="line">npm install vite</span><br></pre></td></tr></table></figure><h3 id="Step-Two"><a href="#Step-Two" class="headerlink" title="Step Two"></a>Step Two</h3><p>將 &#x2F;src 裡面的 index.html 移到根目錄</p><p>vite 預設就是抓根目錄的 index.html</p><h3 id="Step-Three"><a href="#Step-Three" class="headerlink" title="Step Three"></a>Step Three</h3><p>建立 vite.config.ts</p><p>先安裝這個套件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @vitejs/plugin-react-swc</span><br></pre></td></tr></table></figure><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&quot;vite&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">&quot;@vitejs/plugin-react-swc&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="title function_">react</span>()],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>為什麼要裝這個套件呢？</p><p>因為 快！</p><p>他可以更快地解析 react</p><p>當然 default 就可以解析了，這只是更快的選擇</p><p>他的描述：<code> A fast Fast Refresh (~20x faster than Babel)</code></p><h3 id="Step-Four"><a href="#Step-Four" class="headerlink" title="Step Four"></a>Step Four</h3><p>更改 script 指令</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;start&quot;: &quot;vite&quot;,</span><br><span class="line">  &quot;build&quot;: &quot;vite build&quot;,</span><br><span class="line">  &quot;test&quot;: &quot;vite test&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>新工作入職一個月心得</title>
+      <link href="/2023/09/05/7/"/>
+      <url>/2023/09/05/7/</url>
+      
+        <content type="html"><![CDATA[<h2 id="About-the-new-job"><a href="#About-the-new-job" class="headerlink" title="About the new job"></a>About the new job</h2><p>就是一個提供補習班管理系統的平台</p><p>當下聽到這樣的產業類別我感覺得還算正派？</p><p>主要是和裡面的技術負責人聊天室愉快的</p><p>他也有坦承，我不是他們第一人選 XD</p><p>畢竟我只有大概一年的經驗</p><p>他們找人的目的是要翻新他們整個專案</p><h2 id="一個月的心得"><a href="#一個月的心得" class="headerlink" title="一個月的心得"></a>一個月的心得</h2><p>是一份半遠端的工作</p><p>公司規模極小，嚴格說起來公司加上我只有四個人</p><p>這個平台對其他三個人來說就是一種副業的概念</p><p>蠻打破我過往的想法</p><p>以前覺得產品要穩定就是要把控好每個細節</p><p>但事實上，一定程度的滿足客戶就可以蠻穩定了</p><p>對，言下之意很多東西其實都是肉眼可以改善的</p><p>即使沒碰過Vue，學到現在也感受到一些東西是可以寫得更好的</p><h2 id="工作環境"><a href="#工作環境" class="headerlink" title="工作環境"></a>工作環境</h2><p>公司是一個小小的工作室</p><p>在老闆其中一個副業的「加盟店」樓上</p><p>絕對算不上舒適</p><p>但是我對這方面要求是不太高</p><p>和老闆的溝通我認為其實還行</p><p>原本以為這種事業做很大的人都不太好溝通</p><p>不知道是不是因為夠年輕？</p><p>總的來說是還蠻開心的吧</p><p>很多想法都可以跟他講</p><p>只要是和理他就會給我不錯的反饋</p><p>溝通這部分我覺得就還不錯</p><h2 id="工作目標"><a href="#工作目標" class="headerlink" title="工作目標"></a>工作目標</h2><p>而我認為最重要且要時時提醒自己的部分</p><p>會選這家進來就是想要多學一些前端以外的部分</p><p>原因是現在很多技術工具前後端已經是有重疊到了</p><p>甚至以後往全端我認為機會是會多很多的</p><p>到目前為止一個月</p><p>Vue我覺得已經有些概念了</p><p>在開使用React重構專案的同時</p><p>我想應該可以一邊學習後端、資料庫、Server這個部分</p><ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul><p>最後附上一隻貓貓</p><p><img src="/images/cat2.jpg"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> career </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>近期面試結果、心得</title>
+      <link href="/2023/07/02/6/"/>
+      <url>/2023/07/02/6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="目前狀態"><a href="#目前狀態" class="headerlink" title="目前狀態"></a>目前狀態</h1><p>目前狀態算是告一段落了</p><p>從一開始的受到同事各種離職的氣氛中</p><p>我也開始嘗試去投遞履歷</p><p>到發現自己其實好像沒有想像中那麼糟糕</p><p>從獲得了offer到開始考慮離開目前這間公司</p><p>其實現在想一想</p><p>我覺得我覺決定還蠻倉促的</p><p>我是投了一些履歷</p><p>拿到了四個面試機會</p><p>拿到兩間offer</p><p>但是我確定</p><p>持續待在我現在這間公司絕對不是一個好的決定</p><p>有面一間算比較知名的公司</p><p>那時候因為有了offer</p><p>也沒有很認真準備</p><p>原本以為穩了</p><p>但是答題還是不夠好就被刷掉了</p><p>覺得蠻可惜的</p><p>主管對我是蠻滿意的 但就是答題上不是那麼好</p><p>總之</p><p>目前算是確定進入一間小小的公司</p><p>他們是提供補習班管理系統的平台</p><h1 id="面試發現的問題"><a href="#面試發現的問題" class="headerlink" title="面試發現的問題"></a>面試發現的問題</h1><p>就這些面試看來</p><p>思考到我哪裡有做不好的地方</p><p>我想就是很多基本知識吧</p><p>真的想要進入理想的公司還是要把面試題目跑過一遍</p><p>光是 sessionstorage localstorage 和 cookie 差異都不知道了 XD</p><h1 id="重新審思自己職涯該進步的方向"><a href="#重新審思自己職涯該進步的方向" class="headerlink" title="重新審思自己職涯該進步的方向"></a>重新審思自己職涯該進步的方向</h1><p>我自己思考後有四點</p><p>比較具體我覺得以後不管平常在練習</p><p>或是未來找工作的方向都可以考慮到的</p><ol><li>前端的基本功</li></ol><p>這裡指的比較像是包含 html, css, js</p><p>還有常用的React框架的基本知識要慢慢的去填坑</p><ol start="2"><li>網頁整體的了解</li></ol><p>這裡指的是對前端到後端 DB 整體的了解包含server的概念</p><ol start="3"><li>接觸真正大型架構的網站</li></ol><p>那種自己做的side project很難去練習這個東西</p><p>包含大架構、商業邏輯</p><p>這些都是要進到真正的公司裡面我覺得才能真正體會</p><ol start="4"><li>對程式碼的敏銳度</li></ol><p>這個我覺得和1, 2點一樣都是可以自己精進的</p><p>因爲即使JS寫到現在</p><p>還是容易看到不少JS寫法我是覺得很難理解</p><p>甚至玩想不到可以這樣用</p><p>導致不要說寫出來</p><p>去維護或是找到bug就是一個挑戰了</p><p>在和Ericsen合作時都能感受到他在運用一些比較common的程式碼知識</p><p>這是不同語言間都可以運用的概念</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> career </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>自定義MUI的主題</title>
+      <link href="/2023/06/19/5/"/>
+      <url>/2023/06/19/5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>雖然 MUI 已經用了一段時間了</p><p>我自己認為還是對他不是很熟悉</p><p>所以想寫一篇來多了解他</p><h1 id="MUI-with-emotion"><a href="#MUI-with-emotion" class="headerlink" title="MUI with emotion"></a>MUI with emotion</h1><p><code>npm install @mui/material @emotion/react @emotion/styled</code></p><p>若要使用 MUI，他的官方會直接叫你下這個指令</p><p>WHY?</p><p>emotion 是一個 css in js 的套件，和 styled component 相似</p><p>而 MUI 就使使用 emotion 的一些方法去客製化他的 component 樣式</p><p>MUI 本是提供「功能面」的 Component，自身已經有一個預設的樣式，要客製化還是依賴 emotion</p><h2 id="createTheme"><a href="#createTheme" class="headerlink" title="createTheme"></a>createTheme</h2><p>createTheme 提供以下 default 的 key 可以去設定</p><p>當然也可以自定義 key 名稱，但注意不能使用’var’作為 key 名稱</p><p><a href="https://mui.com/material-ui/customization/default-theme/">這是是 MUI theme 的 default 值</a></p><h3 id="palette"><a href="#palette" class="headerlink" title="palette"></a>palette</h3><p>設定顏色的 object</p><p>something like this…</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">palette</span>: &#123;</span><br><span class="line">  <span class="attr">background</span>: &#123;</span><br><span class="line">    <span class="attr">default</span>: <span class="string">&#x27;#EEEEEE&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="typography"><a href="#typography" class="headerlink" title="typography"></a>typography</h3><p>可以 customize 字的樣式</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">typography</span>: &#123;</span><br><span class="line">  <span class="attr">subtitle1</span>: &#123;</span><br><span class="line">    <span class="attr">fontSize</span>: <span class="number">12</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">body1</span>: &#123;</span><br><span class="line">    <span class="attr">fontWeight</span>: <span class="number">500</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">button</span>: &#123;</span><br><span class="line">    <span class="attr">fontStyle</span>: <span class="string">&#x27;italic&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure><h3 id="spacing"><a href="#spacing" class="headerlink" title="spacing"></a>spacing</h3><p>使用方法</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">theme.<span class="title function_">spacing</span>(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// 就等於 2 X 8px = 16px</span></span><br></pre></td></tr></table></figure><p>default 單位是 px</p><p>也可以自定義單位成 rem</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">spacing</span>: <span class="function">(<span class="params">factor</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;<span class="number">0.25</span> * factor&#125;</span>rem`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="breakpoints"><a href="#breakpoints" class="headerlink" title="breakpoints"></a>breakpoints</h3><p>自定義方式如下</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">breakpoints</span>: &#123;</span><br><span class="line">  <span class="attr">values</span>: &#123;</span><br><span class="line">    <span class="attr">xs</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">sm</span>: <span class="number">600</span>,</span><br><span class="line">    <span class="attr">md</span>: <span class="number">900</span>,</span><br><span class="line">    <span class="attr">lg</span>: <span class="number">1200</span>,</span><br><span class="line">    <span class="attr">xl</span>: <span class="number">1536</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure><h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><p>可以更改 default props</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> theme = <span class="title function_">createTheme</span>(&#123;</span><br><span class="line">  <span class="attr">components</span>: &#123;</span><br><span class="line">    <span class="comment">// Name of the component</span></span><br><span class="line">    <span class="title class_">MuiButtonBase</span>: &#123;</span><br><span class="line">      <span class="attr">defaultProps</span>: &#123;</span><br><span class="line">        <span class="comment">// The props to change the default for.</span></span><br><span class="line">        <span class="attr">disableRipple</span>: <span class="literal">true</span>, <span class="comment">// No more ripple, on the whole application 💣!</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure><p>或是 override styles</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">MuiButton</span>: &#123;</span><br><span class="line">  <span class="attr">styleOverrides</span>: &#123;</span><br><span class="line">    <span class="comment">// Name of the slot</span></span><br><span class="line">    <span class="attr">root</span>: &#123;</span><br><span class="line">      <span class="comment">// Some CSS</span></span><br><span class="line">      <span class="attr">fontSize</span>: <span class="string">&#x27;1rem&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure><p>又或者 customize variants + default styles</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="attr">components</span>: &#123;</span><br><span class="line">  <span class="title class_">MuiButton</span>: &#123;</span><br><span class="line">    <span class="attr">styleOverrides</span>: &#123;</span><br><span class="line">      <span class="attr">root</span>: <span class="function">(<span class="params">&#123; ownerState &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">        ...(ownerState.<span class="property">variant</span> === <span class="string">&#x27;contained&#x27;</span> &amp;&amp;</span><br><span class="line">          ownerState.<span class="property">color</span> === <span class="string">&#x27;primary&#x27;</span> &amp;&amp; &#123;</span><br><span class="line">            <span class="attr">backgroundColor</span>: <span class="string">&#x27;#202020&#x27;</span>,</span><br><span class="line">            <span class="attr">color</span>: <span class="string">&#x27;#fff&#x27;</span>,</span><br><span class="line">          &#125;),</span><br><span class="line">      &#125;),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure><h2 id="apply-themes"><a href="#apply-themes" class="headerlink" title="apply themes"></a>apply themes</h2><p>在 createTheme 定義好樣式之後，有些會直接使用到預設的樣式</p><p>但大部分會需要手動去使用</p><p>假設這是我定義好的 theme</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> theme = <span class="title function_">createTheme</span>(&#123;</span><br><span class="line">  <span class="attr">palette</span>: &#123;</span><br><span class="line">    <span class="attr">primary</span>: &#123;</span><br><span class="line">      <span class="attr">main</span>: <span class="string">&quot;#ff4400&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MyApp</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ThemeProvider</span> <span class="attr">theme</span>=<span class="string">&#123;theme&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">MyComponent</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ThemeProvider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="useTheme"><a href="#useTheme" class="headerlink" title="useTheme"></a>useTheme</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 使用主題</span></span><br><span class="line">  <span class="keyword">const</span> theme = <span class="title function_">useTheme</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">theme.palette.primary.main</span> &#125;&#125;&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>以下有幾種方法</p><h3 id="styled"><a href="#styled" class="headerlink" title="styled"></a>styled</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">StyledDiv</span> = <span class="title function_">styled</span>(<span class="string">&quot;div&quot;</span>)(<span class="function">(<span class="params">&#123; theme &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">color</span>: theme.<span class="property">palette</span>.<span class="property">primary</span>.<span class="property">main</span>,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure><h3 id="sx"><a href="#sx" class="headerlink" title="sx"></a>sx</h3><p>sx 有兩種方法</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Box</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">sx</span>=<span class="string">&#123;(theme)</span> =&gt;</span> (&#123;</span></span><br><span class="line"><span class="language-xml">        color: theme.palette.primary.main,</span></span><br><span class="line"><span class="language-xml">        backgroundColor: theme.palette.background.default,</span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    &gt;</span></span><br><span class="line"><span class="language-xml">      Hello, world!</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Box</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">sx</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">width:</span> <span class="attr">300</span>,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">color:</span> &quot;<span class="attr">success.main</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      Hello, world!</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>入職滿一年記錄一下</title>
+      <link href="/2023/06/09/4/"/>
+      <url>/2023/06/09/4/</url>
+      
+        <content type="html"><![CDATA[<h1 id="和去年的差異"><a href="#和去年的差異" class="headerlink" title="和去年的差異"></a>和去年的差異</h1><p>我大概想一下，我覺得比較有進步的除了技術之外，很多在職場上的應對能力我覺得是更有幫助</p><p>我覺得不是說我現在變得很好，而是我之前真的太糟了</p><h2 id="主動性"><a href="#主動性" class="headerlink" title="主動性"></a>主動性</h2><p>我覺得這是我一直以來蠻大的缺點</p><p>現在也還在努力當中</p><p>因為公司比較自由的風氣</p><p>很多時候任務出來都會是主管問「這個有誰要負責？」</p><p>總是同事先講出來說他要負責</p><p>而就工作而言</p><p>我缺乏主動性的心態是因為怕自己做不來</p><p>但是我得到的結論是</p><p>很多事情，從不會到會，這樣的過程才是進步最快的時候</p><h2 id="對-document-的排斥感"><a href="#對-document-的排斥感" class="headerlink" title="對 document 的排斥感"></a>對 document 的排斥感</h2><p>其實這個還在學習當中</p><p>以前碰到新的套件、技術</p><p>我都會想要直接看 youtube 去看別人怎麼做</p><p>但是很多時候是真的要看過 document 才會真正的活用</p><p>常常腦袋出現一句話：「哇 X，他怎麼知道可以這樣用啊？」</p><p>我馬上就知道這是有沒有看 document 的差距</p><p>簡單來說，比較懂的靜下來好好掃過 document 一遍</p><h2 id="對使用中的東西不會去了解"><a href="#對使用中的東西不會去了解" class="headerlink" title="對使用中的東西不會去了解"></a>對使用中的東西不會去了解</h2><p>很多專案是同事開始去使用的</p><p>我就會完全抄他們的寫法直接用</p><p>沒有去好好了解那個套件在幹嘛</p><p>但我覺得目前也在慢慢填坑</p><p>能到目前這個狀態我覺得也是因為技術力慢慢有起來</p><p>有那個餘力再去做更深入的理解</p><h2 id="技術"><a href="#技術" class="headerlink" title="技術"></a>技術</h2><p>技術層面，其實回頭看我認為做到了某一個程度就是在重複的做了</p><p>老實講，我覺得我的技術到了後半年之後成長的就變得緩慢了</p><p>不過確確實實有明顯的進步</p><p>包含一些 component 的規劃</p><p>對程式碼的理解速度有加快</p><p>資料的處理想法也比較多</p><h1 id="接下來一年要達成的"><a href="#接下來一年要達成的" class="headerlink" title="接下來一年要達成的"></a>接下來一年要達成的</h1><h2 id="The-most-important"><a href="#The-most-important" class="headerlink" title="The most important"></a>The most important</h2><p>那就是閱讀 document 的能力</p><p>在這個節奏超級快的前端領域下</p><p>常常都在用新東西</p><p>我想要像我的同事一樣</p><p>能更有效、更快的理解一個技術、套件的整體脈絡以及使用方法</p><p>–靜下來好好的把一個 document 讀完–</p><h2 id="更新-Github"><a href="#更新-Github" class="headerlink" title="更新 Github"></a>更新 Github</h2><p>最近滿一年去面試了一下，我認為 github 是很多面試官會想要先看的東西</p><p>第一個是持續更新這個網站</p><p>第二個就是開始做想做的 side project 吧</p><h2 id="持續在日常找到填坑的機會"><a href="#持續在日常找到填坑的機會" class="headerlink" title="持續在日常找到填坑的機會"></a>持續在日常找到填坑的機會</h2><p>不管是在工作、上網</p><p>常常都會吸收到一些知識</p><p>我現在都會記錄下來，以利後續可以深入研究這樣東西</p><p>有些是全新的技術，有些是用了但不是很理解那個東西</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> career </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>創造一個沒有shallow copy的世界</title>
+      <link href="/2023/05/31/3/"/>
+      <url>/2023/05/31/3/</url>
+      
+        <content type="html"><![CDATA[<h1 id="arr-with"><a href="#arr-with" class="headerlink" title="arr.with()"></a>arr.with()</h1><h2 id="怎麼用"><a href="#怎麼用" class="headerlink" title="怎麼用 ?"></a>怎麼用 ?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">with</span>([指定的index], [指定的值]);</span><br></pre></td></tr></table></figure><p>以往想要更改 array 指定的 index 的值會這麼做</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假設我想要這個arr但是第三項改為 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 必須先做一個深拷貝</span></span><br><span class="line"><span class="keyword">let</span> newArr = [...arr];</span><br><span class="line">newArr[<span class="number">2</span>] = <span class="number">4</span>;</span><br><span class="line"><span class="comment">// newArr = [1, 2, 4]</span></span><br><span class="line"></span><br><span class="line">而要做到這樣的效果就可以使用;</span><br><span class="line">arr.<span class="title function_">with</span>();</span><br><span class="line">如下;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newArr = arr.<span class="title function_">with</span>(<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line"><span class="comment">// newArr = [1, 2, 4]</span></span><br></pre></td></tr></table></figure><h1 id="toSroted-toReversed-toSpliced"><a href="#toSroted-toReversed-toSpliced" class="headerlink" title="toSroted toReversed toSpliced"></a>toSroted toReversed toSpliced</h1><p>看起來應該蠻眼熟的？</p><p>沒錯，我自己的理解為 sort() reverse() splice() 的深拷貝版本</p><p>其實和前面 arr.with()一樣的概念，節省了拷貝的功夫</p><p>不只是省了一些拷貝的功夫，也有效能上的優化</p><p>以這個為例</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...arr].<span class="title function_">sort</span>();</span><br></pre></td></tr></table></figure><p>他在深拷貝和 sort function 都會 loop 一次</p><p>而相反的</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">toSorted</span>();</span><br></pre></td></tr></table></figure><p>這就只會 loop 一次</p><h1 id="structuredClone"><a href="#structuredClone" class="headerlink" title="structuredClone"></a>structuredClone</h1><p>這也是 js 深拷貝的 method</p><p>我就有一個疑問了</p><p>arr.toSorted() 和 structuredClone(arr).sort() &#x3D;&gt; 這兩者的差異 ?</p><p>我問了 Chat GPT</p><p>結論是前者效能比較好</p><p>原因是因為 structuredClone 會 <strong>deep copy 一次</strong></p><p>而 toSorted()他是直接 <strong>操作原始陣列後 return 一個新的 array</strong></p><h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>以目前來看 structuredClone 的瀏覽器支援度較佳，所以可能會先用這個方法</p><p>等未來支援度更高的時候我覺得就可以用了</p><p>支援度補充:</p><p><a href="https://caniuse.com/?search=structuredClone">structuredClone</a></p><p><a href="https://caniuse.com/?search=tosorted">toSorted</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>轉移到Github的Blog網站了!!</title>
+      <link href="/2023/05/28/1/"/>
+      <url>/2023/05/28/1/</url>
+      
+        <content type="html"><![CDATA[<p>很想要找到一個可以很舒適的寫我寫的東西的地方，</p><p>從一開始的痞克幫，medium，後來又自己寫一個blog，</p><p>痞課幫我覺得最大的點是太雜了，</p><p>而這三者共通問題比較是沒辦法很自如的寫有關程式碼東西，</p><p>後來在更新履歷的時候就發現一個東西，</p><p>因為我工作的時候用程式碼管理的平台是Gitlab，</p><p>我想要放Github連結的時候發現，挖X! 有夠空的，</p><p>同時又想到很多人其實會把很多文章寫在github上面，</p><p>我就google了一下github blog，</p><p>發現了Hexo這個東西，</p><p><a href="https://minglun-wu.medium.com/%E5%BB%BA%E7%AB%8B%E4%B8%80%E5%80%8B%E5%B1%AC%E6%96%BC%E8%87%AA%E5%B7%B1%E7%9A%84-%E7%A8%8B%E5%BC%8F-%E9%83%A8%E8%90%BD%E6%A0%BC-4d295ed96236">文章在這</a></p><p>Hexo簡單來說就是一個可以透過github repo去很簡單架設blog的框架</p><p>然後就又找到了現在這個我覺得蠻好看的theme XD</p><p><a href="https://github.com/Haojen/Claudia-theme-blog/tree/master/themes/hexo-theme-Claudia">主題在這</a></p><p>目前看到的功能有tag、根據時間篩選文章、搜尋文章功能等，我覺得挺棒的，而且部屬也是很迅速，</p><p>目前很粗糙的先打開了這個專案，我猜應該有不少可以用的有趣功能等我去發現，</p><p>反正目前就是這樣，不確定會不會去把過去的文章搬過來，應該會吧…</p><p>放一隻貓貓做結尾 ฅ•ω•ฅ</p><p><img src="/images/cat.jpg"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> chat </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>了解一下ForwardRef</title>
+      <link href="/2023/05/28/2/"/>
+      <url>/2023/05/28/2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要 ?"></a>前情提要 ?</h1><p>其實 React 寫到現在已經滿一年了，還是有不少 React 的東西我不是很了解，</p><p>究竟是因為用不到所以不了解，還是因為不了解所以沒用到呢？</p><p>因為我在看一些 document 的時候，看到有一些 forwardRef 的用法，</p><p>就決定來了解一下這到底是什麼？</p><h1 id="什麼是-forwardRef"><a href="#什麼是-forwardRef" class="headerlink" title="什麼是 forwardRef ?"></a>什麼是 forwardRef ?</h1><p>我讀了一下文件，</p><p>以我的理解來說就是，</p><p>「把子層 component 的 ref 傳到父層去使用」</p><h2 id="疑問"><a href="#疑問" class="headerlink" title="疑問"></a>疑問</h2><p>看起來這個定義蠻直觀的，</p><p>而且本身命名也是吻合他的用法，</p><p>但去了解他具體怎麼用的時候我就產生了一些疑問，</p><p>不囉唆直接上 code</p><p>這是一般使用 forwardRef 的方法</p><ul><li>在要使用 ref 的那一個 component 使用 useRef 建立 ref</li><li>傳給要操作的 dom 的 component 裡面</li><li>component 會用 forwardRef 這個 function 包住 component，他會回傳兩個參數分別是 props 和 ref</li><li>在把 ref 傳到要操縱的元素上面即可</li></ul><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useEffect, forwardRef, useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> btnRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(btnRef, <span class="string">&quot;btnRef&quot;</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Start editing to see some magic happen!<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">CustomButton</span> <span class="attr">ref</span>=<span class="string">&#123;btnRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ButtonWithForwardRef</span> = <span class="title function_">forwardRef</span>(<span class="keyword">function</span> <span class="title function_">CustomButton</span>(<span class="params">props, ref</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span>&gt;</span>button<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>做到這邊其實很直觀的就會想到一個問題</p><p>那就是整個傳入 ref 的概念不就跟傳 props 一樣嗎？</p><p>為啥還要多一個 forwardRef 來只用來傳 ref ？</p><p>沒錯</p><p>我硬要用一般 props 傳入的方法一樣可以 work</p><p>但要注意的是情事 component 沒有執行 forwardRef 時</p><p>在父層傳入會無效，因此要命名 ref 以外的 e.g. btnRef 之類的</p><h1 id="So-Why-forwardRef"><a href="#So-Why-forwardRef" class="headerlink" title="So Why forwardRef"></a>So Why forwardRef</h1><p>那照前面的說明，forwardRef 好像就沒有存在的必要？</p><p>我的結論是</p><p>如果是寫 function component 確實是沒有差別</p><p>除了以 prop 傳 ref 可能會讓別人在使用 component 的時候比較不理解，因為他不能直接命名 ref</p><p>第二個原因是為了讓<code>class component重構至function component</code>能更佳 smooth，</p><p>不需要再去改父層的 api</p><p><a href="https://stackoverflow.com/questions/62931216/why-exactly-do-we-need-react-forwardref">詳細的解說在這</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>近期的專案前置設定</title>
+      <link href="/2023/05/14/12/"/>
+      <url>/2023/05/14/12/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Eslint-x-lint-staged-x-prettier-x-husky"><a href="#Eslint-x-lint-staged-x-prettier-x-husky" class="headerlink" title="Eslint x lint-staged x prettier x husky"></a>Eslint x lint-staged x prettier x husky</h1><h2 id="這幾個工具的關聯"><a href="#這幾個工具的關聯" class="headerlink" title="這幾個工具的關聯"></a>這幾個工具的關聯</h2><p>我一開始也不知道有這麼樣的工具可以尬在一起用，</p><p>也是工作夥伴在我們team上推動的，</p><p>有一點不太一樣，</p><p>工作上沒有用到prettier，formatter只用了eslint（等等後面會說明這個）</p><p>先講最終目的，</p><p>就是為了要能夠在團隊中維護程式碼的品質，</p><p>eslint - 檢查程式碼的格式<br>prettier - format程式碼<br>lint-staged - 只針對修改過的程式碼做檢查<br>husky - 在你要進行push or commit時會觸發檢查的工具(我們是設定在commit階段)</p><h2 id="How-did-it-work"><a href="#How-did-it-work" class="headerlink" title="How did it work?"></a>How did it work?</h2><p>一般在做開發的時候，</p><p>完成一個feature後，我們會把程式碼commit後推上去發PR</p><p>而這整個流程就可以從commit出發，</p><p>下了commit指令 -&gt; 觸法husky -&gt; 執行lint-staged -&gt; lint那些只修改過的files</p><p>當然</p><p>在一般開發的時候，可以透過一些套件來直接檢查自己程式碼是否有符合你們制定的lint規範</p><p>可以透過一些vscode的擴充套件達成</p><p>不然在commit階段才做檢查會改得很痛苦</p><h2 id="eslint-setups"><a href="#eslint-setups" class="headerlink" title="eslint setups"></a>eslint setups</h2><ul><li><code>npm install eslint</code></li><li><code>npm init @eslint/config</code></li><li>根據所需的eslint規則加入到 .eslintrc的config中，可以直接在config裡面設定，也可以直接去引用別人定義好的lint</li><li>再把lint的script加入到package.json裡面</li></ul><h2 id="prettier-setups"><a href="#prettier-setups" class="headerlink" title="prettier setups"></a>prettier setups</h2><p>正常來說，eslint是不會和prettier一起用的</p><p>因為prettier自己有一套format規則</p><p>而eslint也有format的功能，因此兩者會有衝突</p><p>但是基於prettier的強大的formatter</p><p>有人就提供了eslint + prettier的方法</p><ul><li>額外下載這兩個套件 eslint-plugin-prettier eslint-config-prettier，用途主要是避免eslint與prettier衝突</li><li>.eslintrc中加入 <code>extend: &quot;plugin:prettier/recommended&quot;</code></li></ul><p>當然，還是可以更改.prettierrc的設定的</p><p>如果是eslint和prettier都有的設定，比如說: semi</p><p>這個情況會是以prettier為優先</p><h2 id="husky-setups"><a href="#husky-setups" class="headerlink" title="husky setups"></a>husky setups</h2><ul><li><code>npm install husky</code></li><li><code>npm pkg set scripts.prepare=&quot;husky install&quot;</code></li><li><code>npx husky add .husky/pre-commit &quot;npm test&quot;</code> 給husky加一個pre-commit的指令為’npm test’</li></ul><h2 id="lint-staged-setups"><a href="#lint-staged-setups" class="headerlink" title="lint-staged setups"></a>lint-staged setups</h2><ul><li><code>npm install lint-staged</code></li><li>承husky的pre-commit 指令，把pre-commit設定為<code>lint-staged</code>指令</li><li>設定要lint的files，這有很多方式，可以去lint-staged的npm看</li></ul><p>我個人覺得比較簡單的方式就是在package.json中給一個lint-staged物件，<br>格式會像是這樣</p><p>src底下的所有fold的所有files會run 一次lint</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;lint-staged&quot;: &#123;</span><br><span class="line">  &quot;src/**/*.&#123;ts,tsx&#125;&quot;: &quot;eslint --fix&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>nginx, Dockerfile, docker compose</title>
+      <link href="/2023/04/16/11/"/>
+      <url>/2023/04/16/11/</url>
+      
+        <content type="html"><![CDATA[<h1 id="工作上用到的Dockerfile"><a href="#工作上用到的Dockerfile" class="headerlink" title="工作上用到的Dockerfile"></a>工作上用到的Dockerfile</h1><h2 id="為何會有這篇？"><a href="#為何會有這篇？" class="headerlink" title="為何會有這篇？"></a>為何會有這篇？</h2><p>由於目前公司網站都是放在GCP的（還有一些是在Azure，不過目前都在慢慢遷移了）</p><p>簡單來說，會有這篇的原因是即使我是前端，還是有要自己設定一些dockerfile nginx的情況</p><p>不過即使到現在，我認為不是一個很好的狀態，因為我碰到要寫docker or nginx的時候</p><p>就是<code>打開過去類似的專案然後copy</code> XDD</p><p>不過當然</p><p>寫到現在也碰過很多次，甚至是有一些以前沒有遇過的狀況，這時候就會需要自己真的去寫這些file了</p><p>但你說我因此會寫了嗎？</p><p>我認為是否定的</p><p>基本上也都是based on 之前的設定檔做一些改寫</p><p>也就是因為為什麼會有這篇，我想要趁我想到這件事的時候，梳理一下這些邏輯</p><h2 id="專案如何部署的？"><a href="#專案如何部署的？" class="headerlink" title="專案如何部署的？"></a>專案如何部署的？</h2><p>我們公司會有好幾台GCP虛擬環境</p><p>而要在哪一台放哪些專案這個問題目前我都是會跑去跟後端他們確認</p><p>我的認知是這台GCP的ip的某個port要對應的哪一個domain</p><p>我們再透過docker + nginx 去把port號對出去，讓使用者訪問</p><h2 id="How-do-React-and-Next-work-with-docker"><a href="#How-do-React-and-Next-work-with-docker" class="headerlink" title="How do React and Next work with docker ?"></a>How do React and Next work with docker ?</h2><p>基本上我們公司前端專案撇除過去老舊專案</p><p>現在的專案都是由這兩個框架去做的</p><p>那使用的基準不外乎就是我們前端team會去評估</p><h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><p>目前是有兩種方式</p><p>第一種，在docker node image build完專案</p><p>再把這個在node image build好的檔案(dist)丟到nginx image裡面的&#x2F;var&#x2F;www&#x2F;html路徑</p><p>讓nginx server去抓裡面的index.html</p><p>在用docker compose 去對port號，就可以成功對外這個nginx server給使用者了</p><p>–</p><p>第二種，其實大同小異，差異就是讓docker做比較少事情</p><p>我自己在本地端build完成，把dist推到repo上，並在GCP機器上pull下來</p><p>docker只會建立nginx的image，然後docker會複製我在local build好的dist資料夾到nginx的&#x2F;var&#x2F;www&#x2F;html路徑</p><p>後面就一樣，nginx會去抓dist裡面的index.html後，用docker compose把port號對出去就完成了</p><h3 id="Next"><a href="#Next" class="headerlink" title="Next"></a>Next</h3><p>Next是經過請教公司意一個資深的同事才知道簡單那麼多</p><p>因為next本身就是一個server，因此他不需要再利用docker去建立一個nginx的image</p><p>因此只需要在node image裏面啟動server，再將該server的port號由docker compose對出去就可以了！</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>為什麼React map時需要加上key?</title>
+      <link href="/2023/04/07/10/"/>
+      <url>/2023/04/07/10/</url>
+      
+        <content type="html"><![CDATA[<h1 id="React-key的用途"><a href="#React-key的用途" class="headerlink" title="React key的用途"></a>React key的用途</h1><p>作為使用React開發網頁的開發者</p><p>必定會用到這個語法</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Mycomponent</span></span>() &#123; </span><br><span class="line">  <span class="built_in">return</span> &lt;&gt;</span><br><span class="line">    &#123;arr.map(item=&gt;&lt;div key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/div&gt;)&#125;</span><br><span class="line">  &lt;/&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>React官方網站寫說: <code>Keys tell React which array item each component corresponds to.</code></p><p>對React來講，key就是辨識array裡面每一個item的一個標示</p><p>他以資料夾做舉例，你要對資料夾新增刪除，電腦會提示你給他一個名稱而且不能重複</p><p>這對電腦來講就是他的key，電腦才知道要編輯、刪除、修改的是哪一個東西</p><h1 id="要怎麼給key-不給會怎樣-難道react就無法辨識每個array-item"><a href="#要怎麼給key-不給會怎樣-難道react就無法辨識每個array-item" class="headerlink" title="要怎麼給key ? 不給會怎樣 難道react就無法辨識每個array item ?"></a>要怎麼給key ? 不給會怎樣 難道react就無法辨識每個array item ?</h1><p>如上述所說，key像是資料夾名稱必須是unique的，因此我們在map的時候會給他唯一的key值</p><p>而要注意到的是，他不是只整個react application唯一，而是該array唯一</p><p>一般來說，在處理array類型資料的時候都會有對應的id，我們會把這個id當作key</p><p>但不一定要是id，也可能是name, title這種可能會是unique值的東西</p><p>如果真的重複，react也會貼心地跟你講</p><p>–</p><p>!! 錯誤的情況</p><ul><li>就是你可能給了key，但是它是有重複的，react就會報錯</li><li>或者是用map第二個參數index給key，這個方式在一般情況可能沒問題，但是有機會發生無法預期的錯誤</li><li>不給key，根據react官網，他會一樣default給你index</li></ul><h2 id="給index會發生什麼問題"><a href="#給index會發生什麼問題" class="headerlink" title="給index會發生什麼問題 ?"></a>給index會發生什麼問題 ?</h2><h3 id="效能問題"><a href="#效能問題" class="headerlink" title="效能問題"></a>效能問題</h3><p>使用index作為key，如果做新增、刪除array的操作，對react來講每一次都在重新給予key值</p><p>假設有一個array</p><p>item 1-3對應的index key是 0, 1, 2</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;item1&#x27;, &#x27;item2&#x27;, &#x27;item3&#x27;]</span><br></pre></td></tr></table></figure><p>如果我把’item2’刪掉，那這個array index只剩下 1, 2，那item3就被重新給予key了</p><p>如果有一個非常龐大的array，每次操作他都會重新render，可以想像會對效能造成不小的傷害</p><h3 id="無法預期的錯誤"><a href="#無法預期的錯誤" class="headerlink" title="無法預期的錯誤"></a>無法預期的錯誤</h3><p>如下圖例子，刪除第二項，input內容卻被保留了</p><p><img src="/images/post3.png" alt="image"><br><img src="/images/post3-1.png" alt="image"></p><h2 id="可以用index作為key的時機"><a href="#可以用index作為key的時機" class="headerlink" title="可以用index作為key的時機"></a>可以用index作為key的時機</h2><p>在靜態頁面的情況，非常確定不會操作到array的時候其實就可以用index</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何在nextjs使用.md</title>
+      <link href="/2023/04/05/9/"/>
+      <url>/2023/04/05/9/</url>
+      
+        <content type="html"><![CDATA[<h1 id="markdown-files-in-Nextjs"><a href="#markdown-files-in-Nextjs" class="headerlink" title="markdown files in Nextjs"></a>markdown files in Nextjs</h1><h3 id="MDX"><a href="#MDX" class="headerlink" title=".MDX"></a>.MDX</h3><p>其實依照Nextjs官網的solution，他有一個方式可以去讀一個叫做.mdx的檔案格式</p><p>他和.md幾乎是一樣的，但是他能做的事情不只是寫markdown</p><p>他可以在裡面寫javascript，把需要的component import進去</p><p>e.g.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123; MyComponent &#125; from &#x27;my-components&#x27;</span><br><span class="line"></span><br><span class="line"># My MDX page</span><br><span class="line"></span><br><span class="line">This is a list in markdown:</span><br><span class="line"></span><br><span class="line">- One</span><br><span class="line">- Two</span><br><span class="line">- Three</span><br><span class="line"></span><br><span class="line">Checkout my React component:</span><br><span class="line"></span><br><span class="line">&lt;MyComponent/&gt;</span><br></pre></td></tr></table></figure><h2 id="如何實作"><a href="#如何實作" class="headerlink" title="如何實作 ?"></a>如何實作 ?</h2><h3 id="如何讀這些-md檔案"><a href="#如何讀這些-md檔案" class="headerlink" title="如何讀這些.md檔案?"></a>如何讀這些.md檔案?</h3><p>我在&#x2F;src資料夾裡面加了一folder叫做<code>posts</code></p><p>在posts裡面新增markdown files</p><p>然後會在pages的 <code>getServerSideProps</code> function去讀fs檔案</p><p>利用<code>fs</code>module裡面的<code>readdirSync</code>和<code>readdirSync</code>function去讀files和folder</p><p>如下</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">export const getServerSideProps = async () =&gt; &#123;</span><br><span class="line">  const files = fs.readdirSync(path.resolve(process.cwd(), &quot;src/posts&quot;));</span><br><span class="line">  const allPostsData = files.map((fileName) =&gt; &#123;</span><br><span class="line">    const slug = fileName.replace(&quot;.md&quot;, &quot;&quot;);</span><br><span class="line">    const fileContents = fs.readFileSync(</span><br><span class="line">      path.resolve(process.cwd(), `src/posts/$&#123;slug&#125;.md`</span><br><span class="line">      ));</span><br><span class="line">    const &#123; data, content &#125; = matter(fileContents);</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      files,</span><br><span class="line">      slug,</span><br><span class="line">      data,</span><br><span class="line">      content,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">  return &#123; props: &#123; allPostsData &#125; &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h3 id="在nextjs使用fs遇到的坑"><a href="#在nextjs使用fs遇到的坑" class="headerlink" title="在nextjs使用fs遇到的坑"></a>在nextjs使用fs遇到的坑</h3><h4 id="process-cwd-vs-dirname"><a href="#process-cwd-vs-dirname" class="headerlink" title="process.cwd() vs __dirname"></a>process.cwd() vs __dirname</h4><p>對於node不是很熟悉的我來說，即使是google到答案還不是很確定為什麼XD</p><p>我要去閱讀 <code>path.resolve(process.cwd(), &quot;src/posts&quot;)</code>這個位置的檔案</p><p>一開始都一直失敗，因為我第一個參數用的是<code>__dirname</code>，一直不知道為何</p><p>但這和next執行node的方式有關</p><p>先講一下__dirname和process.cwd()的差異</p><p>前者是<strong>執行node的檔案位置</strong>，以我的案例來說，因為我是在getServerSideProps執行</p><p><img src="/images/2.png" alt="image"></p><p>有上圖可以看到，因為是在server執行的，所以會抓到.next\server\pages這個路徑，而找不到我的.md檔案</p><h3 id="解析拿到的md資料"><a href="#解析拿到的md資料" class="headerlink" title="解析拿到的md資料"></a>解析拿到的md資料</h3><p>會需要一個叫做 next-mdx-remote 這個套件來解析markdown file</p><p>會需要import一個component和function分別是MDXRemote和serialize</p><p>serialize function會回傳一個promise，response會回傳一個物件</p><p>再把這個物件放到MDXRemote component裡面</p><h3 id="樣式"><a href="#樣式" class="headerlink" title="樣式"></a>樣式</h3><p>以我這個專案用tailwind來說</p><p>tailwind有給一個className可以diabled掉指定的component <code>prose</code></p><p>在tailwind.config裡面去設定我想要的markdown樣式</p><p><a href="https://tailwindcss.com/docs/typography-plugin" target="_blank">參考如連結</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何更改commit message ?</title>
+      <link href="/2023/04/03/8/"/>
+      <url>/2023/04/03/8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="更改前一個-commit-message"><a href="#更改前一個-commit-message" class="headerlink" title="更改前一個 commit message"></a>更改前一個 commit message</h1><p>以更改「前一個」commit message 來說比較簡單</p><p>可以直接用 <code>--amend</code> 參數</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend -m &quot;message you want to apply...&quot;</span><br></pre></td></tr></table></figure><p>但是必須要注意的事情是，他會成為一個新的 commit log</p><p>這邊做個範例</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit log --oneline</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">69ea03d (HEAD -&gt; main) chore: add some custom stlyes</span><br><span class="line">f0984db fix: enable husky</span><br><span class="line">bc9c434 refactor: posts ordering</span><br><span class="line">25b8dca (origin/main, origin/HEAD) feat: changelog layout</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend -m &quot;build: add some custom styles&quot;</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3a4e223 (HEAD -&gt; main) build: add some custom styles</span><br><span class="line">f0984db fix: enable husky</span><br><span class="line">bc9c434 refactor: posts ordering</span><br><span class="line">25b8dca feat: changelog layout</span><br></pre></td></tr></table></figure><p>這邊就可以看到，原本的<code>69ea03d</code>已經不見了，取而代之的是<code>3a4e223</code></p><h1 id="更改任意一個-commit-message"><a href="#更改任意一個-commit-message" class="headerlink" title="更改任意一個 commit message"></a>更改任意一個 commit message</h1><p>那如果是我想要更改更之前的 commit name 呢？</p><p>分為幾個步驟</p><ol><li>找到我要改的 commit id</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git log --oneline</span><br><span class="line"></span><br><span class="line">708df70 (HEAD -&gt; main) feat: first post</span><br><span class="line">3a4e223 build: add some custom styles</span><br><span class="line">f0984db fix: enable husky</span><br><span class="line">bc9c434 refactor: posts ordering</span><br></pre></td></tr></table></figure><ol start="2"><li>假設我要改的是<code>f0984db</code>這個 commit message，我要找到該 commit 的上一個 commit id，以這個情況為例就是<code>bc9c434</code></li></ol><p>然後下該指令 （要注意下此指令前要先把 git 的 stage 和 change 清空）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i bc9c434</span><br></pre></td></tr></table></figure><ol start="3"><li>此時會進入 vim 長這樣</li></ol><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pick f0984db fix: enable husky</span><br><span class="line">pick 3a4e223 build: add some custom styles</span><br><span class="line">pick 708df70 feat: first post</span><br><span class="line"></span><br><span class="line"># Rebase bc9c434..708df70 onto bc9c434 (3 commands)</span><br><span class="line">#</span><br><span class="line"># Commands:</span><br><span class="line"># p, pick &lt;commit&gt; = use commit</span><br><span class="line"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span><br><span class="line"># e, edit &lt;commit&gt; = use commit, but stop for amending</span><br><span class="line"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span><br><span class="line"># f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="line"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span><br><span class="line"># b, break = stop here (continue rebase later with &#x27;git rebase --continue&#x27;)</span><br><span class="line"># d, drop &lt;commit&gt; = remove commit</span><br><span class="line"># l, label &lt;label&gt; = label current HEAD with a name</span><br><span class="line"># t, reset &lt;label&gt; = reset HEAD to a label</span><br><span class="line"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span><br><span class="line"># .       create a merge commit using the original merge commit&#x27;s</span><br><span class="line"># .       message (or the oneline, if no original merge commit was</span><br><span class="line"># .       specified). Use -c &lt;commit&gt; to reword the commit message.</span><br><span class="line">#</span><br></pre></td></tr></table></figure><p>但別慌張，我們要注意的只有這個部分</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pick f0984db fix: enable husky</span><br><span class="line">pick 3a4e223 build: add some custom styles</span><br><span class="line">pick 708df70 feat: first post</span><br></pre></td></tr></table></figure><p>將我們要改的 commit 前面 pick 改為 r 然後 esc &#x3D;&gt; : &#x3D;&gt; wq 儲存並退出 vim</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r f0984db fix: enable husky</span><br><span class="line">pick 3a4e223 build: add some custom styles</span><br><span class="line">pick 708df70 feat: first post</span><br></pre></td></tr></table></figure><ol start="4"><li>修改你要的 commit message</li></ol><p>此時會進入另一個 vim</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fix: enable husky</span><br><span class="line"></span><br><span class="line"># Please enter the commit message for your changes. Lines starting</span><br><span class="line"># with &#x27;#&#x27; will be ignored, and an empty message aborts the commit.</span><br><span class="line">#</span><br><span class="line"># Date:      Mon Apr 3 14:12:18 2023 +0800</span><br><span class="line">#</span><br><span class="line"># interactive rebase in progress; onto bc9c434</span><br><span class="line"># Last command done (1 command done):</span><br><span class="line">#    reword f0984db fix: enable husky</span><br><span class="line"># Next commands to do (2 remaining commands):</span><br><span class="line">#    pick 3a4e223 build: add some custom styles</span><br><span class="line">#    pick 708df70 feat: first post</span><br><span class="line"># You are currently editing a commit while rebasing branch &#x27;main&#x27; on &#x27;bc9c434&#x27;.</span><br><span class="line">#</span><br><span class="line"># Changes to be committed:</span><br><span class="line">#       modified:   .husky/commit-msg</span><br><span class="line">#       modified:   .husky/pre-commit</span><br><span class="line">#</span><br></pre></td></tr></table></figure><p>將 fix: enable husky -&gt; 改為你要的 message 後一樣 esc &#x3D;&gt; : &#x3D;&gt; wq 儲存並離開 vim 就完成了。</p><p>!! 但是這邊有一個情況</p><p>如果 commit message 是已經被 push 過了，你更改完再 push 會出現以下 error</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">! [rejected]        main -&gt; main (non-fast-forward)</span><br></pre></td></tr></table></figure><p>此時只要在 push 加上-f 參數即可</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> frontend </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>

@@ -1,0 +1,56 @@
+<!DOCTYPE html><html class="appearance-dark" lang="en"><head><meta charset="UTF-8"><title>近期的專案前置設定</title><meta name="description" content="只專注一件事"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><link rel="icon" href="/"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="Eslint x lint-staged x prettier x husky這幾個工具的關聯我一開始也不知道有這麼樣的工具可以尬在一起用，
+也是工作夥伴在我們team上推動的，
+有一點不太一樣，
+工作上沒有用到prettier，formatter只用了eslint（等等後面會說明這個）
+先講最終目的，
+就是為了要能夠在團隊中維護程式碼的品質，
+eslint - 檢查程式碼的格式prettier - format程式碼lint-staged - 只針對修改過的程式碼做檢查husky - 在你要進行push or commit時會觸發檢查的工具(我們是設定在commit階段)
+How did it work?一般在做開發的時候，
+完成一個feature後，我們會把程式碼commit後推上去發PR
+而這整個流程.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">近期的專案前置設定</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Eslint-x-lint-staged-x-prettier-x-husky"><span class="toc-text">Eslint x lint-staged x prettier x husky</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%99%E5%B9%BE%E5%80%8B%E5%B7%A5%E5%85%B7%E7%9A%84%E9%97%9C%E8%81%AF"><span class="toc-text">這幾個工具的關聯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-did-it-work"><span class="toc-text">How did it work?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eslint-setups"><span class="toc-text">eslint setups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#prettier-setups"><span class="toc-text">prettier setups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#husky-setups"><span class="toc-text">husky setups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lint-staged-setups"><span class="toc-text">lint-staged setups</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">近期的專案前置設定</h1><time class="has-text-grey" datetime="2023-05-13T16:00:00.000Z">2023-05-14</time><article class="mt-2 post-content"><h1 id="Eslint-x-lint-staged-x-prettier-x-husky"><a href="#Eslint-x-lint-staged-x-prettier-x-husky" class="headerlink" title="Eslint x lint-staged x prettier x husky"></a>Eslint x lint-staged x prettier x husky</h1><h2 id="這幾個工具的關聯"><a href="#這幾個工具的關聯" class="headerlink" title="這幾個工具的關聯"></a>這幾個工具的關聯</h2><p>我一開始也不知道有這麼樣的工具可以尬在一起用，</p>
+<p>也是工作夥伴在我們team上推動的，</p>
+<p>有一點不太一樣，</p>
+<p>工作上沒有用到prettier，formatter只用了eslint（等等後面會說明這個）</p>
+<p>先講最終目的，</p>
+<p>就是為了要能夠在團隊中維護程式碼的品質，</p>
+<p>eslint - 檢查程式碼的格式<br>prettier - format程式碼<br>lint-staged - 只針對修改過的程式碼做檢查<br>husky - 在你要進行push or commit時會觸發檢查的工具(我們是設定在commit階段)</p>
+<h2 id="How-did-it-work"><a href="#How-did-it-work" class="headerlink" title="How did it work?"></a>How did it work?</h2><p>一般在做開發的時候，</p>
+<p>完成一個feature後，我們會把程式碼commit後推上去發PR</p>
+<p>而這整個流程就可以從commit出發，</p>
+<p>下了commit指令 -&gt; 觸法husky -&gt; 執行lint-staged -&gt; lint那些只修改過的files</p>
+<p>當然</p>
+<p>在一般開發的時候，可以透過一些套件來直接檢查自己程式碼是否有符合你們制定的lint規範</p>
+<p>可以透過一些vscode的擴充套件達成</p>
+<p>不然在commit階段才做檢查會改得很痛苦</p>
+<h2 id="eslint-setups"><a href="#eslint-setups" class="headerlink" title="eslint setups"></a>eslint setups</h2><ul>
+<li><code>npm install eslint</code></li>
+<li><code>npm init @eslint/config</code></li>
+<li>根據所需的eslint規則加入到 .eslintrc的config中，可以直接在config裡面設定，也可以直接去引用別人定義好的lint</li>
+<li>再把lint的script加入到package.json裡面</li>
+</ul>
+<h2 id="prettier-setups"><a href="#prettier-setups" class="headerlink" title="prettier setups"></a>prettier setups</h2><p>正常來說，eslint是不會和prettier一起用的</p>
+<p>因為prettier自己有一套format規則</p>
+<p>而eslint也有format的功能，因此兩者會有衝突</p>
+<p>但是基於prettier的強大的formatter</p>
+<p>有人就提供了eslint + prettier的方法</p>
+<ul>
+<li>額外下載這兩個套件 eslint-plugin-prettier eslint-config-prettier，用途主要是避免eslint與prettier衝突</li>
+<li>.eslintrc中加入 <code>extend: &quot;plugin:prettier/recommended&quot;</code></li>
+</ul>
+<p>當然，還是可以更改.prettierrc的設定的</p>
+<p>如果是eslint和prettier都有的設定，比如說: semi</p>
+<p>這個情況會是以prettier為優先</p>
+<h2 id="husky-setups"><a href="#husky-setups" class="headerlink" title="husky setups"></a>husky setups</h2><ul>
+<li><code>npm install husky</code></li>
+<li><code>npm pkg set scripts.prepare=&quot;husky install&quot;</code></li>
+<li><code>npx husky add .husky/pre-commit &quot;npm test&quot;</code> 給husky加一個pre-commit的指令為’npm test’</li>
+</ul>
+<h2 id="lint-staged-setups"><a href="#lint-staged-setups" class="headerlink" title="lint-staged setups"></a>lint-staged setups</h2><ul>
+<li><code>npm install lint-staged</code></li>
+<li>承husky的pre-commit 指令，把pre-commit設定為<code>lint-staged</code>指令</li>
+<li>設定要lint的files，這有很多方式，可以去lint-staged的npm看</li>
+</ul>
+<p>我個人覺得比較簡單的方式就是在package.json中給一個lint-staged物件，<br>格式會像是這樣</p>
+<p>src底下的所有fold的所有files會run 一次lint</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;lint-staged&quot;: &#123;</span><br><span class="line">  &quot;src/**/*.&#123;ts,tsx&#125;&quot;: &quot;eslint --fix&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/05/28/2/" title="了解一下ForwardRef"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: 了解一下ForwardRef</span></a><a class="button is-default" href="/2023/04/16/11/" title="nginx, Dockerfile, docker compose"><span class="has-text-weight-semibold">Next: nginx, Dockerfile, docker compose</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/myBlogRepo" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/milkeddy1"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com/milkeddy1"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Eddy 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
