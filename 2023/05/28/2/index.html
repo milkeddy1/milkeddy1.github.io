@@ -30,8 +30,28 @@
 <li>component 會用 forwardRef 這個 function 包住 component，他會回傳兩個參數分別是 props 和 ref</li>
 <li>在把 ref 傳到要操縱的元素上面即可</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useEffect, forwardRef, useRef &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> btnRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(btnRef, <span class="string">&quot;btnRef&quot;</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Start editing to see some magic happen!<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">CustomButton</span> <span class="attr">ref</span>=<span class="string">&#123;btnRef&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ButtonWithForwardRef</span> = <span class="title function_">forwardRef</span>(<span class="keyword">function</span> <span class="title function_">CustomButton</span>(<span class="params">props, ref</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span>&gt;</span>button<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="js">import React, &#123; useEffect, forwardRef, useRef &#125; from &quot;react&quot;;
 
+export function App(props) &#123;
+  const btnRef = useRef(null);
+
+  useEffect(() =&gt; &#123;
+    console.log(btnRef, &quot;btnRef&quot;);
+  &#125;, []);
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello React.&lt;/h1&gt;
+      &lt;h2&gt;Start editing to see some magic happen!&lt;/h2&gt;
+
+      &lt;CustomButton ref=&#123;btnRef&#125; /&gt;
+    &lt;/div&gt;
+  );
+&#125;
+
+const ButtonWithForwardRef = forwardRef(function CustomButton(props, ref) &#123;
+  return &lt;button ref=&#123;ref&#125;&gt;button&lt;/button&gt;;
+&#125;);
+</code></pre>
 <p>做到這邊其實很直觀的就會想到一個問題</p>
 <p>那就是整個傳入 ref 的概念不就跟傳 props 一樣嗎？</p>
 <p>為啥還要多一個 forwardRef 來只用來傳 ref ？</p>

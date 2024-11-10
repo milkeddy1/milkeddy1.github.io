@@ -2,21 +2,62 @@
 他和.md幾乎是一樣的，但是他能做的事情不只是寫markdown
 他可以在裡面寫javascript，把需要的component import進去
 e.g.
-12345678910111213import &amp;#123; MyComponent &amp;#125; from &amp;#x27;my-components&amp;#x27;# My MDX pageThis is a list in markdown:- One- Two- ThreeCheckout my React component:&amp;lt;MyComponent/&amp;gt;
+import &amp;#123; MyComponent &amp;#125; from &amp;#39;my-components&amp;#39;
 
-如何實作 ?如何讀這些.md檔案?我.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">如何在nextjs使用.md</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#markdown-files-in-Nextjs"><span class="toc-text">markdown files in Nextjs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MDX"><span class="toc-text">.MDX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AF%A6%E4%BD%9C"><span class="toc-text">如何實作 ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%80%E9%80%99%E4%BA%9B-md%E6%AA%94%E6%A1%88"><span class="toc-text">如何讀這些.md檔案?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8nextjs%E4%BD%BF%E7%94%A8fs%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91"><span class="toc-text">在nextjs使用fs遇到的坑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#process-cwd-vs-dirname"><span class="toc-text">process.cwd() vs __dirname</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E6%8B%BF%E5%88%B0%E7%9A%84md%E8%B3%87%E6%96%99"><span class="toc-text">解析拿到的md資料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A3%E5%BC%8F"><span class="toc-text">樣式</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">如何在nextjs使用.md</h1><time class="has-text-grey" datetime="2023-04-04T16:00:00.000Z">2023-04-05</time><article class="mt-2 post-content"><h1 id="markdown-files-in-Nextjs"><a href="#markdown-files-in-Nextjs" class="headerlink" title="markdown files in Nextjs"></a>markdown files in Nextjs</h1><h3 id="MDX"><a href="#MDX" class="headerlink" title=".MDX"></a>.MDX</h3><p>其實依照Nextjs官網的solution，他有一個方式可以去讀一個叫做.mdx的檔案格式</p>
+# My MDX page
+
+This is a list in markdown:
+
+- One
+- Two
+- Three
+
+Checkout my React component:
+
+&amp;lt;MyComponent/&amp;gt;
+
+如何實作 ?如何讀這些.md檔案?我在&amp;#x2F;.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">如何在nextjs使用.md</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#markdown-files-in-Nextjs"><span class="toc-text">markdown files in Nextjs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MDX"><span class="toc-text">.MDX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AF%A6%E4%BD%9C"><span class="toc-text">如何實作 ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%80%E9%80%99%E4%BA%9B-md%E6%AA%94%E6%A1%88"><span class="toc-text">如何讀這些.md檔案?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8nextjs%E4%BD%BF%E7%94%A8fs%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91"><span class="toc-text">在nextjs使用fs遇到的坑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#process-cwd-vs-dirname"><span class="toc-text">process.cwd() vs __dirname</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E6%8B%BF%E5%88%B0%E7%9A%84md%E8%B3%87%E6%96%99"><span class="toc-text">解析拿到的md資料</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A3%E5%BC%8F"><span class="toc-text">樣式</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">如何在nextjs使用.md</h1><time class="has-text-grey" datetime="2023-04-04T16:00:00.000Z">2023-04-05</time><article class="mt-2 post-content"><h1 id="markdown-files-in-Nextjs"><a href="#markdown-files-in-Nextjs" class="headerlink" title="markdown files in Nextjs"></a>markdown files in Nextjs</h1><h3 id="MDX"><a href="#MDX" class="headerlink" title=".MDX"></a>.MDX</h3><p>其實依照Nextjs官網的solution，他有一個方式可以去讀一個叫做.mdx的檔案格式</p>
 <p>他和.md幾乎是一樣的，但是他能做的事情不只是寫markdown</p>
 <p>他可以在裡面寫javascript，把需要的component import進去</p>
 <p>e.g.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123; MyComponent &#125; from &#x27;my-components&#x27;</span><br><span class="line"></span><br><span class="line"># My MDX page</span><br><span class="line"></span><br><span class="line">This is a list in markdown:</span><br><span class="line"></span><br><span class="line">- One</span><br><span class="line">- Two</span><br><span class="line">- Three</span><br><span class="line"></span><br><span class="line">Checkout my React component:</span><br><span class="line"></span><br><span class="line">&lt;MyComponent/&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>import &#123; MyComponent &#125; from &#39;my-components&#39;
 
+# My MDX page
+
+This is a list in markdown:
+
+- One
+- Two
+- Three
+
+Checkout my React component:
+
+&lt;MyComponent/&gt;
+</code></pre>
 <h2 id="如何實作"><a href="#如何實作" class="headerlink" title="如何實作 ?"></a>如何實作 ?</h2><h3 id="如何讀這些-md檔案"><a href="#如何讀這些-md檔案" class="headerlink" title="如何讀這些.md檔案?"></a>如何讀這些.md檔案?</h3><p>我在&#x2F;src資料夾裡面加了一folder叫做<code>posts</code></p>
 <p>在posts裡面新增markdown files</p>
 <p>然後會在pages的 <code>getServerSideProps</code> function去讀fs檔案</p>
 <p>利用<code>fs</code>module裡面的<code>readdirSync</code>和<code>readdirSync</code>function去讀files和folder</p>
 <p>如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">export const getServerSideProps = async () =&gt; &#123;</span><br><span class="line">  const files = fs.readdirSync(path.resolve(process.cwd(), &quot;src/posts&quot;));</span><br><span class="line">  const allPostsData = files.map((fileName) =&gt; &#123;</span><br><span class="line">    const slug = fileName.replace(&quot;.md&quot;, &quot;&quot;);</span><br><span class="line">    const fileContents = fs.readFileSync(</span><br><span class="line">      path.resolve(process.cwd(), `src/posts/$&#123;slug&#125;.md`</span><br><span class="line">      ));</span><br><span class="line">    const &#123; data, content &#125; = matter(fileContents);</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      files,</span><br><span class="line">      slug,</span><br><span class="line">      data,</span><br><span class="line">      content,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">  return &#123; props: &#123; allPostsData &#125; &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code>export const getServerSideProps = async () =&gt; &#123;
+  const files = fs.readdirSync(path.resolve(process.cwd(), &quot;src/posts&quot;));
+  const allPostsData = files.map((fileName) =&gt; &#123;
+    const slug = fileName.replace(&quot;.md&quot;, &quot;&quot;);
+    const fileContents = fs.readFileSync(
+      path.resolve(process.cwd(), `src/posts/$&#123;slug&#125;.md`
+      ));
+    const &#123; data, content &#125; = matter(fileContents);
 
+    return &#123;
+      files,
+      slug,
+      data,
+      content,
+    &#125;;
+  &#125;);
+  return &#123; props: &#123; allPostsData &#125; &#125;;
+&#125;;
+</code></pre>
 <h3 id="在nextjs使用fs遇到的坑"><a href="#在nextjs使用fs遇到的坑" class="headerlink" title="在nextjs使用fs遇到的坑"></a>在nextjs使用fs遇到的坑</h3><h4 id="process-cwd-vs-dirname"><a href="#process-cwd-vs-dirname" class="headerlink" title="process.cwd() vs __dirname"></a>process.cwd() vs __dirname</h4><p>對於node不是很熟悉的我來說，即使是google到答案還不是很確定為什麼XD</p>
 <p>我要去閱讀 <code>path.resolve(process.cwd(), &quot;src/posts&quot;)</code>這個位置的檔案</p>
 <p>一開始都一直失敗，因為我第一個參數用的是<code>__dirname</code>，一直不知道為何</p>

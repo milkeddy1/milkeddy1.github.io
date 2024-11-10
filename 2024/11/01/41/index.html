@@ -6,7 +6,15 @@
 Render and Commit不是什麼複雜的概念
 就只是考 react 一個蠻基本的概念
 在 react docs 就有的 Render phase 和 Commit phase
-123456789101112131415161718192021222324import &amp;#123;useEffect&amp;#125; from &amp;quot;react&amp;quot;export default function Parent() &amp;#123;console.log(&amp;#x27;I am parent component&amp;#x27;)  useEf.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">React 渲染的順序</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Render-and-Commit"><span class="toc-text">Render and Commit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Render-Phase"><span class="toc-text">Render Phase</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commit-Phase"><span class="toc-text">Commit Phase</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useLayoutEffect-useEffect"><span class="toc-text">useLayoutEffect &amp; useEffect</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">React 渲染的順序</h1><time class="has-text-grey" datetime="2024-10-31T16:00:00.000Z">2024-11-01</time><article class="mt-2 post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做了不少面試</p>
+
+import &amp;#123;useEffect&amp;#125; from &amp;quot;react&amp;quot;
+
+export default function Parent() &amp;#123;
+
+console.log(&amp;#39;I am parent component&amp;#39;)
+ 
+ useEffect(() =&amp;gt; &amp;#123;
+  console.log.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">React 渲染的順序</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Render-and-Commit"><span class="toc-text">Render and Commit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Render-Phase"><span class="toc-text">Render Phase</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commit-Phase"><span class="toc-text">Commit Phase</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#useLayoutEffect-useEffect"><span class="toc-text">useLayoutEffect &amp; useEffect</span></a></li></ol></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">React 渲染的順序</h1><time class="has-text-grey" datetime="2024-10-31T16:00:00.000Z">2024-11-01</time><article class="mt-2 post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近做了不少面試</p>
 <p>經過各種自信心的打擊之後</p>
 <p>發現自己對 react 其實沒有想像中那麼了解</p>
 <p>明明每天跟他朝夕相處，以為很懂他</p>
@@ -14,8 +22,32 @@ Render and Commit不是什麼複雜的概念
 <h2 id="Render-and-Commit"><a href="#Render-and-Commit" class="headerlink" title="Render and Commit"></a>Render and Commit</h2><p>不是什麼複雜的概念</p>
 <p>就只是考 react 一個蠻基本的概念</p>
 <p>在 react docs 就有的 Render phase 和 Commit phase</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useEffect&#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;I am parent component&#x27;</span>)</span><br><span class="line"> </span><br><span class="line"> <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;I am parent useEffect&#x27;</span>)</span><br><span class="line"> &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>I am parent</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Child</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;I am child component&#x27;</span>)</span><br><span class="line"></span><br><span class="line"> <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;I am child useEffect&#x27;</span>)</span><br><span class="line"> &#125;, [])</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span>I am child<span class="tag">&lt;/&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">
+import &#123;useEffect&#125; from &quot;react&quot;
 
+export default function Parent() &#123;
+
+console.log(&#39;I am parent component&#39;)
+ 
+ useEffect(() =&gt; &#123;
+  console.log(&#39;I am parent useEffect&#39;)
+ &#125;, [])
+
+  return &lt;div&gt;I am parent
+    &lt;Child /&gt;
+  &lt;/div&gt;
+&#125;
+
+function Child() &#123;
+
+console.log(&#39;I am child component&#39;)
+
+ useEffect(() =&gt; &#123;
+  console.log(&#39;I am child useEffect&#39;)
+ &#125;, [])
+  return &lt;&gt;I am child&lt;/&gt;
+&#125;
+</code></pre>
 <p>以上方程式碼作為範例</p>
 <h3 id="Render-Phase"><a href="#Render-Phase" class="headerlink" title="Render Phase"></a>Render Phase</h3><p>先說明一下名詞</p>
 <p>這裡的 render 和一般我們熟知的 react 渲染其實不是一個意思</p>
@@ -27,15 +59,17 @@ Render and Commit不是什麼複雜的概念
 <p>在這個 phase 中，就會由上到下執行所有的 component</p>
 <p>因此回到上面範例就可以知道</p>
 <p>最先 console 出來的兩個順序就是 </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// I am parent component</span></span><br><span class="line"><span class="comment">// I am child component</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="javascript">// I am parent component
+// I am child component
+</code></pre>
 <h3 id="Commit-Phase"><a href="#Commit-Phase" class="headerlink" title="Commit Phase"></a>Commit Phase</h3><p>根據所獲得的 React element tree 做 Dom 節點的創建</p>
 <p>如果是 rerender 的 commit phase，就是會「更新」Dom 節點</p>
 <p>那當然也是透過 react 計算出最少操作需要的節點</p>
 <p>而 commit phase 是遵循「深度優先」原則</p>
 <p>所以結果想當然會是</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// I am child useEffect</span></span><br><span class="line"><span class="comment">// I am parent useEffect</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="javascript">// I am child useEffect
+// I am parent useEffect
+</code></pre>
 <h4 id="useLayoutEffect-useEffect"><a href="#useLayoutEffect-useEffect" class="headerlink" title="useLayoutEffect &amp; useEffect"></a>useLayoutEffect &amp; useEffect</h4><p>由 commit phase 也可以理解到這兩者的差異</p>
 <p>useLayoutEffect 是在 commit phase 同步執行的，也就是在 DOM 更新後，但在瀏覽器繪製前</p>
 <p>useEffect 則是在 commit phase 後執行</p>

@@ -3,13 +3,61 @@
 稍微研究之後才發現我對 useEffect 不夠瞭解
 所以稍微記錄一下
 一般使用 useEffect 去 fetch dataCode 如下
-12345678910111213141516171819202122232425262728293031323334353637383940414243import React, &amp;#123; useState, useEffect &amp;#125; from &amp;quot;react&amp;quot;;export function App(props) &amp;#123;  const [person, setPerson] = useState(1);  co.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">從 race condition 更了解 useEffect</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E4%BD%BF%E7%94%A8-useEffect-%E5%8E%BB-fetch-data"><span class="toc-text">一般使用 useEffect 去 fetch data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95"><span class="toc-text">解法</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">從 race condition 更了解 useEffect</h1><time class="has-text-grey" datetime="2024-06-07T16:00:00.000Z">2024-06-08</time><article class="mt-2 post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在看 yt 在介紹為啥不建議用 useEffect 去 fetch data 時</p>
+import React, &amp;#123; useState, useEffect &amp;#125; from &amp;quot;react&amp;quot;;
+
+export function App(props) &amp;#123;
+  const [person, setPerson] = useState(1);
+  const [bio, setBio] = useState(null);
+
+  const handlePeople = () =&amp;gt; &amp;#12.."><meta name="generator" content="Hexo 7.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">Eddy's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">從 race condition 更了解 useEffect</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E4%BD%BF%E7%94%A8-useEffect-%E5%8E%BB-fetch-data"><span class="toc-text">一般使用 useEffect 去 fetch data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95"><span class="toc-text">解法</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/frontend"><i class="tag post-item-tag">frontend</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">從 race condition 更了解 useEffect</h1><time class="has-text-grey" datetime="2024-06-07T16:00:00.000Z">2024-06-08</time><article class="mt-2 post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在看 yt 在介紹為啥不建議用 useEffect 去 fetch data 時</p>
 <p>從官網他給的解法我 get 不到</p>
 <p>稍微研究之後才發現我對 useEffect 不夠瞭解</p>
 <p>所以稍微記錄一下</p>
 <h3 id="一般使用-useEffect-去-fetch-data"><a href="#一般使用-useEffect-去-fetch-data" class="headerlink" title="一般使用 useEffect 去 fetch data"></a>一般使用 useEffect 去 fetch data</h3><p>Code 如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = <span class="title function_">useState</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> [bio, setBio] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handlePeople</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setPerson</span>(<span class="number">2</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">fakeFetchData</span> = (<span class="params">num</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 模擬成功返回數據</span></span><br><span class="line">        <span class="keyword">const</span> success = <span class="literal">true</span>; <span class="comment">// 將其設為 false 以模擬錯誤</span></span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">          <span class="keyword">const</span> db = &#123;</span><br><span class="line">            <span class="number">1</span>: <span class="string">&quot;Alice&quot;</span>,</span><br><span class="line">            <span class="number">2</span>: <span class="string">&quot;Bob&quot;</span>,</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="title function_">resolve</span>(&#123; <span class="attr">message</span>: db[num] &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(<span class="string">&quot;Error fetching data&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, <span class="number">2000</span>); <span class="comment">// 模擬 2 秒的延遲</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [person]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;bio&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handlePeople&#125;</span>&gt;</span>switch<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;
 
+export function App(props) &#123;
+  const [person, setPerson] = useState(1);
+  const [bio, setBio] = useState(null);
+
+  const handlePeople = () =&gt; &#123;
+    setPerson(2);
+  &#125;;
+
+  const fakeFetchData = (num) =&gt; &#123;
+    return new Promise((resolve, reject) =&gt; &#123;
+      setTimeout(() =&gt; &#123;
+        // 模擬成功返回數據
+        const success = true; // 將其設為 false 以模擬錯誤
+        if (success) &#123;
+          const db = &#123;
+            1: &quot;Alice&quot;,
+            2: &quot;Bob&quot;,
+          &#125;;
+          resolve(&#123; message: db[num] &#125;);
+        &#125; else &#123;
+          reject(&quot;Error fetching data&quot;);
+        &#125;
+      &#125;, 2000); // 模擬 2 秒的延遲
+    &#125;);
+  &#125;;
+
+  useEffect(() =&gt; &#123;
+    setBio(null);
+    fakeFetchData(person).then((result) =&gt; &#123;
+      setBio(result.message);
+    &#125;);
+  &#125;, [person]);
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello React.&lt;/h1&gt;
+      &lt;h2&gt;&#123;bio&#125;&lt;/h2&gt;
+      &lt;button onClick=&#123;handlePeople&#125;&gt;switch&lt;/button&gt;
+    &lt;/div&gt;
+  );
+&#125;
+</code></pre>
 <p>其實這個寫法非常不難懂也不難寫</p>
 <p>以有在使用或是對 React 有些了解的人來說</p>
 <p>不過他會有一個問題</p>
@@ -20,8 +68,57 @@
 <p>就叫做 race condition</p>
 <h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>Code 如下</p>
 <p>（這裡有特意做一個第二次會比第一次 response 快的機制）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = <span class="title function_">useState</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">const</span> [bio, setBio] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handlePeople</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setPerson</span>(<span class="number">2</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">fakeFetchData</span> = (<span class="params">num, defer = <span class="number">5000</span></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (num === <span class="number">2</span>) defer = <span class="number">1000</span>;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 模擬成功返回數據</span></span><br><span class="line">        <span class="keyword">const</span> success = <span class="literal">true</span>; <span class="comment">// 將其設為 false 以模擬錯誤</span></span><br><span class="line">        <span class="keyword">if</span> (success) &#123;</span><br><span class="line">          <span class="keyword">const</span> db = &#123;</span><br><span class="line">            <span class="number">1</span>: <span class="string">&quot;Alice&quot;</span>,</span><br><span class="line">            <span class="number">2</span>: <span class="string">&quot;Bob&quot;</span>,</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="title function_">resolve</span>(&#123; <span class="attr">message</span>: db[num] &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(<span class="string">&quot;Error fetching data&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, defer); <span class="comment">// 模擬 2 秒的延遲</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> ignore = <span class="literal">false</span>;</span><br><span class="line">    <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (!ignore) &#123;</span><br><span class="line">        <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      ignore = <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, [person]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;App&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello React.<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;bio&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handlePeople&#125;</span>&gt;</span>switch<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import React, &#123; useState, useEffect &#125; from &quot;react&quot;;
 
+export function App(props) &#123;
+  const [person, setPerson] = useState(1);
+  const [bio, setBio] = useState(null);
+
+  const handlePeople = () =&gt; &#123;
+    setPerson(2);
+  &#125;;
+
+  const fakeFetchData = (num, defer = 5000) =&gt; &#123;
+    return new Promise((resolve, reject) =&gt; &#123;
+      if (num === 2) defer = 1000;
+      setTimeout(() =&gt; &#123;
+        // 模擬成功返回數據
+        const success = true; // 將其設為 false 以模擬錯誤
+        if (success) &#123;
+          const db = &#123;
+            1: &quot;Alice&quot;,
+            2: &quot;Bob&quot;,
+          &#125;;
+          resolve(&#123; message: db[num] &#125;);
+        &#125; else &#123;
+          reject(&quot;Error fetching data&quot;);
+        &#125;
+      &#125;, defer); // 模擬 2 秒的延遲
+    &#125;);
+  &#125;;
+
+  useEffect(() =&gt; &#123;
+    let ignore = false;
+    setBio(null);
+    fakeFetchData(person).then((result) =&gt; &#123;
+      if (!ignore) &#123;
+        setBio(result.message);
+      &#125;
+    &#125;);
+    return () =&gt; &#123;
+      ignore = true;
+    &#125;;
+  &#125;, [person]);
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;h1&gt;Hello React.&lt;/h1&gt;
+      &lt;h2&gt;&#123;bio&#125;&lt;/h2&gt;
+      &lt;button onClick=&#123;handlePeople&#125;&gt;switch&lt;/button&gt;
+    &lt;/div&gt;
+  );
+&#125;
+</code></pre>
 <p>簡單來說就是多了 ignore 這個 flag</p>
 <p>原本很 confused 這個 ignore 為何可以預防這件事</p>
 <p>其實涵蓋了兩個概念</p>
@@ -41,8 +138,19 @@
 <p>另外一個概念是閉包</p>
 <p>雖然 return function 才將 ignore 變為 true</p>
 <p>但是這個 ignore 代表的還是第一次 api call 的那個 ignore 判斷</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> ignore = <span class="literal">false</span>;</span><br><span class="line">  <span class="title function_">setBio</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="title function_">fakeFetchData</span>(person).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ignore) &#123;</span><br><span class="line">      <span class="title function_">setBio</span>(result.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ignore = <span class="literal">true</span>; <span class="comment">// 這個會在有下一個 api call 的時候才會執行</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [person]);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="javascript">useEffect(() =&gt; &#123;
+  let ignore = false;
+  setBio(null);
+  fakeFetchData(person).then((result) =&gt; &#123;
+    if (!ignore) &#123;
+      setBio(result.message);
+    &#125;
+  &#125;);
+  return () =&gt; &#123;
+    ignore = true; // 這個會在有下一個 api call 的時候才會執行
+  &#125;;
+&#125;, [person]);
+</code></pre>
 <p>簡單來說</p>
 <p>在第一次 api response 之前，我在第二次的 useEffect 執行的上一個 return function</p>
 <p>來擋住上一次的 api response state change</p>

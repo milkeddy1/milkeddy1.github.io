@@ -22,42 +22,140 @@ createThemecreateTheme 提供以下 default 的 key 可以去設定
 <p><a target="_blank" rel="noopener" href="https://mui.com/material-ui/customization/default-theme/">這是是 MUI theme 的 default 值</a></p>
 <h3 id="palette"><a href="#palette" class="headerlink" title="palette"></a>palette</h3><p>設定顏色的 object</p>
 <p>something like this…</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">palette</span>: &#123;</span><br><span class="line">  <span class="attr">background</span>: &#123;</span><br><span class="line">    <span class="attr">default</span>: <span class="string">&#x27;#EEEEEE&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">  palette: &#123;
+    background: &#123;
+      default: &#39;#EEEEEE&#39;,
+    &#125;,
+  &#125;
+</code></pre>
 <h3 id="typography"><a href="#typography" class="headerlink" title="typography"></a>typography</h3><p>可以 customize 字的樣式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">typography</span>: &#123;</span><br><span class="line">  <span class="attr">subtitle1</span>: &#123;</span><br><span class="line">    <span class="attr">fontSize</span>: <span class="number">12</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">body1</span>: &#123;</span><br><span class="line">    <span class="attr">fontWeight</span>: <span class="number">500</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">button</span>: &#123;</span><br><span class="line">    <span class="attr">fontStyle</span>: <span class="string">&#x27;italic&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">  typography: &#123;
+    subtitle1: &#123;
+      fontSize: 12,
+    &#125;,
+    body1: &#123;
+      fontWeight: 500,
+    &#125;,
+    button: &#123;
+      fontStyle: &#39;italic&#39;,
+    &#125;,
+  &#125;,
+</code></pre>
 <h3 id="spacing"><a href="#spacing" class="headerlink" title="spacing"></a>spacing</h3><p>使用方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">theme.<span class="title function_">spacing</span>(<span class="number">2</span>);</span><br><span class="line"><span class="comment">// 就等於 2 X 8px = 16px</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">theme.spacing(2);
+// 就等於 2 X 8px = 16px
+</code></pre>
 <p>default 單位是 px</p>
 <p>也可以自定義單位成 rem</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">spacing</span>: <span class="function">(<span class="params">factor</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;<span class="number">0.25</span> * factor&#125;</span>rem`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">&#123;
+  spacing: (factor) =&gt; `$&#123;0.25 * factor&#125;rem`;
+&#125;
+</code></pre>
 <h3 id="breakpoints"><a href="#breakpoints" class="headerlink" title="breakpoints"></a>breakpoints</h3><p>自定義方式如下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">breakpoints</span>: &#123;</span><br><span class="line">  <span class="attr">values</span>: &#123;</span><br><span class="line">    <span class="attr">xs</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">sm</span>: <span class="number">600</span>,</span><br><span class="line">    <span class="attr">md</span>: <span class="number">900</span>,</span><br><span class="line">    <span class="attr">lg</span>: <span class="number">1200</span>,</span><br><span class="line">    <span class="attr">xl</span>: <span class="number">1536</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">  breakpoints: &#123;
+    values: &#123;
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    &#125;,
+  &#125;,
+</code></pre>
 <h3 id="components"><a href="#components" class="headerlink" title="components"></a>components</h3><p>可以更改 default props</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> theme = <span class="title function_">createTheme</span>(&#123;</span><br><span class="line">  <span class="attr">components</span>: &#123;</span><br><span class="line">    <span class="comment">// Name of the component</span></span><br><span class="line">    <span class="title class_">MuiButtonBase</span>: &#123;</span><br><span class="line">      <span class="attr">defaultProps</span>: &#123;</span><br><span class="line">        <span class="comment">// The props to change the default for.</span></span><br><span class="line">        <span class="attr">disableRipple</span>: <span class="literal">true</span>, <span class="comment">// No more ripple, on the whole application 💣!</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">const theme = createTheme(&#123;
+  components: &#123;
+    // Name of the component
+    MuiButtonBase: &#123;
+      defaultProps: &#123;
+        // The props to change the default for.
+        disableRipple: true, // No more ripple, on the whole application 💣!
+      &#125;,
+    &#125;,
+  &#125;,
+</code></pre>
 <p>或是 override styles</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">MuiButton</span>: &#123;</span><br><span class="line">  <span class="attr">styleOverrides</span>: &#123;</span><br><span class="line">    <span class="comment">// Name of the slot</span></span><br><span class="line">    <span class="attr">root</span>: &#123;</span><br><span class="line">      <span class="comment">// Some CSS</span></span><br><span class="line">      <span class="attr">fontSize</span>: <span class="string">&#x27;1rem&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">    MuiButton: &#123;
+      styleOverrides: &#123;
+        // Name of the slot
+        root: &#123;
+          // Some CSS
+          fontSize: &#39;1rem&#39;,
+        &#125;,
+      &#125;,
+    &#125;,
+</code></pre>
 <p>又或者 customize variants + default styles</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="attr">components</span>: &#123;</span><br><span class="line">  <span class="title class_">MuiButton</span>: &#123;</span><br><span class="line">    <span class="attr">styleOverrides</span>: &#123;</span><br><span class="line">      <span class="attr">root</span>: <span class="function">(<span class="params">&#123; ownerState &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">        ...(ownerState.<span class="property">variant</span> === <span class="string">&#x27;contained&#x27;</span> &amp;&amp;</span><br><span class="line">          ownerState.<span class="property">color</span> === <span class="string">&#x27;primary&#x27;</span> &amp;&amp; &#123;</span><br><span class="line">            <span class="attr">backgroundColor</span>: <span class="string">&#x27;#202020&#x27;</span>,</span><br><span class="line">            <span class="attr">color</span>: <span class="string">&#x27;#fff&#x27;</span>,</span><br><span class="line">          &#125;),</span><br><span class="line">      &#125;),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="js">  components: &#123;
+   MuiButton: &#123;
+     styleOverrides: &#123;
+       root: (&#123; ownerState &#125;) =&gt; (&#123;
+         ...(ownerState.variant === &#39;contained&#39; &amp;&amp;
+           ownerState.color === &#39;primary&#39; &amp;&amp; &#123;
+             backgroundColor: &#39;#202020&#39;,
+             color: &#39;#fff&#39;,
+           &#125;),
+       &#125;),
+     &#125;,
+   &#125;,
+ &#125;,
+</code></pre>
 <h2 id="apply-themes"><a href="#apply-themes" class="headerlink" title="apply themes"></a>apply themes</h2><p>在 createTheme 定義好樣式之後，有些會直接使用到預設的樣式</p>
 <p>但大部分會需要手動去使用</p>
 <p>假設這是我定義好的 theme</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> theme = <span class="title function_">createTheme</span>(&#123;</span><br><span class="line">  <span class="attr">palette</span>: &#123;</span><br><span class="line">    <span class="attr">primary</span>: &#123;</span><br><span class="line">      <span class="attr">main</span>: <span class="string">&quot;#ff4400&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MyApp</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ThemeProvider</span> <span class="attr">theme</span>=<span class="string">&#123;theme&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">MyComponent</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ThemeProvider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="js">const theme = createTheme(&#123;
+  palette: &#123;
+    primary: &#123;
+      main: &quot;#ff4400&quot;,
+    &#125;,
+  &#125;,
+&#125;);
 
-<h3 id="useTheme"><a href="#useTheme" class="headerlink" title="useTheme"></a>useTheme</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 使用主題</span></span><br><span class="line">  <span class="keyword">const</span> theme = <span class="title function_">useTheme</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">theme.palette.primary.main</span> &#125;&#125;&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+function MyApp() &#123;
+  return (
+    &lt;ThemeProvider theme=&#123;theme&#125;&gt;
+      &lt;MyComponent /&gt;
+    &lt;/ThemeProvider&gt;
+  );
+&#125;
+</code></pre>
+<h3 id="useTheme"><a href="#useTheme" class="headerlink" title="useTheme"></a>useTheme</h3><pre><code class="js">function MyComponent() &#123;
+  // 使用主題
+  const theme = useTheme();
 
+  return &lt;div style=&#123;&#123; color: theme.palette.primary.main &#125;&#125;&gt;Hello, world!&lt;/div&gt;;
+&#125;
+</code></pre>
 <p>以下有幾種方法</p>
-<h3 id="styled"><a href="#styled" class="headerlink" title="styled"></a>styled</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">StyledDiv</span> = <span class="title function_">styled</span>(<span class="string">&quot;div&quot;</span>)(<span class="function">(<span class="params">&#123; theme &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">color</span>: theme.<span class="property">palette</span>.<span class="property">primary</span>.<span class="property">main</span>,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-
+<h3 id="styled"><a href="#styled" class="headerlink" title="styled"></a>styled</h3><pre><code class="js">const StyledDiv = styled(&quot;div&quot;)((&#123; theme &#125;) =&gt; (&#123;
+  color: theme.palette.primary.main,
+&#125;));
+</code></pre>
 <h3 id="sx"><a href="#sx" class="headerlink" title="sx"></a>sx</h3><p>sx 有兩種方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Box</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">sx</span>=<span class="string">&#123;(theme)</span> =&gt;</span> (&#123;</span></span><br><span class="line"><span class="language-xml">        color: theme.palette.primary.main,</span></span><br><span class="line"><span class="language-xml">        backgroundColor: theme.palette.background.default,</span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    &gt;</span></span><br><span class="line"><span class="language-xml">      Hello, world!</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MyComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Box</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">sx</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">width:</span> <span class="attr">300</span>,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">color:</span> &quot;<span class="attr">success.main</span>&quot;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      Hello, world!</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="js">function MyComponent() &#123;
+  return (
+    &lt;Box
+      sx=&#123;(theme) =&gt; (&#123;
+        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.background.default,
+      &#125;)&#125;
+    &gt;
+      Hello, world!
+    &lt;/Box&gt;
+  );
+&#125;
+</code></pre>
+<pre><code class="js">function MyComponent() &#123;
+  return (
+    &lt;Box
+      sx=&#123;&#123;
+        width: 300,
+        color: "success.main",
+      &#125;&#125;
+    &gt;
+      Hello, world!
+    &lt;/Box&gt;
+  );
+&#125;
+</code></pre>
 </article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/07/02/6/" title="近期面試結果、心得"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: 近期面試結果、心得</span></a><a class="button is-default" href="/2023/06/09/4/" title="入職滿一年記錄一下"><span class="has-text-weight-semibold">Next: 入職滿一年記錄一下</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/myBlogRepo" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/milkeddy1"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com/milkeddy1"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> Eddy 2024</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
