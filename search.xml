@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>工作</title>
+      <link href="/2025/02/04/42/"/>
+      <url>/2025/02/04/42/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>新開的一個 tag</p><p>還沒做其他功能分類</p><p>這個用途主要是讓我常常能回顧在工作學到的東西</p><p>有時候在解 bug 或是做 feature 總會出現 「啊！原來是這樣喔！」的時刻</p><p>我也會把它記錄在 heptabase 裡面</p><p>但是光光這樣紀錄我覺得好像也沒有進入我的腦袋</p><p>所以就在這邊多做一個紀錄的過程，應該會幫助我學得更深刻</p><h2 id="window-matchMedia"><a href="#window-matchMedia" class="headerlink" title="window.matchMedia"></a>window.matchMedia</h2><p>可以用這個 function 取得一個 MediaQueryList</p><p>然後用指定的 string 去讓他判斷是否存在於當前瀏覽器</p><p>然後可以從他返回的物件的 matches boolean 值判斷是否是該狀態</p><p>舉個例子：</p><pre><code class="js">// 檢測目前視窗大小// 使用示例const useMediaQuery = (query) =&gt; &#123;    const [matches, setMatches] = useState(window.matchMedia(query).matches);    useEffect(() =&gt; &#123;        const mediaQueryList = window.matchMedia(query);        const listener = (event) =&gt; setMatches(event.matches);        mediaQueryList.addListener(listener);        return () =&gt; mediaQueryList.removeListener(listener);    &#125;, [query]);    return matches;&#125;;const MyComponent = () =&gt; &#123;    const isMobile = useMediaQuery(&#39;(max-width: 600px)&#39;);    return (        &lt;div&gt;            &#123;isMobile ? &#39;Mobile View&#39; : &#39;Desktop View&#39;&#125;        &lt;/div&gt;    );&#125;;</code></pre><p>比較常用的功能有這些：</p><ul><li><p>PWA 模式</p></li><li><p>視口監測</p></li><li><p>主題偏好</p></li><li><p>pointer 交互</p></li><li><p>畫質</p></li></ul><p>主題、個人化、裝置、效能 這些相關的都可以想到這個東西來處理</p><h2 id="手機旋轉狀態"><a href="#手機旋轉狀態" class="headerlink" title="手機旋轉狀態"></a>手機旋轉狀態</h2><p>這個其實延續到上一個 matchMedia 其中一個用法</p><p>這邊針對偵測的一個小小的點多做說明</p><p>以 react 為例</p><p>先定義初始 state</p><p>（會以函數方式是因為減少他重新沒必要抓取狀態）</p><pre><code class="js">  const [isLandscape, setIsLandscape] = useState(() =&gt;    window.matchMedia(&quot;(orientation: portrait)&quot;).matches ? &quot;portrait&quot; : &quot;landscape&quot;,  )</code></pre><p>翻轉事件名稱：orientationchange</p><p>所以就用 useEffect 去做監聽</p><p>這邊要注意的是，翻轉事件會在 matchMedia 的 “(orientation: portrait)” 之前發生</p><p>所以做了一個 timeout，他才會是正確的狀態</p><pre><code class="js">  useEffect(() =&gt; &#123;    const handleFlip = () =&gt; &#123;      // 延遲才會得到翻轉後的值      setTimeout(() =&gt; &#123;        setIsLandscape(window.matchMedia(&quot;(orientation: portrait)&quot;).matches ? &quot;portrait&quot; : &quot;landscape&quot;)      &#125;, 100)    &#125;    window.addEventListener(&quot;orientationchange&quot;, handleFlip)    return () =&gt; &#123;      window.removeEventListener(&quot;orientationchange&quot;, handleFlip)    &#125;  &#125;, [])</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> work </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>React 渲染的順序</title>
       <link href="/2024/11/01/41/"/>
       <url>/2024/11/01/41/</url>
